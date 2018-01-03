@@ -1,8 +1,5 @@
-import pandas as pd
-import unittest
-from nose.tools import assert_is_instance, assert_equal, assert_not_equal, assert_raises
-
 from trans_facebook import FB
+
 
 class TestFacebook(object):
     def __init__(self):
@@ -27,5 +24,4 @@ class TestFacebook(object):
         self.fb.read_csv('https://transparency.facebook.com/download/2013-H1/')
 
     def test_process_fb(self):
-        assert self.fb.process('2013-01-01','2013-06-30 23:59:59').size > 0
-
+        assert self.fb.process('2013-01-01', '2013-06-30 23:59:59').size > 0
