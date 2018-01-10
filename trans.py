@@ -6,49 +6,55 @@ from utils import setup_logging
 import logging
 
 def main():
-    """ Fetch transparency reports for different platforms and convert to a common format
+		""" Fetch transparency reports for different platforms and convert to a common format
 
-    Usage:
-      transparency_aggregator.py [-vl] --all --output=FILE
-      transparency_aggregator.py --version
+		Usage:
+			transparency_aggregator.py [-vl] --output=FILE (--get=SOURCE | --get-all)
+			transparency_aggregator.py --version
 
-    Options:
-      -h --help     Show this screen.
-      -v --verbose  Increase verbosity for debugging.
-      -l --nolog    Don't save log to file -- for debugging only.
-      -o FILE, --output=FILE     Save results to FILE in CSV format.
-      --version  Show version.
-      --all     Fetch all available transparency reports
+		Options:
+			-h --help		 Show this screen.
+			-v --verbose	Increase verbosity for debugging.
+			-l --nolog		Don't save log to file -- for debugging only.
+			-o FILE, --output=FILE		 Save results to FILE in CSV format.
+			--version	Show version.
+			--get-all		 Fetch all available transparency reports
+			--get=SOURCE	Fetch data from SOURCE (e.g. facebook)
 
-    """
+		"""
 
-    args = docopt(main.__doc__, version='Transparency Aggregator v0.1')
+		args = docopt(main.__doc__, version='Transparency Aggregator v0.1')
+		print(args)
 
-    setup_logging("transparency.log", verbose=args['--verbose'],
-                  interactive_only=args['--nolog'])
+		get_from = args['--get']
+		get_all = args['--get-all']
+		csv_file = args['--output']  #TODO: change to --csv-output
 
-    df = pd.DataFrame()
-    df_facebook = fetch_facebook()
-    df = df.append(df_facebook)
 
-    if args['--all']:
-        logging.info("Starting complete run, collecting historical data.")
+		setup_logging("transparency.log", verbose=args['--verbose'],
+									interactive_only=args['--nolog'])
 
-        df = pd.DataFrame()
-        df_facebook = fetch_facebook()
-        df = df.append(df_facebook)
+		if not csv_file:
+			logging.warn("no output file specified, results will be discarded")
 
-        logging.info("Finished complete run. Found {} rows total.".format(df.shape[0]))
+		logging.info("Starting complete run, collecting historical data.")
+		df = pd.DataFrame()
 
-        writer = TransparencyWriterCSV()
+		if get_from == 'facebook' or get_all:
+			df.append(fetch_facebook)
+	
+		logging.info("Finished complete run. Found {} rows total.".format(df.shape[0]))
 
-        writer.write(df, args['--output'])
+		if csv_file:
+				logging.info('writeing to' + csv_file)
+				writer = TransparencyWriterCSV()
+				writer.write(df, csv_file)
 
 def fetch_facebook():
-    fb = FB()
-    df = fb.fetch_all()
-    return df
+		fb = FB()
+		df = fb.fetch_all()
+		return df
 
 
 if __name__ == '__main__':
-    main()
+		main()
