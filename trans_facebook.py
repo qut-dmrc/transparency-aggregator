@@ -2,12 +2,11 @@
 import datetime
 import logging
 import urllib
-
 import numpy as np
 import pandas as pd
 
 from transparency_aggregator import TransparencyAggregator
-
+from data_frame_builder import DataFrameBuilder
 
 class FB(TransparencyAggregator):
 
@@ -55,22 +54,26 @@ class FB(TransparencyAggregator):
         self.df['number of requests where some data produced'] = self.df[
             'number of requests where some data produced'].round()
         # this doesn't seem to work: .astype(int, errors='ignore')
-
-        # Extract requests for user data from governments:
-        self.extract_columns('Facebook', 'Facebook', start_date, end_date, 'requests for user data',
-                             'total requests for user data', 'total user accounts referenced',
-                             'number of requests where some data produced')
-
-        # Extract content restriction requests:
-        self.extract_columns('Facebook', 'Facebook', start_date, end_date, 'content restrictions',
-                             'content restrictions', 'content_num_affected', 'content_num_complied')
-
-        # Extract account preservation requests
+        
         self.df['preservations_num_affected'] = self.df[
             'preservations requested']  # Assume 1:1 mapping on requests:accounts
-        self.extract_columns('Facebook', 'Facebook', start_date, end_date, 'preservation requests',
+
+        builder = DataFrameBuilder(df_in = self.df, df_out = self.df_out, platform = 'Facebook', platform_property = 'Facebook', 
+                                    report_start = start_date, report_end = end_date)
+
+        # Extract requests for user data from governments:
+        builder.extract_columns('requests for user data',
+                                'total requests for user data', 'total user accounts referenced',
+                                'number of requests where some data produced')
+
+        # Extract content restriction requests:
+        builder.extract_columns('content restrictions', 'content restrictions', 'content_num_affected', 'content_num_complied')
+
+        # Extract account preservation requests
+        builder.extract_columns('preservation requests',
                              'preservations requested', 'preservations_num_affected', 'users / accounts preserved')
 
+        self.df_out = builder.get_df()
         return self.df_out
 
     def fetch_all(self):

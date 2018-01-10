@@ -1,6 +1,16 @@
 import logging
 from logging.handlers import RotatingFileHandler
+from dateutil.parser import parse
+from datetime import datetime, date
 
+def c_to_date(date_in):
+    """ Simple method to convert a string to a date. If passed a date, leave as is. """
+    if isinstance(date_in, str):
+        return parse(date_in)
+    elif isinstance(date_in, (datetime, date)):
+        return date_in
+    else:
+        raise ValueError("Input not in a string or date format. Got: {}".format(date_in))
 
 def setup_logging(log_file_name, verbose=False, interactive_only=False):
     if not verbose:
