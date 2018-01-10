@@ -12,7 +12,7 @@ import logging
 
 class TransparencyAggregator:
     def __init__(self):
-        self.df = None
+        self.df = None 
         self.df_out = pd.DataFrame()
 
     def read_csv(self, filename_or_url):

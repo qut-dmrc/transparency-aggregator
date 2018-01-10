@@ -1,7 +1,6 @@
-import csv
-
 from docopt import docopt
 from trans_facebook import FB
+from trans_writer_csv import TransparencyWriterCSV 
 import pandas as pd
 from utils import setup_logging
 import logging
@@ -28,6 +27,10 @@ def main():
     setup_logging("transparency.log", verbose=args['--verbose'],
                   interactive_only=args['--nolog'])
 
+    df = pd.DataFrame()
+    df_facebook = fetch_facebook()
+    df = df.append(df_facebook)
+
     if args['--all']:
         logging.info("Starting complete run, collecting historical data.")
 
@@ -36,8 +39,10 @@ def main():
         df = df.append(df_facebook)
 
         logging.info("Finished complete run. Found {} rows total.".format(df.shape[0]))
-        df.to_csv(args['--output'], quoting=csv.QUOTE_ALL, encoding="UTF-8")
 
+        writer = TransparencyWriterCSV()
+
+        writer.write(df, args['--output'])
 
 def fetch_facebook():
     fb = FB()

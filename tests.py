@@ -1,9 +1,7 @@
 from trans_facebook import FB
 
-
-class TestFacebook(object):
-    def __init__(self):
-        self.fb = None
+class TestFacebook(unittest.TestCase):
+        # self.fb = None
 
     @classmethod
     def setup_class(cls):
@@ -25,3 +23,6 @@ class TestFacebook(object):
 
     def test_process_fb(self):
         assert self.fb.process('2013-01-01', '2013-06-30 23:59:59').size > 0
+
+if __name__ == '__main__':
+    unittest.main()
