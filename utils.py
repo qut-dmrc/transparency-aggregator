@@ -2,8 +2,10 @@ import logging
 from logging.handlers import RotatingFileHandler
 from dateutil.parser import parse
 from datetime import datetime, date
+import numpy as np
+import pandas as pd
 
-def c_to_date(date_in):
+def str_to_date(date_in):
     """ Simple method to convert a string to a date. If passed a date, leave as is. """
     if isinstance(date_in, str):
         return parse(date_in)
@@ -50,3 +52,28 @@ def setup_logging(log_file_name, verbose=False, interactive_only=False):
         logger.setLevel(logging.INFO)
 
     return logger
+
+
+def df_fix_columns(df):
+		df.columns = df.columns.str.lower()
+
+def df_strip_char(df, row, char):
+		df[row] = df[row].str.rstrip(char)
+
+def df_convert_to_numeric(df, numeric_cols):
+	for col in numeric_cols:
+		if col not in df.columns:
+			df[col] = None
+		else:
+			if df[col].dtype == np.object_:  #TODO: handle else?
+				# replace formatting commas
+				df[col] = df[col].str.replace(',', '')
+
+				# replace ranges with the lower bound of the range
+				df[col] = df[col].str.replace(r"(\d+)( - )(\d+)", r'\1')
+
+				df[col] = pd.to_numeric(df[col], errors='raise')
+
+def df_convert_from_percentage(df, pc_col, total_col, dest_col):
+		df[dest_col] = df[total_col] * df[pc_col] / 100.0
+		df[dest_col] = df[dest_col].round()

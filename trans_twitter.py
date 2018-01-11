@@ -9,7 +9,7 @@ import utils
 from transparency_aggregator import TransparencyAggregator
 from data_frame_builder import DataFrameBuilder
 
-class FB(TransparencyAggregator):
+class TransTwitter(TransparencyAggregator):
 
 	def process(self, df, start_date, end_date):
 
@@ -17,51 +17,38 @@ class FB(TransparencyAggregator):
 		df.columns = df.columns.str.lower()
 		utils.df_fix_columns(df)
 
-		col_map = {
-			'requests for user data': 'total requests for user data',
-			'user accounts referenced': 'total user accounts referenced',
-			'percentage of requests where some data produced': 'total percentage of requests where some data produced',
-		}
 
-		df.rename(columns=col_map, inplace=True)
 
-		utils.df_strip_char(df, 'total percentage of requests where some data produced', '%')
 
-		#TODO
-		#		df['number of requests where some data produced'] = df.apply(convert_percentages, axis=1)
+#delete TOTAL country
 
-		# convert strings to numbers
-		numeric_cols = ['total requests for user data', 'total user accounts referenced',
-						'total percentage of requests where some data produced', 'content restrictions',
-						'content_num_affected', 'content_num_complied', 'preservations requested',
-						'preservations_num_affected', 'users / accounts preserved']
+		utils.df_strip_char(df, 'percentage where some information produced', '%')
+		utils.df_strip_char(df, 'account information requests', '*')
+
+		numeric_cols = ['account information requests', 'percentage where some information produced', 'accounts specified']
+       
+		df = df.replace('-', np.NaN)  #treat dashs as null, per nic 2018-01-11
 
 		utils.df_convert_to_numeric(df, numeric_cols)
 
-		df['number of requests where some data produced'] = df[
-																	 'total percentage of requests where some data produced'] * \
-																 df['total requests for user data'] / 100.0
-		df['number of requests where some data produced'] = df[
-			'number of requests where some data produced'].round()
-		# this doesn't seem to work: .astype(int, errors='ignore')
-		
-		df['preservations_num_affected'] = df[
-			'preservations requested']  # Assume 1:1 mapping on requests:accounts
 
-		builder = DataFrameBuilder(df_in = df, df_out = self.df_out, platform = 'Facebook', platform_property = 'Facebook', 
+		builder = DataFrameBuilder(df_in = df, df_out = self.df_out, platform = 'Twitter', platform_property = 'Twitter', 
 									report_start = start_date, report_end = end_date)
+
+
+		utils.df_convert_from_percentage(df, 'percentage where some information produced', 'account information requests', 'number where some information produced')
 
 		# Extract requests for user data from governments:
 		builder.extract_columns('requests for user data',
-								'total requests for user data', 'total user accounts referenced',
-								'number of requests where some data produced')
+								'account information requests', 'accounts specified',
+								'number where some information produced')
 
 		# Extract content restriction requests:
-		builder.extract_columns('content restrictions', 'content restrictions', 'content_num_affected', 'content_num_complied')
+#		builder.extract_columns('content restrictions', 'content restrictions', 'content_num_affected', 'content_num_complied')
 
 		# Extract account preservation requests
-		builder.extract_columns('preservation requests',
-							 'preservations requested', 'preservations_num_affected', 'users / accounts preserved')
+#		builder.extract_columns('preservation requests',
+#							 'preservations requested', 'preservations_num_affected', 'users / accounts preserved')
 
 		self.df_out = builder.get_df()
 		return self.df_out

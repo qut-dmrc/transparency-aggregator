@@ -8,7 +8,7 @@ import pandas as pd
 from dateutil.parser import parse
 from datetime import datetime, date
 import logging
-from utils import c_to_date
+from utils import str_to_date
 
 class DataFrameBuilder:
 	def __init__(self, df_in, df_out, platform, platform_property, report_start, report_end):
@@ -17,8 +17,8 @@ class DataFrameBuilder:
 		self.fixed_columns = {
 			'platform': platform,
 			'property': platform_property,
-			'report_start': c_to_date(report_start),
-			'report_end': c_to_date(report_end),
+			'report_start': str_to_date(report_start),
+			'report_end': str_to_date(report_end),
 		}
 
 	def get_df(self):
