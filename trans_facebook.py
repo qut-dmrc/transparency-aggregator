@@ -79,12 +79,35 @@ class FB(TransparencyAggregator):
 	def fetch_all(self):
 		# Facebook transparency reports are in half-years, starting from 2013-H1
 		# "https://transparency.facebook.com/download/2013-H1/"
-
+		
 		start_year = 2013
 		end_year = datetime.datetime.utcnow().year
+		
+		available_urls = self._get_urls(start_year, end_year) 
+		
+		for data in available_urls:
+			url = data['url']
+			start_date = data['start_date']
+			end_date = data['end_date']
+
+			logging.info("Fetching FB transparency report from {}".format(url))
+
+			try:
+				self.read_csv(url)
+				logging.info("Processing government requests for {}".format(url))
+				self.process(start_date=start_date, end_date=end_date)
+			except urllib.error.HTTPError as e:
+				logging.error("Unable to fetch url: {}. Error: {}".format(url, e))
+		self.df_out = self.coerce_df(self.df_out)
+
+		return self.df_out
+
+	def _get_urls(self, start_year, end_year):
+		data = []
+
 		for report_year in range(start_year, end_year):
+
 			for period in ('H1', 'H2'):
-				logging.info("Fetching FB transparency report for {}-{}".format(report_year, period))
 				url = "https://transparency.facebook.com/download/{}-{}/".format(report_year, period)
 				if period == 'H1':
 					start_date = "{}-01-01 00:00:00".format(start_year)
@@ -93,18 +116,13 @@ class FB(TransparencyAggregator):
 					start_date = "{}-07-01 00:00:00".format(start_year)
 					end_date = "{}-12-31 23:59:59".format(start_year)
 
-				try:
-					self.read_csv(url)
-					logging.info("Processing government requests for {}-{}".format(report_year, period))
-					self.process(start_date=start_date, end_date=end_date)
-				except urllib.error.HTTPError as e:
-					logging.info("Unable to fetch url: {}. Error: {}".format(url, e))
-		self.df_out = self.coerce_df(self.df_out)
+				period_data = { 'url': url, 'start_date': start_date, 'end_date': end_date }
+				
+				data.append(period_data)
 
-		return self.df_out
+		return data
 
-
-def convert_percentages(row):
+def convert_percentages(row): #TODO Move to util
 	num_complied = None
 	try:
 		num_complied = float(row['total percentage of requests where some data produced'].rstrip(
@@ -117,3 +135,4 @@ def convert_percentages(row):
 		pass
 
 	return num_complied
+
