@@ -1,9 +1,12 @@
 from docopt import docopt
-from trans_facebook import FB
 from trans_writer_csv import TransparencyWriterCSV 
 import pandas as pd
 from utils import setup_logging
 import logging
+
+from trans_facebook import FB
+from trans_twitter import TransTwitter
+
 
 def main():
 		""" Fetch transparency reports for different platforms and convert to a common format
@@ -41,6 +44,9 @@ def main():
 
 		if get_from == 'facebook' or get_all:
 			df = df.append(fetch_facebook())
+
+		if get_from == 'twitter' or get_all:
+			df = df.append(fetch_twitter())
 	
 		logging.info("Finished complete run. Found {} rows total.".format(df.shape[0]))
 
@@ -52,6 +58,11 @@ def main():
 def fetch_facebook():
 		fb = FB()
 		df = fb.fetch_all()
+		return df
+
+def fetch_twitter():
+		twitter = TransTwitter()
+		df = twitter.fetch_all()
 		return df
 
 
