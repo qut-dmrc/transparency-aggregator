@@ -51,7 +51,7 @@ def main():
 		logging.info("Finished complete run. Found {} rows total.".format(df.shape[0]))
 
 		if csv_file:
-				logging.info('writing to' + csv_file)
+				logging.info('writing to ' + csv_file)
 				writer = TransparencyWriterCSV()
 				writer.write(df, csv_file)
 
