@@ -1,4 +1,4 @@
-""" Fetch and read Facebook transparency data """
+""" Fetch and read Twitter transparency data """
 import datetime
 import logging
 import urllib
@@ -54,10 +54,10 @@ class TransTwitter(TransparencyAggregator):
 		return self.df_out
 
 	def fetch_all(self):
-		# Facebook transparency reports are in half-years, starting from 2013-H1
-		# "https://transparency.facebook.com/download/2013-H1/"
+		# Twitter transparency reports are in half-years, starting from 2012-H1
+		# "https://transparency.twitter.com/content/dam/transparency-twitter/data/download-govt-information-requests/information-requests-report-jan-jun-2012.csv"
 		
-		start_year = 2013
+		start_year = 2012
 		end_year = datetime.datetime.utcnow().year
 		
 		available_urls = self.get_urls(start_year, end_year)
@@ -71,8 +71,8 @@ class TransTwitter(TransparencyAggregator):
 
 		for report_year in range(start_year, end_year + 1):
 
-			for period in ('H1', 'H2'):
-				url = "https://transparency.facebook.com/download/{}-{}/".format(report_year, period)
+			for period, start_month, end_month in [("H1", "jan", "jun"), ("H2", "jul", "dec")]:
+				url = f"https://transparency.twitter.com/content/dam/transparency-twitter/data/download-govt-information-requests/information-requests-report-{start_month}-{end_month}-{report_year}.csv"
 				if period == 'H1':
 					start_date = "{}-01-01 00:00:00".format(report_year)
 					end_date = "{}-06-30 23:59:59".format(report_year)
@@ -92,7 +92,7 @@ class TransTwitter(TransparencyAggregator):
 			start_date = data['start_date']
 			end_date = data['end_date']
 
-			logging.info("Fetching FB transparency report from {}".format(url))
+			logging.info(f"Fetching Twitter transparency report from {url}")
 
 			try:
 				df = self.read_csv(url)

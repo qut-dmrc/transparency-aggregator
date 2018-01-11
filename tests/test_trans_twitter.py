@@ -16,8 +16,6 @@ class TestTransTwitter(unittest.TestCase):
 	def tearDown(self):
 		pass
 
-
-
 	def test_read_csv_fb(self):
 		df = self.twitter.read_csv('tests/Transparency_Reports/Twitter/information-requests-report-jan-jun-2017.csv')
 		assert df.size > 0
@@ -25,18 +23,18 @@ class TestTransTwitter(unittest.TestCase):
 	def test_read_csv_from_url(self):
 		self.twitter.read_csv('https://transparency.twitter.com/content/dam/transparency-twitter/data/download-govt-information-requests/information-requests-report-jan-jun-2017.csv')
 
-	def xtest_get_urls(self):
+	def test_get_urls(self):
 		start_year = 2013
 		end_year = 2014
 		
 		available_urls = self.twitter.get_urls(start_year, end_year)
 
 		self.assertEqual(4, len(available_urls))
-		self.assertEqual('https://transparency.facebook.com/download/2013-H1/', available_urls[0]['url'])
+		self.assertEqual('https://transparency.twitter.com/content/dam/transparency-twitter/data/download-govt-information-requests/information-requests-report-jan-jun-2013.csv', available_urls[0]['url'])
 		self.assertEqual('2013-01-01 00:00:00', available_urls[0]['start_date'])
 		self.assertEqual('2013-06-30 23:59:59', available_urls[0]['end_date'])
 
-		self.assertEqual('https://transparency.facebook.com/download/2014-H2/', available_urls[3]['url'])
+		self.assertEqual('https://transparency.twitter.com/content/dam/transparency-twitter/data/download-govt-information-requests/information-requests-report-jul-dec-2014.csv', available_urls[3]['url'])
 		self.assertEqual('2014-07-01 00:00:00', available_urls[3]['start_date'])
 		self.assertEqual('2014-12-31 23:59:59', available_urls[3]['end_date'])
 
