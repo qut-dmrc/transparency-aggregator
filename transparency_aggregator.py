@@ -7,6 +7,7 @@
 import pandas as pd
 from dateutil.parser import parse
 from datetime import datetime, date
+import numpy as np
 import logging
 
 
@@ -15,7 +16,7 @@ class TransparencyAggregator:
 		self.df_out = pd.DataFrame()
 
 	def read_csv(self, filename_or_url):
-		df = pd.read_csv(filename_or_url, encoding="UTF-8")
+		df = pd.read_csv(filename_or_url, encoding="UTF-8", dtype=np.object_)  #force dtype to avoid columns changing type because sometimes they have *s in them
 		logging.debug("Found {} rows.".format(df.shape[0]))
 		return df
 

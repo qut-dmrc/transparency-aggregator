@@ -58,22 +58,20 @@ def df_fix_columns(df):
 	df.columns = df.columns.str.lower()
 
 def df_strip_char(df, col, char):
-	if df[col].dtype == np.object_:  #TODO: handle else?
-		df[col] = df[col].str.rstrip(char)
+	df[col] = df[col].str.rstrip(char)
 
 def df_convert_to_numeric(df, numeric_cols):
 	for col in numeric_cols:
 		if col not in df.columns:
 			df[col] = None
 		else:
-			if df[col].dtype == np.object_:  #TODO: handle else?
-				# replace formatting commas
-				df[col] = df[col].str.replace(',', '')
+			# replace formatting commas
+			df[col] = df[col].str.replace(',', '')
 
-				# replace ranges with the lower bound of the range
-				df[col] = df[col].str.replace(r"(\d+)( - )(\d+)", r'\1')
+			# replace ranges with the lower bound of the range
+			df[col] = df[col].str.replace(r"(\d+)( - )(\d+)", r'\1')
 
-				df[col] = pd.to_numeric(df[col], errors='raise')
+			df[col] = pd.to_numeric(df[col], errors='raise')
 
 def df_convert_from_percentage(df, pc_col, total_col, dest_col):
 		df[dest_col] = df[total_col] * df[pc_col] / 100.0
