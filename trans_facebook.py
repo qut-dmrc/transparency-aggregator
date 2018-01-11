@@ -83,8 +83,33 @@ class FB(TransparencyAggregator):
 		start_year = 2013
 		end_year = datetime.datetime.utcnow().year
 		
-		available_urls = self._get_urls(start_year, end_year) 
+		available_urls = self._get_urls(start_year, end_year)
 		
+		self.df_out = self._process_urls(available_urls)
+
+		return self.df_out
+
+	def _get_urls(self, start_year, end_year):
+		data = []
+
+		for report_year in range(start_year, end_year + 1):
+
+			for period in ('H1', 'H2'):
+				url = "https://transparency.facebook.com/download/{}-{}/".format(report_year, period)
+				if period == 'H1':
+					start_date = "{}-01-01 00:00:00".format(start_year)
+					end_date = "{}-06-30 23:59:59".format(start_year)
+				else:
+					start_date = "{}-07-01 00:00:00".format(start_year)
+					end_date = "{}-12-31 23:59:59".format(start_year)
+
+				period_data = { 'url': url, 'start_date': start_date, 'end_date': end_date }
+
+				data.append(period_data)
+
+		return data
+
+	def _process_urls(self, available_urls):
 		for data in available_urls:
 			url = data['url']
 			start_date = data['start_date']
@@ -98,29 +123,8 @@ class FB(TransparencyAggregator):
 				self.process(start_date=start_date, end_date=end_date)
 			except urllib.error.HTTPError as e:
 				logging.error("Unable to fetch url: {}. Error: {}".format(url, e))
-		self.df_out = self.coerce_df(self.df_out)
-
-		return self.df_out
-
-	def _get_urls(self, start_year, end_year):
-		data = []
-
-		for report_year in range(start_year, end_year):
-
-			for period in ('H1', 'H2'):
-				url = "https://transparency.facebook.com/download/{}-{}/".format(report_year, period)
-				if period == 'H1':
-					start_date = "{}-01-01 00:00:00".format(start_year)
-					end_date = "{}-06-30 23:59:59".format(start_year)
-				else:
-					start_date = "{}-07-01 00:00:00".format(start_year)
-					end_date = "{}-12-31 23:59:59".format(start_year)
-
-				period_data = { 'url': url, 'start_date': start_date, 'end_date': end_date }
 				
-				data.append(period_data)
-
-		return data
+		return self.coerce_df(self.df_out)
 
 def convert_percentages(row): #TODO Move to util
 	num_complied = None
