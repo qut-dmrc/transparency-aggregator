@@ -1,7 +1,7 @@
 import unittest
-from trans_writer_csv import TransparencyWriterCSV
+from writer_csv import WriterCSV
 
-class TestTransparencyWriterCSV(unittest.TestCase):
+class TestWriterCSV(unittest.TestCase):
 
     @classmethod
     def setup_class(cls):
@@ -15,7 +15,7 @@ class TestTransparencyWriterCSV(unittest.TestCase):
         pass    
 
     def test_abc(self):
-        writer = TransparencyWriterCSV()
+        writer = WriterCSV()
 
 if __name__ == '__main__':
     unittest.main()

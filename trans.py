@@ -1,5 +1,5 @@
 from docopt import docopt
-from trans_writer_csv import TransparencyWriterCSV 
+from writer_csv import WriterCSV 
 import pandas as pd
 from utils import setup_logging
 import logging
@@ -52,7 +52,7 @@ def main():
 
 		if csv_file:
 				logging.info('writing to' + csv_file)
-				writer = TransparencyWriterCSV()
+				writer = WriterCSV()
 				writer.write(df, csv_file)
 
 def fetch_facebook():
