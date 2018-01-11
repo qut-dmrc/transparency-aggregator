@@ -83,13 +83,13 @@ class FB(TransparencyAggregator):
 		start_year = 2013
 		end_year = datetime.datetime.utcnow().year
 		
-		available_urls = self._get_urls(start_year, end_year)
+		available_urls = self.get_urls(start_year, end_year)
 		
-		self.df_out = self._process_urls(available_urls)
+		self.df_out = self.process_urls(available_urls)
 
 		return self.df_out
 
-	def _get_urls(self, start_year, end_year):
+	def get_urls(self, start_year, end_year):
 		data = []
 
 		for report_year in range(start_year, end_year + 1):
@@ -97,11 +97,11 @@ class FB(TransparencyAggregator):
 			for period in ('H1', 'H2'):
 				url = "https://transparency.facebook.com/download/{}-{}/".format(report_year, period)
 				if period == 'H1':
-					start_date = "{}-01-01 00:00:00".format(start_year)
-					end_date = "{}-06-30 23:59:59".format(start_year)
+					start_date = "{}-01-01 00:00:00".format(report_year)
+					end_date = "{}-06-30 23:59:59".format(report_year)
 				else:
-					start_date = "{}-07-01 00:00:00".format(start_year)
-					end_date = "{}-12-31 23:59:59".format(start_year)
+					start_date = "{}-07-01 00:00:00".format(report_year)
+					end_date = "{}-12-31 23:59:59".format(report_year)
 
 				period_data = { 'url': url, 'start_date': start_date, 'end_date': end_date }
 
@@ -109,7 +109,7 @@ class FB(TransparencyAggregator):
 
 		return data
 
-	def _process_urls(self, available_urls):
+	def process_urls(self, available_urls):
 		for data in available_urls:
 			url = data['url']
 			start_date = data['start_date']
@@ -121,7 +121,7 @@ class FB(TransparencyAggregator):
 				self.read_csv(url)
 				logging.info("Processing government requests for {}".format(url))
 				self.process(start_date=start_date, end_date=end_date)
-			except urllib.error.HTTPError as e:
+			except urllib.error.URLError as e:
 				logging.error("Unable to fetch url: {}. Error: {}".format(url, e))
 				
 		return self.coerce_df(self.df_out)
