@@ -12,19 +12,16 @@ class TestFacebook(unittest.TestCase):
 
     def setUp(self):
         self.fb = FB()
-        self.fb.read_csv('tests/Transparency_Reports/Facebook/Facebook-Government-Report-2013-H1.csv')
 
     def tearDown(self):
         pass
 
     def test_read_csv_fb(self):
-        assert self.fb.df.size > 0
+        df = self.fb.read_csv('tests/Transparency_Reports/Facebook/Facebook-Government-Report-2013-H1.csv')
+        assert df.size > 0
 
     def test_read_csv_from_url(self):
         self.fb.read_csv('https://transparency.facebook.com/download/2013-H1/')
-
-    def test_process_fb(self):
-        assert self.fb.process('2013-01-01', '2013-06-30 23:59:59').size > 0
 
     def test_get_urls(self):
         start_year = 2013

@@ -10,10 +10,10 @@ from data_frame_builder import DataFrameBuilder
 
 class FB(TransparencyAggregator):
 
-	def process(self, start_date, end_date):
+	def process(self, df, start_date, end_date):
 
 		# Rename the columns to a standard format, and account for changes over the years
-		self.df.columns = self.df.columns.str.lower()
+		df.columns = df.columns.str.lower()
 
 		col_map = {
 			'requests for user data': 'total requests for user data',
@@ -21,13 +21,13 @@ class FB(TransparencyAggregator):
 			'percentage of requests where some data produced': 'total percentage of requests where some data produced',
 		}
 
-		self.df.rename(columns=col_map, inplace=True)
+		df.rename(columns=col_map, inplace=True)
 
 		# Convert percentages to numbers
-		self.df['total percentage of requests where some data produced'] = self.df[
+		df['total percentage of requests where some data produced'] = df[
 			'total percentage of requests where some data produced'].str.rstrip('%')
 
-		#		self.df['number of requests where some data produced'] = self.df.apply(convert_percentages, axis=1)
+		#		df['number of requests where some data produced'] = df.apply(convert_percentages, axis=1)
 
 		# convert strings to numbers
 		numeric_cols = ['total requests for user data', 'total user accounts referenced',
@@ -36,29 +36,29 @@ class FB(TransparencyAggregator):
 						'preservations_num_affected', 'users / accounts preserved']
 
 		for col in numeric_cols:
-			if col not in self.df.columns:
-				self.df[col] = None
+			if col not in df.columns:
+				df[col] = None
 			else:
-				if self.df[col].dtype == np.object_:
+				if df[col].dtype == np.object_:
 					# replace formatting commas
-					self.df[col] = self.df[col].str.replace(',', '')
+					df[col] = df[col].str.replace(',', '')
 
 					# replace ranges with the lower bound of the range
-					self.df[col] = self.df[col].str.replace(r"(\d+)( - )(\d+)", r'\1')
+					df[col] = df[col].str.replace(r"(\d+)( - )(\d+)", r'\1')
 
-					self.df[col] = pd.to_numeric(self.df[col], errors='raise')
+					df[col] = pd.to_numeric(df[col], errors='raise')
 
-		self.df['number of requests where some data produced'] = self.df[
+		df['number of requests where some data produced'] = df[
 																	 'total percentage of requests where some data produced'] * \
-																 self.df['total requests for user data'] / 100.0
-		self.df['number of requests where some data produced'] = self.df[
+																 df['total requests for user data'] / 100.0
+		df['number of requests where some data produced'] = df[
 			'number of requests where some data produced'].round()
 		# this doesn't seem to work: .astype(int, errors='ignore')
 		
-		self.df['preservations_num_affected'] = self.df[
+		df['preservations_num_affected'] = df[
 			'preservations requested']  # Assume 1:1 mapping on requests:accounts
 
-		builder = DataFrameBuilder(df_in = self.df, df_out = self.df_out, platform = 'Facebook', platform_property = 'Facebook', 
+		builder = DataFrameBuilder(df_in = df, df_out = self.df_out, platform = 'Facebook', platform_property = 'Facebook', 
 									report_start = start_date, report_end = end_date)
 
 		# Extract requests for user data from governments:
@@ -118,9 +118,9 @@ class FB(TransparencyAggregator):
 			logging.info("Fetching FB transparency report from {}".format(url))
 
 			try:
-				self.read_csv(url)
+				df = self.read_csv(url)
 				logging.info("Processing government requests for {}".format(url))
-				self.process(start_date=start_date, end_date=end_date)
+				self.process(df, start_date=start_date, end_date=end_date)
 			except urllib.error.URLError as e:
 				logging.error("Unable to fetch url: {}. Error: {}".format(url, e))
 				
