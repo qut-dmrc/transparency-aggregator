@@ -6,6 +6,7 @@ import logging
 
 from trans_facebook import FB
 from trans_twitter import TransTwitter
+from trans_google import TransGoogle
 
 
 def main():
@@ -48,6 +49,10 @@ def main():
 		if get_from == 'twitter' or get_all:
 			df = df.append(fetch_twitter())
 	
+		if get_from == 'google' or get_all:
+			df = df.append(fetch_google())
+	
+
 		logging.info("Finished complete run. Found {} rows total.".format(df.shape[0]))
 
 		if csv_file:
@@ -63,6 +68,11 @@ def fetch_facebook():
 def fetch_twitter():
 		twitter = TransTwitter()
 		df = twitter.fetch_all()
+		return df
+
+def fetch_google():
+		google = TransGoogle()
+		df = google.fetch_all()
 		return df
 
 

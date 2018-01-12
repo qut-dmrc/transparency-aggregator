@@ -21,6 +21,8 @@ class DataFrameBuilder:
 			'report_end': str_to_date(report_end),
 		}
 
+		self.fixed_columns = { k: v for k, v in self.fixed_columns.items() if v }
+
 	def get_df(self):
 		return self.df_out
 

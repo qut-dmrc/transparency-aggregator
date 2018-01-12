@@ -7,7 +7,10 @@ import pandas as pd
 
 def str_to_date(date_in):
 	""" Simple method to convert a string to a date. If passed a date, leave as is. """
+	## TODO Make this locale independant
 	if isinstance(date_in, str):
+		if date_in == '':
+			return None
 		return parse(date_in)
 	elif isinstance(date_in, (datetime, date)):
 		return date_in

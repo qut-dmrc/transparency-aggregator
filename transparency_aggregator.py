@@ -52,6 +52,7 @@ class TransparencyAggregator:
 				src_file = self.downloader.download(url, 'source')
 				df = self.read_csv(src_file)
 				#logging.info("Processing government requests for {}".format(url))
+
 				self.process(df, start_date=start_date, end_date=end_date)
 			except urllib.error.URLError as e:
 				logging.error("Unable to fetch url: {}. Error: {}".format(url, e))
