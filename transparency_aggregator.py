@@ -10,11 +10,13 @@ from datetime import datetime, date
 import numpy as np
 import logging
 import urllib
+from downloader import Downloader
 
 
 class TransparencyAggregator:
 	def __init__(self):
 		self.df_out = pd.DataFrame()
+		self.downloader = Downloader()
 
 	def read_csv(self, filename_or_url):
 		df = pd.read_csv(filename_or_url, encoding="UTF-8", dtype=np.object_)  #force dtype to avoid columns changing type because sometimes they have *s in them
@@ -45,11 +47,11 @@ class TransparencyAggregator:
 			start_date = data['start_date']
 			end_date = data['end_date']
 
-			logging.info("Fetching transparency report from {}".format(url))
 
 			try:
-				df = self.read_csv(url)
-				logging.info("Processing government requests for {}".format(url))
+				src_file = self.downloader.download(url, 'source')
+				df = self.read_csv(src_file)
+				#logging.info("Processing government requests for {}".format(url))
 				self.process(df, start_date=start_date, end_date=end_date)
 			except urllib.error.URLError as e:
 				logging.error("Unable to fetch url: {}. Error: {}".format(url, e))
