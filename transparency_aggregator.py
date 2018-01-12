@@ -9,6 +9,7 @@ from dateutil.parser import parse
 from datetime import datetime, date
 import numpy as np
 import logging
+import urllib
 
 
 class TransparencyAggregator:
@@ -38,6 +39,22 @@ class TransparencyAggregator:
 
 		return df
 
+	def process_urls(self, available_urls):
+		for data in available_urls:
+			url = data['url']
+			start_date = data['start_date']
+			end_date = data['end_date']
+
+			logging.info("Fetching transparency report from {}".format(url))
+
+			try:
+				df = self.read_csv(url)
+				logging.info("Processing government requests for {}".format(url))
+				self.process(df, start_date=start_date, end_date=end_date)
+			except urllib.error.URLError as e:
+				logging.error("Unable to fetch url: {}. Error: {}".format(url, e))
+				
+		return self.coerce_df(self.df_out)
 	
 
 

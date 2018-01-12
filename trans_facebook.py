@@ -1,7 +1,6 @@
 """ Fetch and read Facebook transparency data """
 import datetime
 import logging
-import urllib
 import numpy as np
 import pandas as pd
 import utils
@@ -99,19 +98,3 @@ class FB(TransparencyAggregator):
 
 		return data
 
-	def process_urls(self, available_urls):
-		for data in available_urls:
-			url = data['url']
-			start_date = data['start_date']
-			end_date = data['end_date']
-
-			logging.info("Fetching FB transparency report from {}".format(url))
-
-			try:
-				df = self.read_csv(url)
-				logging.info("Processing government requests for {}".format(url))
-				self.process(df, start_date=start_date, end_date=end_date)
-			except urllib.error.URLError as e:
-				logging.error("Unable to fetch url: {}. Error: {}".format(url, e))
-				
-		return self.coerce_df(self.df_out)
