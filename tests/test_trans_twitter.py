@@ -16,13 +16,6 @@ class TestTransTwitter(unittest.TestCase):
 	def tearDown(self):
 		pass
 
-	def test_read_csv_fb(self):
-		df = self.twitter.read_csv('tests/Transparency_Reports/Twitter/information-requests-report-jan-jun-2017.csv')
-		assert df.size > 0
-
-	def test_read_csv_from_url(self):
-		self.twitter.read_csv('https://transparency.twitter.com/content/dam/transparency-twitter/data/download-govt-information-requests/information-requests-report-jan-jun-2017.csv')
-
 	def test_get_urls(self):
 		start_year = 2013
 		end_year = 2014
@@ -39,7 +32,7 @@ class TestTransTwitter(unittest.TestCase):
 		self.assertEqual('2014-12-31 23:59:59', available_urls[3]['end_date'])
 
 	def test_process_urls(self):
-		available_urls = [ { 'url': 'tests/Transparency_Reports/Twitter/information-requests-report-jan-jun-2017.csv', 'start_date': '2017-01-01 00:00:00', 'end_date': '2017-06-30 23:59:59'} ]
+		available_urls = [ { 'url': 'https://transparency.twitter.com/content/dam/transparency-twitter/data/download-govt-information-requests/information-requests-report-jan-jun-2017.csv', 'start_date': '2017-01-01 00:00:00', 'end_date': '2017-06-30 23:59:59'} ]
 		df_out = self.twitter.process_urls(available_urls)
 		self.assertEqual('Australia', df_out['country'][2])
 		self.assertEqual(14, df_out['num_requests'][2])
