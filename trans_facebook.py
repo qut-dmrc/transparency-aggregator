@@ -51,15 +51,15 @@ class FB(TransparencyAggregator):
 									report_start = start_date, report_end = end_date)
 
 		# Extract requests for user data from governments:
-		builder.extract_columns('requests for user data',
+		builder.extract_columns('requests for user data', 'facebook other',
 								'total requests for user data', 'total user accounts referenced',
 								'number of requests where some data produced')
 
 		# Extract content restriction requests:
-		builder.extract_columns('content restrictions', 'content restrictions', 'content_num_affected', 'content_num_complied')
+		builder.extract_columns('content restrictions', 'all', 'content restrictions', 'content_num_affected', 'content_num_complied')
 
 		# Extract account preservation requests
-		builder.extract_columns('preservation requests',
+		builder.extract_columns('requests for user data', 'preservation requests',
 							 'preservations requested', 'preservations_num_affected', 'users / accounts preserved')
 
 		self.df_out = builder.get_df()

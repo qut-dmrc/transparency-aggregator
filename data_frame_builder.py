@@ -24,7 +24,7 @@ class DataFrameBuilder:
 	def get_df(self):
 		return self.df_out
 
-	def extract_columns(self, request_type, num_requests_col,
+	def extract_columns(self, request_type, request_subtype, num_requests_col,
 							num_affected_col, num_complied_col, jurisdiction_col='country', agency_col='agency',
 							reason_col='reason'):
 		""" Take a dataframe with the columns num_requests_col and num_complied_col
@@ -38,6 +38,7 @@ class DataFrameBuilder:
 			df_out[key] = value
 			
 		df_out['request_type'] = request_type
+		df_out['request_subtype'] = request_subtype
 
 		col_map = {num_complied_col: 'num_complied',
 				   num_requests_col: 'num_requests',

@@ -30,7 +30,7 @@ class TransparencyAggregator:
 	def coerce_df(df):
 		""" Ensure the final dataframe contains all and only the columns we need. """
 
-		columns = ['report_start', 'report_end', 'platform', 'property', 'country', 'request_type', 'num_requests',
+		columns = ['report_start', 'report_end', 'platform', 'property', 'country', 'request_type', 'request_subtype', 'num_requests',
 				   'num_complied', 'num_affected', 'agency', 'reason']
 
 		for col in columns:
