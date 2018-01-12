@@ -38,7 +38,7 @@ class TransTwitter(TransparencyAggregator):
 		utils.df_convert_from_percentage(df, 'percentage where some information produced', 'account information requests', 'number where some information produced')
 
 		# Extract requests for user data from governments:
-		builder.extract_columns('requests for user data',
+		builder.extract_columns('requests for user data', 'all',
 								'account information requests', 'accounts specified',
 								'number where some information produced')
 

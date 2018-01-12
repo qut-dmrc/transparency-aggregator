@@ -35,19 +35,21 @@ class TestDataFrameBuilder(unittest.TestCase):
 		TransparencyAggregator.coerce_df(df_out)
 
 		cut = DataFrameBuilder(df_in, df_out, 'platform', 'platform_property', '2001-01-01', '2001-06-30')
-		cut.extract_columns('request_type', num_requests_col = 'number requests', num_affected_col = 'number affected', num_complied_col = 'number complied')
-		cut.extract_columns('another request_type', num_requests_col = 'another number requests', num_affected_col = 'another number affected', num_complied_col = 'another number complied')
+		cut.extract_columns('request_type', request_subtype = 'all', num_requests_col = 'number requests', num_affected_col = 'number affected', num_complied_col = 'number complied')
+		cut.extract_columns('another request_type', request_subtype = 'subpoena', num_requests_col = 'another number requests', num_affected_col = 'another number affected', num_complied_col = 'another number complied')
 		new_df_out = cut.get_df()
 
 		self.assertEqual(6, len(new_df_out.index))
 		self.assertEqual('aust', new_df_out['country'][0])
 		self.assertEqual('request_type', new_df_out['request_type'][0])
+		self.assertEqual('all', new_df_out['request_subtype'][0])
 		self.assertEqual(1, new_df_out['num_requests'][0])
 		self.assertEqual(4, new_df_out['num_affected'][0])
 		self.assertEqual(7, new_df_out['num_complied'][0])
 
 		self.assertEqual('aust', new_df_out['country'][3])
 		self.assertEqual('another request_type', new_df_out['request_type'][3])
+		self.assertEqual('subpoena', new_df_out['request_subtype'][3])
 		self.assertEqual(11, new_df_out['num_requests'][3])
 		self.assertEqual(14, new_df_out['num_affected'][3])
 		self.assertEqual(17, new_df_out['num_complied'][3])
