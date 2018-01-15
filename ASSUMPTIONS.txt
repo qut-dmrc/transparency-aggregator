@@ -1,0 +1,3 @@
+google:
+	CSV is in zip
+  periods are 6 months (only end of period is provided)
