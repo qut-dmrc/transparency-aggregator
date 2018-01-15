@@ -12,12 +12,12 @@ import os.path
 import logging
 from action import Action
 
-class Mutator:
+class Mutator(Action):
 	def mutate(self, df):
 		"""
 		call mutate, but override in_place_mutate
 		"""
-		return self.in_place_mutate(df.Copy())
+		return self.in_place_mutate(df.copy())
 
 	def in_place_mutate(self, df):
 		"""

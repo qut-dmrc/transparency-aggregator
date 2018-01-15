@@ -13,6 +13,6 @@ import os.path
 import logging
 from action import Action
 
-class Checker:
+class Checker(Action):
 	def check(self, df):
 		raise NotImplementedError()
