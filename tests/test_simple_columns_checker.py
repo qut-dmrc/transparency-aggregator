@@ -6,11 +6,11 @@ import pandas as pd
 import numpy as np
 
 import utils
-from simple_column_checker import SimpleColumnChecker
+from simple_columns_checker import SimpleColumnsChecker
 
-class TestSimpleColumnChecker(unittest.TestCase):
+class TestSimpleColumnsChecker(unittest.TestCase):
 	def setUp(self):
-		self.checker = SimpleColumnChecker({'expected_source_columns': ['apple', 'banana', 'cherry']})
+		self.checker = SimpleColumnsChecker({'expected_source_columns': ['apple', 'banana', 'cherry']})
 
 	def sample_df(self):
 		csv = \

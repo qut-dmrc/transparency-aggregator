@@ -10,7 +10,6 @@ import urllib
 from downloader import Downloader
 
 from csv_reader import CSVReader
-from simple_column_checker import SimpleColumnChecker
 import utils
 from mutator import Mutator
 

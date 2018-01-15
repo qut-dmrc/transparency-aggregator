@@ -10,7 +10,7 @@ import utils
 import json
 from checker import Checker
 
-class SimpleColumnChecker(Checker):
+class SimpleColumnsChecker(Checker):
 
 	def check(self, df):
 		expected_cols = set(self.config['expected_source_columns'])

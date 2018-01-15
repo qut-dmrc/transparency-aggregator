@@ -14,7 +14,7 @@ import urllib
 from downloader import Downloader
 
 from csv_reader import CSVReader
-from simple_column_checker import SimpleColumnChecker
+from simple_columns_checker import SimpleColumnsChecker
 from desired_columns_mutator import DesiredColumnsMutator
 import utils
 
@@ -30,7 +30,7 @@ class TransparencyAggregator:
 
 
 	def process_with_check(self, df, start_date, end_date):
-		checker = SimpleColumnChecker({'expected_source_columns': self.expected_source_columns()})
+		checker = SimpleColumnsChecker({'expected_source_columns': self.expected_source_columns()})
 		checker.check(df)
 		return self.process(df, start_date, end_date)
 
