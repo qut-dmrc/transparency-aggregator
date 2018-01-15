@@ -12,16 +12,18 @@ import logging
 import urllib
 from downloader import Downloader
 
+from csv_reader import CSVReader
 
 class TransparencyAggregator:
 	def __init__(self):
 		self.df_out = pd.DataFrame()
 		self.downloader = Downloader()
 
-	def read_csv(self, filename_or_url):
-		df = pd.read_csv(filename_or_url, encoding="UTF-8", dtype=np.object_)  #force dtype to avoid columns changing type because sometimes they have *s in them
-		logging.debug("Found {} rows.".format(df.shape[0]))
-		return df
+	def read_csv(self, filename):
+		reader = CSVReader()
+		return reader.read(filename)
+		
+
 
 	def process(self, start_date, end_date):
 		return None
