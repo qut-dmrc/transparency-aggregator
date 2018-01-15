@@ -14,6 +14,7 @@ import urllib
 from downloader import Downloader
 
 from csv_reader import CSVReader
+from simple_column_checker import SimpleColumnChecker
 import utils
 
 class TransparencyAggregator:
@@ -28,14 +29,8 @@ class TransparencyAggregator:
 
 
 	def process_with_check(self, df, start_date, end_date):
-		expected_cols = set(self.expected_source_columns())
-		actual_cols = set(df.columns.values)
-		extra_cols = list(actual_cols - expected_cols)
-		missing_cols = list(expected_cols - actual_cols)
-
-		utils.check_assumption(len(extra_cols) == 0, "Unexpected extra columns: " + json.dumps(extra_cols))
-		utils.check_assumption(len(missing_cols) == 0, "Unexpected missing columns: " + json.dumps(missing_cols))
-
+		checker = SimpleColumnChecker({'expected_source_columns': self.expected_source_columns()})
+		checker.check(df)
 		return self.process(df, start_date, end_date)
 
 	def process(self, start_date, end_date):
