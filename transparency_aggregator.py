@@ -4,6 +4,7 @@
 	Most of these methods will need to be overwritten to handle specific reporting formats.
 	 
 """
+import json
 import pandas as pd
 from dateutil.parser import parse
 from datetime import datetime, date
@@ -13,6 +14,7 @@ import urllib
 from downloader import Downloader
 
 from csv_reader import CSVReader
+import utils
 
 class TransparencyAggregator:
 	def __init__(self):
@@ -25,8 +27,22 @@ class TransparencyAggregator:
 		
 
 
+	def process_with_check(self, df, start_date, end_date):
+		expected_cols = set(self.expected_source_columns())
+		actual_cols = set(df.columns.values)
+		extra_cols = list(actual_cols - expected_cols)
+		missing_cols = list(expected_cols - actual_cols)
+
+		utils.check_assumption(len(extra_cols) == 0, "Unexpected extra columns: " + json.dumps(extra_cols))
+		utils.check_assumption(len(missing_cols) == 0, "Unexpected missing columns: " + json.dumps(missing_cols))
+
+		return self.process(df, start_date, end_date)
+
 	def process(self, start_date, end_date):
-		return None
+		raise NotImplementedError()
+
+	def expected_source_columns(self):
+		raise NotImplementedError()
 
 	@staticmethod
 	def coerce_df(df):
@@ -55,7 +71,7 @@ class TransparencyAggregator:
 				df = self.read_csv(src_file)
 				#logging.info("Processing government requests for {}".format(url))
 				# TODO Assert column name changes
-				self.process(df, start_date=start_date, end_date=end_date)
+				self.process_with_check(df, start_date=start_date, end_date=end_date)
 			except urllib.error.URLError as e:
 				logging.error("Unable to fetch url: {}. Error: {}".format(url, e))
 				

@@ -1,9 +1,11 @@
-from trans_google import TransGoogle
 import unittest
 import logging
 from io import StringIO
 import pandas as pd
 import numpy as np
+
+import utils
+from trans_google import TransGoogle
 
 class TestTransGoogle(unittest.TestCase):
 		# self.google = None
@@ -19,7 +21,7 @@ class TestTransGoogle(unittest.TestCase):
 	def tearDown(self):
 		pass
 
-	def test_get_urls(self):
+	def test_get_urls_should_return_correct_config(self):
 		available_urls = self.google.get_urls()
 
 		self.assertEqual(1, len(available_urls))
@@ -27,7 +29,7 @@ class TestTransGoogle(unittest.TestCase):
 		self.assertEqual('', available_urls[0]['start_date'])
 		self.assertEqual('', available_urls[0]['end_date'])
 
-	def test_process_urls(self):
+	def test_process_urls_should_load_data(self):
 		available_urls = [ { 'url': 'https://storage.googleapis.com/transparencyreport/google-user-data-requests.zip', 'start_date': '', 'end_date': ''} ]
 		
 		df_out = self.google.process_urls(available_urls)
@@ -48,11 +50,29 @@ Period Ending,Country,CLDR Territory Code,Legal Process,User Data Requests,Perce
 		df = pd.read_csv(StringIO(csv), encoding="UTF-8", dtype=np.object_)	
 		return df
 
-	def test_process(self):
+	def test_process_with_check_should_load_data(self):
 		df = self.sample_df()
-		df_out = self.google.process(df, '', '')
+		df_out = self.google.process_with_check(df, '', '')
 		self.assertEqual('Australia', df_out['country'][1])
 		self.assertEqual(155, df_out['num_requests'][1])
+
+	def test_process_with_check_extra_column_should_cause_assumption_error(self):
+		df = self.sample_df()
+		df['extra col'] = 1
+		with self.assertRaises(utils.AssumptionError) as context:
+			with self.assertLogs(level="ERROR") as logger:
+				df_out = self.google.process_with_check(df, '', '')
+		
+		self.assertIn('Unexpected extra columns: ["extra col"]', str(context.exception))
+
+	def test_process_with_check_missing_columns_should_cause_assumption_error(self):
+		df = self.sample_df()
+		df.drop('Period Ending', 1, inplace=True)
+		with self.assertRaises(utils.AssumptionError) as context:
+			with self.assertLogs(level="ERROR") as logger:
+				df_out = self.google.process_with_check(df, '', '')
+		
+		self.assertIn('Unexpected missing columns: ["Period Ending"]', str(context.exception))
 
 # self.process(df, start_date=start_date, end_date=end_date)
 if __name__ == '__main__':
