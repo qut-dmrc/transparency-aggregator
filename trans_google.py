@@ -67,6 +67,9 @@ class TransGoogle(TransparencyAggregator):
 
 		return self.df_out
 
+	def expected_source_columns(self):
+		return ['CLDR Territory Code', 'Users/Accounts Specified', 'Country', 'Legal Process', 'Percentage of requests where some data produced', 'Period Ending', 'User Data Requests']
+
 	def get_urls(self):
 		data = []
 
