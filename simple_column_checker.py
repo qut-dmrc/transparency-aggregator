@@ -8,10 +8,9 @@ import os.path
 import logging
 import utils
 import json
+from checker import Checker
 
-class SimpleColumnChecker:
-	def __init__(self, config):
-		self.config = config
+class SimpleColumnChecker(Checker):
 
 	def check(self, df):
 		expected_cols = set(self.config['expected_source_columns'])
