@@ -54,6 +54,7 @@ class TransGoogle(TransparencyAggregator):
 
 		for report_start in self.df_out['report_start']:
 			utils.check_assumption(report_start.day == 1, "Report Start date should be the first of the month") 
+			utils.check_assumption(report_start.month in [1, 7], "Report Start month should be January or July") 
 		return self.df_out
 
 	def fetch_all(self):
