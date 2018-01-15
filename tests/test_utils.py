@@ -54,11 +54,13 @@ class TestUtils(unittest.TestCase):
 			mock_ret.assert_not_called()
 			
 	def test_check_assumption_failed(self):
-		with self.assertLogs(level="ERROR") as logger:
-			utils.check_assumption(False, "Value should be true")
+		with self.assertRaises(utils.AssumptionError) as context:
+			with self.assertLogs(level="ERROR") as logger:
+				utils.check_assumption(False, "Value should be true")
 
-			self.assertEqual(1, len(logger.output))
-			self.assertIn('ERROR:root:Assumption failed: Value should be true', logger.output[0])
+				self.assertEqual(1, len(logger.output))
+				self.assertIn('ERROR:root:Assumption failed: Value should be true', logger.output[0])
+		self.assertTrue('Value should be true' in str(context.exception))
 
 	def test_df_convert_from_percentage(self):
 		pass

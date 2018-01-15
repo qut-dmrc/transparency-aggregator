@@ -5,11 +5,15 @@ from datetime import datetime, date
 import numpy as np
 import pandas as pd
 
+class AssumptionError(Exception):
+	pass
+
 def check_assumption(assumption, assumption_description):
 	if assumption:
 		pass
 	else:
 		logging.error(f'Assumption failed: {assumption_description}')
+		raise AssumptionError(assumption_description)
 
 def str_to_date(date_in):
 	""" Simple method to convert a string to a date. If passed a date, leave as is. """
