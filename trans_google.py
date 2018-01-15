@@ -49,7 +49,11 @@ class TransGoogle(TransparencyAggregator):
 		
 		self.df_out = builder.get_df()
 		self.df_out['report_end'] = df['period ending'].apply(utils.str_to_date)
-		self.df_out['report_start'] = (self.df_out['report_end'] - datetime.timedelta(days=6*30-10)).apply(lambda x: x.replace(day=1))
+
+		self.df_out['report_start'] = self.df_out['report_end'].apply(lambda report_end: (report_end + pd.DateOffset(days=1) - pd.DateOffset(months=6)))
+
+		for report_start in self.df_out['report_start']:
+			utils.check_assumption(report_start.day == 1, "Report Start date should be the first of the month") 
 		return self.df_out
 
 	def fetch_all(self):

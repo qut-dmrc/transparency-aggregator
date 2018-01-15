@@ -9,6 +9,7 @@ import numbers
 import utils
 
 import unittest
+import unittest.mock as mock
 
 class TestUtils(unittest.TestCase):
 
@@ -37,20 +38,27 @@ class TestUtils(unittest.TestCase):
 		
 		self.assertEqual(['1', '2', '3'], df['a'].as_matrix().tolist())
 
-	def df_convert_to_numeric(self):
+	def test_df_convert_to_numeric(self):
 		d = {
 			'a' : pd.Series(['11', '2', '3'], index=['a', 'b', 'c']),
-			'b' : pd.Series([4, 5, 6], index=['a', 'b', 'c']),
+			'b' : pd.Series(['4', '5', '6'], index=['a', 'b', 'c']),
 		}
 		df = pd.DataFrame(d)
 		utils.df_convert_to_numeric(df, ['a', 'b'])
 		
 		self.assertTrue(isinstance(df['a'][0], numbers.Number))
-		
+	
+	def test_check_assumption(self):
+		with mock.patch('utils.logging.error') as mock_ret:
+			utils.check_assumption(True, "Value should be true")
+			mock_ret.assert_not_called()
+			
+	def test_check_assumption_failed(self):
+		with self.assertLogs(level="ERROR") as logger:
+			utils.check_assumption(False, "Value should be true")
 
-
-
-
+			self.assertEqual(1, len(logger.output))
+			self.assertIn('ERROR:root:Assumption failed: Value should be true', logger.output[0])
 
 	def test_df_convert_from_percentage(self):
 		pass

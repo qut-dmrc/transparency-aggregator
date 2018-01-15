@@ -26,11 +26,11 @@ class TestTransGoogle(unittest.TestCase):
 
 	def test_process_urls(self):
 		available_urls = [ { 'url': 'https://storage.googleapis.com/transparencyreport/google-user-data-requests.zip', 'start_date': '', 'end_date': ''} ]
+		
 		df_out = self.google.process_urls(available_urls)
-		self.assertEqual('Australia', df_out['country'][2])
-		self.assertEqual(14, df_out['num_requests'][2])
-		self.assertEqual(6, df_out['num_complied'][2])
-		self.assertEqual(20, df_out['num_affected'][2])
+		self.assertEqual('Brazil', df_out['country'][3])
+		self.assertEqual(3663, df_out['num_requests'][3])
+		#TODO Test from fixed data
 
 if __name__ == '__main__':
 	unittest.main()
