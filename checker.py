@@ -11,10 +11,8 @@ import urllib
 import urllib.request
 import os.path
 import logging
+from action import Action
 
 class Checker:
-	def __init__(self, config):
-		self.config = config
-
 	def check(self, df):
 		raise NotImplementedError()

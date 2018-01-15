@@ -15,6 +15,7 @@ from downloader import Downloader
 
 from csv_reader import CSVReader
 from simple_column_checker import SimpleColumnChecker
+from desired_column_mutator import DesiredColumnMutator
 import utils
 
 class TransparencyAggregator:
@@ -42,17 +43,8 @@ class TransparencyAggregator:
 	@staticmethod
 	def coerce_df(df):
 		""" Ensure the final dataframe contains all and only the columns we need. """
-
-		columns = ['report_start', 'report_end', 'platform', 'property', 'country', 'request_type', 'request_subtype', 'num_requests',
-				   'num_complied', 'num_affected', 'agency', 'reason']
-
-		for col in columns:
-			if col not in df.columns:
-				df[col] = None
-
-		df = df[columns]
-
-		return df
+		mutator = DesiredColumnMutator({'desired_columns': ['report_start', 'report_end', 'platform', 'property', 'country', 'request_type', 'request_subtype', 'num_requests', 'num_complied', 'num_affected', 'agency', 'reason']})
+		return mutator.mutate(df)
 
 	def process_urls(self, available_urls):
 		for data in available_urls:
