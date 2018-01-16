@@ -72,3 +72,13 @@ class TestMultiColumnsChecker(unittest.TestCase):
                 df_out = self.checker.check(df)
 
         self.assertIn('Unexpected missing columns: ["banana"]', str(context.exception))
+
+    def test_check_missing_and_extra_columns_should_cause_assumption_error(self):
+        df = self.sample_df()
+        df.drop('banana', 1, inplace=True)
+        df['extra col'] = 1
+        with self.assertRaises(utils.AssumptionError) as context:
+            with self.assertLogs(level="ERROR") as logger:
+                df_out = self.checker.check(df)
+
+        self.assertIn('Unexpected missing columns (["banana"]) and extra columns (["extra col"])', str(context.exception))
