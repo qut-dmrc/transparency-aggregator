@@ -23,8 +23,8 @@ Options:
   -l --nolog    Don't save log to file -- for debugging only.
   -o FILE, --output=FILE     Save results to FILE in CSV format.
   --version  Show version.
-  --get-all     Fetch all available transparency reports
-  --get=SOURCE  Fetch data from SOURCE (e.g. facebook)
+  -a --get-all     Fetch all available transparency reports
+  -s --get=SOURCE  Fetch data from SOURCE (e.g. facebook)
 
     """
 
