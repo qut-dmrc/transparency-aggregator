@@ -47,9 +47,9 @@ class TestTransGoogle(unittest.TestCase):
         csv = \
             """
             Period Ending,Country,CLDR Territory Code,Legal Process,User Data Requests,Percentage of requests where some data produced,Users/Accounts Specified
-            31/12/09,Argentina,AR,All,98,,
-            31/12/09,Australia,AU,All,155,,
-            31/12/09,Belgium,BE,All,67,,
+            2009-12-31,Argentina,AR,All,98,,
+            2009-12-31,Australia,AU,All,155,,
+            2009-12-31,Belgium,BE,All,67,,
             """
 
         df = pd.read_csv(StringIO(textwrap.dedent(csv)), encoding="UTF-8", dtype=np.object_)

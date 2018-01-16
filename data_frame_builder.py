@@ -14,8 +14,8 @@ class DataFrameBuilder:
         self.fixed_columns = {
             'platform': platform,
             'property': platform_property,
-            'report_start': str_to_date(report_start),
-            'report_end': str_to_date(report_end),
+            'report_start': str_to_date(report_start, "%Y-%m-%d %H:%M:%S"),
+            'report_end': str_to_date(report_end, "%Y-%m-%d %H:%M:%S"),
         }
 
         self.fixed_columns = {k: v for k, v in self.fixed_columns.items() if v}

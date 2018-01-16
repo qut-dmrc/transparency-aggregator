@@ -9,8 +9,17 @@ import utils
 
 class TestUtils(unittest.TestCase):
 
-    def test_str_to_date(self):
-        pass  # TODO
+    def test_str_to_date_with_format_parses_date(self):
+        got = utils.str_to_date('01/02/2000', "%d/%m/%Y")
+        self.assertEqual(1, got.day)
+        self.assertEqual(2, got.month)
+        self.assertEqual(2000, got.year)
+
+    def test_str_to_date_without_format_parses_date(self):
+        got = utils.str_to_date('2000-02-01')
+        self.assertEqual(1, got.day)
+        self.assertEqual(2, got.month)
+        self.assertEqual(2000, got.year)
 
     def test_setup_logging(self):
         pass  # TODO

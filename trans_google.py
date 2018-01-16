@@ -45,7 +45,7 @@ class TransGoogle(Orchestrator):
         #							 'preservations requested', 'preservations_num_affected', 'users / accounts preserved')
 
         self.df_out = builder.get_df()
-        self.df_out['report_end'] = df['period ending'].apply(utils.str_to_date)
+        self.df_out['report_end'] = df['period ending'].apply(lambda d: utils.str_to_date(d))
 
         self.df_out['report_start'] = self.df_out['report_end'].apply(
             lambda report_end: (report_end + pd.DateOffset(days=1) - pd.DateOffset(months=6)))

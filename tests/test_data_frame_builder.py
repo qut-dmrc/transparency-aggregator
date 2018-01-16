@@ -37,7 +37,7 @@ class TestDataFrameBuilder(unittest.TestCase):
         df_out = pd.DataFrame()
         Orchestrator.coerce_df(df_out)
 
-        cut = DataFrameBuilder(df_in, df_out, 'platform', 'platform_property', '2001-01-01', '2001-06-30')
+        cut = DataFrameBuilder(df_in, df_out, 'platform', 'platform_property', '2001-01-01 00:00:00', '2001-06-30 23:59:59')
         cut.extract_columns('request_type', request_subtype='all', num_requests_col='number requests',
                             num_affected_col='number affected', num_complied_col='number complied')
         cut.extract_columns('another request_type', request_subtype='subpoena',
