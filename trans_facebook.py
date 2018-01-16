@@ -4,6 +4,7 @@ import datetime
 import utils
 from data_frame_builder import DataFrameBuilder
 from orchestrator import Orchestrator
+from semiannual_url_source import SemiannualUrlSource
 
 
 class FB(Orchestrator):
@@ -78,24 +79,24 @@ class FB(Orchestrator):
         return self.df_out
 
     def get_urls(self, start_year, end_year):
-        data = []
+        source = SemiannualUrlSource({"url_template": "https://transparency.facebook.com/download/$report_year-$facebook_period/", "start_year": start_year, "end_year": end_year})
 
-        for report_year in range(start_year, end_year + 1):
-
-            for period in ('H1', 'H2'):
-                url = "https://transparency.facebook.com/download/{}-{}/".format(report_year, period)
-                if period == 'H1':
-                    start_date = "{}-01-01 00:00:00".format(report_year)
-                    end_date = "{}-06-30 23:59:59".format(report_year)
-                else:
-                    start_date = "{}-07-01 00:00:00".format(report_year)
-                    end_date = "{}-12-31 23:59:59".format(report_year)
-
-                period_data = {'url': url, 'start_date': start_date, 'end_date': end_date}
-
-                data.append(period_data)
-
-        return data
+        return source.get()
+        #
+        # for report_year in range(start_year, end_year + 1):
+        #
+        #     for period in ('H1', 'H2'):
+        #         url = "https://transparency.facebook.com/download/{}-{}/".format(report_year, period)
+        #         if period == 'H1':
+        #             start_date = "{}-01-01 00:00:00".format(report_year)
+        #             end_date = "{}-06-30 23:59:59".format(report_year)
+        #         else:
+        #             start_date = "{}-07-01 00:00:00".format(report_year)
+        #             end_date = "{}-12-31 23:59:59".format(report_year)
+        #
+        #         period_data = {'url': url, 'start_date': start_date, 'end_date': end_date}
+        #
+        #         data.append(period_data)
 
     def expected_source_columns_array(self):
         return [

@@ -1,9 +1,9 @@
 """ 
+Generate twice yearly source data pointing to readable files/urls from the config
 """
 
 from source import Source
 from string import Template
-
 
 
 class SemiannualUrlSource(Source):

@@ -1,4 +1,5 @@
-""" 
+"""
+Get static source data pointing to readable files/urls from the config
 """
 
 from source import Source
