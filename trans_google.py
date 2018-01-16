@@ -7,10 +7,10 @@ import pandas as pd
 
 import utils
 from data_frame_builder import DataFrameBuilder
-from transparency_aggregator import TransparencyAggregator
+from orchestrator import Orchestrator
 
 
-class TransGoogle(TransparencyAggregator):
+class TransGoogle(Orchestrator):
 
     def process(self, df, start_date, end_date):
         # Rename the columns to a standard format, and account for changes over the years

@@ -14,8 +14,8 @@ def main():
     """ Fetch transparency reports for different platforms and convert to a common format
 
 Usage:
-  transparency_aggregator.py [-vl] --output=FILE (--get=SOURCE | --get-all)
-  transparency_aggregator.py --version
+  orchestrator.py [-vl] --output=FILE (--get=SOURCE | --get-all)
+  orchestrator.py --version
 
 Options:
   -h --help     Show this screen.

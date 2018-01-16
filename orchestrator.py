@@ -15,7 +15,7 @@ from downloader import Downloader
 from simple_columns_checker import SimpleColumnsChecker
 
 
-class TransparencyAggregator:
+class Orchestrator:
     def __init__(self):
         self.df_out = pd.DataFrame()
         self.downloader = Downloader()

@@ -5,10 +5,10 @@ import numpy as np
 
 import utils
 from data_frame_builder import DataFrameBuilder
-from transparency_aggregator import TransparencyAggregator
+from orchestrator import Orchestrator
 
 
-class TransTwitter(TransparencyAggregator):
+class TransTwitter(Orchestrator):
 
     def process(self, df, start_date, end_date):
 

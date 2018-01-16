@@ -3,10 +3,10 @@ import datetime
 
 import utils
 from data_frame_builder import DataFrameBuilder
-from transparency_aggregator import TransparencyAggregator
+from orchestrator import Orchestrator
 
 
-class FB(TransparencyAggregator):
+class FB(Orchestrator):
 
     def process(self, df, start_date, end_date):
 

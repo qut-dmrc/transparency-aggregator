@@ -3,7 +3,7 @@ import unittest
 import pandas as pd
 
 from data_frame_builder import DataFrameBuilder
-from transparency_aggregator import TransparencyAggregator
+from orchestrator import Orchestrator
 
 
 class TestDataFrameBuilder(unittest.TestCase):
@@ -35,7 +35,7 @@ class TestDataFrameBuilder(unittest.TestCase):
     def test_data_frame_builder(self):
         df_in = self.sample_df()
         df_out = pd.DataFrame()
-        TransparencyAggregator.coerce_df(df_out)
+        Orchestrator.coerce_df(df_out)
 
         cut = DataFrameBuilder(df_in, df_out, 'platform', 'platform_property', '2001-01-01', '2001-06-30')
         cut.extract_columns('request_type', request_subtype='all', num_requests_col='number requests',
