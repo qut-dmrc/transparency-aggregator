@@ -12,7 +12,7 @@ import pandas as pd
 from csv_reader import CSVReader
 from desired_columns_mutator import DesiredColumnsMutator
 from downloader import Downloader
-from simple_columns_checker import SimpleColumnsChecker
+from multi_columns_checker import MultiColumnsChecker
 
 
 class Orchestrator:
@@ -25,7 +25,7 @@ class Orchestrator:
         return reader.read(filename)
 
     def process_with_check(self, df, start_date, end_date):
-        checker = SimpleColumnsChecker({'expected_source_columns': self.expected_source_columns()})
+        checker = MultiColumnsChecker({'expected_source_columns_array': [self.expected_source_columns()]})
         checker.check(df)
         return self.process(df, start_date, end_date)
 
