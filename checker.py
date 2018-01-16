@@ -6,13 +6,9 @@ companies (e.g. google's transparency reports come out twice yearly).  This clas
 its decendents encode those assumptions, so that the user is notified, and check code,
 when the assumptions are violated.
 """
-import re
-import urllib
-import urllib.request
-import os.path
-import logging
 from action import Action
 
+
 class Checker(Action):
-	def check(self, df):
-		raise NotImplementedError()
+    def check(self, df):
+        raise NotImplementedError()
