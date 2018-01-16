@@ -1,8 +1,8 @@
 import numbers
 import unittest
+import unittest.mock as mock
 
 import pandas as pd
-import unittest.mock as mock
 
 import utils
 

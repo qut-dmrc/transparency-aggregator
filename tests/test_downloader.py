@@ -1,5 +1,4 @@
 import unittest
-
 import unittest.mock as mock
 
 from downloader import Downloader
