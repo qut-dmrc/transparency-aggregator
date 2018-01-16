@@ -1,3 +1,4 @@
+import textwrap
 import unittest
 from io import StringIO
 
@@ -51,7 +52,7 @@ class TestTransGoogle(unittest.TestCase):
             31/12/09,Belgium,BE,All,67,,
             """
 
-        df = pd.read_csv(StringIO(csv), encoding="UTF-8", dtype=np.object_)
+        df = pd.read_csv(StringIO(textwrap.dedent(csv)), encoding="UTF-8", dtype=np.object_)
         return df
 
     def test_process_with_check_should_load_data(self):

@@ -1,3 +1,4 @@
+import textwrap
 import unittest
 from io import StringIO
 
@@ -19,7 +20,7 @@ class TestSimpleColumnsChecker(unittest.TestCase):
             1,2,3
             4,5,6
             """
-        df = pd.read_csv(StringIO(csv), encoding="UTF-8", dtype=np.object_)
+        df = pd.read_csv(StringIO(textwrap.dedent(csv)), encoding="UTF-8", dtype=np.object_)
         return df
 
     def test_check_should_pass(self):
