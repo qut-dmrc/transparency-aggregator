@@ -24,10 +24,10 @@ class TestDownloader(unittest.TestCase):
         with mock.patch('downloader.urllib.request.urlretrieve') as mock_ret:
             mock_ret.return_value = ('/tmp.txt', ['X-OK: True'])
 
-            res = self.downloader.download('https://transparency.facebook.com/download/2013-H1/', 'tests/source')
+            res = self.downloader.download('https://transparency.facebook.com/download/2013-H1/', 'tests/cache')
 
             mock_ret.assert_called_once_with('https://transparency.facebook.com/download/2013-H1/',
-                                             'tests/source/https___transparency_facebook_com_download_2013_H1_')
+                                             'tests/cache/https___transparency_facebook_com_download_2013_H1_')
             self.assertEqual('/tmp.txt', res)
 
     def test_download_cached(self):
