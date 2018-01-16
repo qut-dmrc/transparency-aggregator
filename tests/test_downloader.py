@@ -33,7 +33,7 @@ class TestDownloader(unittest.TestCase):
     def test_download_cached(self):
         with mock.patch('downloader.urllib.request.urlretrieve') as mock_ret:
             mock_ret.return_value = ('/tmp.txt', ['X-OK: True'])
-            dir = os.path.join(os.path.dirname(__file__), 'source')
+            dir = os.path.join(os.path.dirname(__file__), 'files')
 
             res = self.downloader.download('file_that_exists', dir)
 
