@@ -17,10 +17,6 @@ class TestFacebook(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_read_csv_fb(self):
-        df = self.fb.read_csv('tests/Transparency_Reports/Facebook/Facebook-Government-Report-2013-H1.csv')
-        assert df.size > 0
-
     def test_read_csv_from_url(self):
         self.fb.read_csv('https://transparency.facebook.com/download/2013-H1/')
 

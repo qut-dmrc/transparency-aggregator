@@ -1,6 +1,8 @@
 import unittest
 import unittest.mock as mock
 
+import os
+
 from downloader import Downloader
 
 
@@ -31,11 +33,12 @@ class TestDownloader(unittest.TestCase):
     def test_download_cached(self):
         with mock.patch('downloader.urllib.request.urlretrieve') as mock_ret:
             mock_ret.return_value = ('/tmp.txt', ['X-OK: True'])
+            dir = os.path.join(os.path.dirname(__file__), 'source')
 
-            res = self.downloader.download('file_that_exists', 'tests/source')
+            res = self.downloader.download('file_that_exists', dir)
 
             mock_ret.assert_not_called()
-            self.assertEqual('tests/source/file_that_exists', res)
+            self.assertEqual(os.path.join(dir, 'file_that_exists'), res)
 
     def test_url_to_filename(self):
         got = self.downloader.url_to_filename('https://transparency.facebook.com/download/2013-H1/')
