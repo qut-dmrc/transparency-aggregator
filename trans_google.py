@@ -8,6 +8,7 @@ import pandas as pd
 import utils
 from data_frame_builder import DataFrameBuilder
 from orchestrator import Orchestrator
+from static_source import StaticSource
 from zip_csv_reader import ZipCSVReader
 
 
@@ -69,15 +70,13 @@ class TransGoogle(Orchestrator):
                 'Percentage of requests where some data produced', 'Period Ending', 'User Data Requests']]
 
     def get_urls(self):
-        data = []
+        source = StaticSource({'data': [{
+            "url": "https://storage.googleapis.com/transparencyreport/google-user-data-requests.zip",
+            "start_date": '',
+            "end_date": '',
+        }]})
 
-        url = "https://storage.googleapis.com/transparencyreport/google-user-data-requests.zip"
-
-        period_data = {'url': url, 'start_date': '', 'end_date': ''}
-
-        data.append(period_data)
-
-        return data
+        return source.get()
 
     def read_csv(self, filename):
         reader = ZipCSVReader({'internal_filename': 'google-user-data-requests/google-user-data-requests.csv'})

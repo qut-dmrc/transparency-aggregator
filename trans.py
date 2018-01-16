@@ -56,7 +56,7 @@ Options:
 
     if csv_file:
         logging.info('writing to ' + csv_file)
-        writer = WriterCSV()
+        writer = WriterCSV({})
         writer.write(df, csv_file)
 
 
