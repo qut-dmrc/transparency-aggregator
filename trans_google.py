@@ -8,6 +8,7 @@ import pandas as pd
 import utils
 from data_frame_builder import DataFrameBuilder
 from orchestrator import Orchestrator
+from zip_csv_reader import ZipCSVReader
 
 
 class TransGoogle(Orchestrator):
@@ -78,10 +79,7 @@ class TransGoogle(Orchestrator):
 
         return data
 
-    def read_csv(self, filename_or_url):
-        with ZipFile(filename_or_url) as zipf:
-            with zipf.open('google-user-data-requests/google-user-data-requests.csv') as data_file:
-                df = pd.read_csv(data_file, encoding="UTF-8",
-                                 dtype=np.object_)  # force dtype to avoid columns changing type because sometimes they have *s in them
-                logging.debug("Found {} rows.".format(df.shape[0]))
-                return df
+    def read_csv(self, filename):
+        reader = ZipCSVReader({'internal_filename': 'google-user-data-requests/google-user-data-requests.csv'})
+        return reader.read(filename)
+

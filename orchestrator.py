@@ -22,7 +22,7 @@ class Orchestrator:
         self.downloader = Downloader()
 
     def read_csv(self, filename):
-        reader = CSVReader()
+        reader = CSVReader({})
         return reader.read(filename)
 
     def process_with_check(self, df, start_date, end_date):

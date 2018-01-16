@@ -17,7 +17,7 @@ class TestWriterCSV(unittest.TestCase):
         pass
 
     def test_abc(self):
-        writer = WriterCSV()
+        writer = WriterCSV({})
 
 
 if __name__ == '__main__':

@@ -5,9 +5,10 @@ import logging
 
 import numpy as np
 import pandas as pd
+from reader import Reader
 
 
-class CSVReader:
+class CSVReader(Reader):
     def read(self, filename):
         df = pd.read_csv(filename, encoding="UTF-8",
                          dtype=np.object_)  # force dtype to avoid columns changing type because sometimes they have *s in them
