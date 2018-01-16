@@ -14,14 +14,15 @@ def main():
     """ Fetch transparency reports for different platforms and convert to a common format
 
 Usage:
-  orchestrator.py [-vl] --output=FILE (--get=SOURCE | --get-all)
+  orchestrator.py [-vl] --csv-output=FILE (--get=SOURCE | --get-all)
   orchestrator.py --version
+  orchestrator.py --help
 
 Options:
   -h --help     Show this screen.
   -v --verbose  Increase verbosity for debugging.
   -l --nolog    Don't save log to file -- for debugging only.
-  -o FILE, --output=FILE     Save results to FILE in CSV format.
+  -c FILE, --csv-output=FILE     Save results to FILE in CSV format.
   --version  Show version.
   -a --get-all     Fetch all available transparency reports
   -s --get=SOURCE  Fetch data from SOURCE (e.g. facebook)
@@ -32,13 +33,13 @@ Options:
 
     get_from = args['--get']
     get_all = args['--get-all']
-    csv_file = args['--output']  # TODO: change to --csv-output
+    csv_file = args['--csv-output']
 
     setup_logging("transparency.log", verbose=args['--verbose'],
                   interactive_only=args['--nolog'])
 
     if not csv_file:
-        logging.warn("no output file specified, results will be discarded")
+        logging.warning("no output file specified, results will be discarded")
 
     logging.info("Starting complete run, collecting historical data.")
     df = pd.DataFrame()
