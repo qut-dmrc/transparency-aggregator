@@ -14,9 +14,9 @@ def main():
     """ Fetch transparency reports for different platforms and convert to a common format
 
 Usage:
-  orchestrator.py [-vl] --csv-output=FILE (--get=SOURCE | --get-all)
-  orchestrator.py --version
-  orchestrator.py --help
+  main.py [-vl] --csv-output=FILE (--get=SOURCE | --get-all)
+  main.py --version
+  main.py --help
 
 Options:
   -h --help     Show this screen.
