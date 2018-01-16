@@ -9,7 +9,7 @@ from semiannual_url_source import SemiannualUrlSource
 
 class FB(Orchestrator):
 
-    def process(self, df, start_date, end_date):
+    def process(self, df, report_start, report_end):
 
         # Rename the columns to a standard format, and account for changes over the years
         df.columns = df.columns.str.lower()
@@ -47,7 +47,7 @@ class FB(Orchestrator):
             'preservations requested']  # Assume 1:1 mapping on requests:accounts
 
         builder = DataFrameBuilder(df_in=df, df_out=self.df_out, platform='Facebook', platform_property='Facebook',
-                                   report_start=start_date, report_end=end_date)
+                                   report_start=report_start, report_end=report_end)
 
         # Extract requests for user data from governments:
         builder.extract_columns('requests for user data', 'facebook other',
@@ -88,13 +88,13 @@ class FB(Orchestrator):
         #     for period in ('H1', 'H2'):
         #         url = "https://transparency.facebook.com/download/{}-{}/".format(report_year, period)
         #         if period == 'H1':
-        #             start_date = "{}-01-01 00:00:00".format(report_year)
-        #             end_date = "{}-06-30 23:59:59".format(report_year)
+        #             report_start = "{}-01-01 00:00:00".format(report_year)
+        #             report_end = "{}-06-30 23:59:59".format(report_year)
         #         else:
-        #             start_date = "{}-07-01 00:00:00".format(report_year)
-        #             end_date = "{}-12-31 23:59:59".format(report_year)
+        #             report_start = "{}-07-01 00:00:00".format(report_year)
+        #             report_end = "{}-12-31 23:59:59".format(report_year)
         #
-        #         period_data = {'url': url, 'start_date': start_date, 'end_date': end_date}
+        #         period_data = {'url': url, 'report_start': report_start, 'report_end': report_end}
         #
         #         data.append(period_data)
 

@@ -14,7 +14,7 @@ from zip_csv_reader import ZipCSVReader
 
 class TransGoogle(Orchestrator):
 
-    def process(self, df, start_date, end_date):
+    def process(self, df, report_start, report_end):
         # Rename the columns to a standard format, and account for changes over the years
         df.columns = df.columns.str.lower()
         utils.df_fix_columns(df)
@@ -72,8 +72,8 @@ class TransGoogle(Orchestrator):
     def get_urls(self):
         source = StaticSource({'data': [{
             "url": "https://storage.googleapis.com/transparencyreport/google-user-data-requests.zip",
-            "start_date": '',
-            "end_date": '',
+            "report_start": '',
+            "report_end": '',
         }]})
 
         return source.get()

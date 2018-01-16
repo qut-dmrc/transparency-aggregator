@@ -10,7 +10,7 @@ from orchestrator import Orchestrator
 
 class TransTwitter(Orchestrator):
 
-    def process(self, df, start_date, end_date):
+    def process(self, df, report_start, report_end):
 
         # Rename the columns to a standard format, and account for changes over the years
         df.columns = df.columns.str.lower()
@@ -29,7 +29,7 @@ class TransTwitter(Orchestrator):
         utils.df_convert_to_numeric(df, numeric_cols)
 
         builder = DataFrameBuilder(df_in=df, df_out=self.df_out, platform='Twitter', platform_property='Twitter',
-                                   report_start=start_date, report_end=end_date)
+                                   report_start=report_start, report_end=report_end)
 
         utils.df_convert_from_percentage(df, 'percentage where some information produced',
                                          'account information requests', 'number where some information produced')
@@ -70,13 +70,13 @@ class TransTwitter(Orchestrator):
             for period, start_month, end_month in [("H1", "jan", "jun"), ("H2", "jul", "dec")]:
                 url = f"https://transparency.twitter.com/content/dam/transparency-twitter/data/download-govt-information-requests/information-requests-report-{start_month}-{end_month}-{report_year}.csv"
                 if period == 'H1':
-                    start_date = "{}-01-01 00:00:00".format(report_year)
-                    end_date = "{}-06-30 23:59:59".format(report_year)
+                    report_start = "{}-01-01 00:00:00".format(report_year)
+                    report_end = "{}-06-30 23:59:59".format(report_year)
                 else:
-                    start_date = "{}-07-01 00:00:00".format(report_year)
-                    end_date = "{}-12-31 23:59:59".format(report_year)
+                    report_start = "{}-07-01 00:00:00".format(report_year)
+                    report_end = "{}-12-31 23:59:59".format(report_year)
 
-                period_data = {'url': url, 'start_date': start_date, 'end_date': end_date}
+                period_data = {'url': url, 'report_start': report_start, 'report_end': report_end}
 
                 data.append(period_data)
 

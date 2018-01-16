@@ -29,13 +29,13 @@ class TestTransGoogle(unittest.TestCase):
         self.assertEqual(1, len(available_urls))
         self.assertEqual('https://storage.googleapis.com/transparencyreport/google-user-data-requests.zip',
                          available_urls[0]['url'])
-        self.assertEqual('', available_urls[0]['start_date'])
-        self.assertEqual('', available_urls[0]['end_date'])
+        self.assertEqual('', available_urls[0]['report_start'])
+        self.assertEqual('', available_urls[0]['report_end'])
 
     def test_process_urls_should_load_data(self):
         available_urls = [
-            {'url': 'https://storage.googleapis.com/transparencyreport/google-user-data-requests.zip', 'start_date': '',
-             'end_date': ''}]
+            {'url': 'https://storage.googleapis.com/transparencyreport/google-user-data-requests.zip', 'report_start': '',
+             'report_end': ''}]
 
         df_out = self.google.process_urls(available_urls)
         self.assertEqual('Brazil', df_out['country'][3])
@@ -80,6 +80,6 @@ class TestTransGoogle(unittest.TestCase):
         self.assertIn('Unexpected missing columns: ["Period Ending"]', str(context.exception))
 
 
-# self.process(df, start_date=start_date, end_date=end_date)
+# self.process(df, report_start=report_start, report_end=report_end)
 if __name__ == '__main__':
     unittest.main()

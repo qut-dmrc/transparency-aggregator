@@ -32,13 +32,13 @@ class SemiannualUrlSource(Source):
                 substitutes = {**substitutes, 'report_year': report_year}
                 url = url_template.substitute(substitutes)
                 if i == 0:
-                    start_date = "{}-01-01 00:00:00".format(report_year)
-                    end_date = "{}-06-30 23:59:59".format(report_year)
+                    report_start = "{}-01-01 00:00:00".format(report_year)
+                    report_end = "{}-06-30 23:59:59".format(report_year)
                 else:
-                    start_date = "{}-07-01 00:00:00".format(report_year)
-                    end_date = "{}-12-31 23:59:59".format(report_year)
+                    report_start = "{}-07-01 00:00:00".format(report_year)
+                    report_end = "{}-12-31 23:59:59".format(report_year)
 
-                period_data = {'url': url, 'report_start': start_date, 'report_end': end_date}
+                period_data = {'url': url, 'report_start': report_start, 'report_end': report_end}
 
                 data.append(period_data)
 
