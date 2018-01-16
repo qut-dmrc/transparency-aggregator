@@ -81,3 +81,9 @@ class TransTwitter(Orchestrator):
                 data.append(period_data)
 
         return data
+
+    def expected_source_columns_array(self):
+        return [[
+            "TIME PERIOD", "COUNTRY", "ISO CODE", "ACCOUNT INFORMATION REQUESTS", "PERCENTAGE WHERE SOME INFORMATION PRODUCED",
+            "ACCOUNTS SPECIFIED", "FLAGS", "LINKS", "REPORT LINKS",
+        ]]

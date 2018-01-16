@@ -96,3 +96,11 @@ class FB(Orchestrator):
                 data.append(period_data)
 
         return data
+
+    def expected_source_columns_array(self):
+        return [
+            ["Country","Requests for User Data","User Accounts Referenced","Percentage of requests where some data produced","Content Restrictions"],
+            ["Country","Total Requests for User Data","Total User Accounts Referenced","Total Percentage of Requests Where Some Data Produced","Content Restrictions","Preservations Requested","Users/Accounts Preserved"],
+            ["Country","Requests for User Data","User Accounts Referenced","Percentage of requests where some data produced"],
+        ]
+

@@ -25,7 +25,7 @@ class Orchestrator:
         return reader.read(filename)
 
     def process_with_check(self, df, start_date, end_date):
-        checker = MultiColumnsChecker({'expected_source_columns_array': [self.expected_source_columns()]})
+        checker = MultiColumnsChecker({'expected_source_columns_array': self.expected_source_columns_array()})
         checker.check(df)
         return self.process(df, start_date, end_date)
 

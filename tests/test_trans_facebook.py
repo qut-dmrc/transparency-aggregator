@@ -35,7 +35,6 @@ class TestFacebook(unittest.TestCase):
         self.assertEqual('2014-07-01 00:00:00', available_urls[3]['start_date'])
         self.assertEqual('2014-12-31 23:59:59', available_urls[3]['end_date'])
 
-    @unittest.skip('disabled until column checks are fixed')
     def test_process_urls(self):
         available_urls = [
             {'url': 'https://transparency.facebook.com/download/2013-H1/', 'start_date': '2013-01-01 00:00:00',

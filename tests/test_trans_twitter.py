@@ -36,7 +36,6 @@ class TestTransTwitter(unittest.TestCase):
         self.assertEqual('2014-07-01 00:00:00', available_urls[3]['start_date'])
         self.assertEqual('2014-12-31 23:59:59', available_urls[3]['end_date'])
 
-    @unittest.skip('skip until column checks are refactored')
     def test_process_urls(self):
         available_urls = [{
                               'url': 'https://transparency.twitter.com/content/dam/transparency-twitter/data/download-govt-information-requests/information-requests-report-jan-jun-2017.csv',
