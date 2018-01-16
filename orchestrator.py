@@ -54,8 +54,6 @@ class Orchestrator:
             try:
                 src_file = self.downloader.download(url, os.path.join(os.path.dirname(__file__),'cache'))
                 df = self.read_csv(src_file)
-                # logging.info("Processing government requests for {}".format(url))
-                # TODO Assert column name changes
                 self.process_with_check(df, report_start=report_start, report_end=report_end)
             except urllib.error.URLError as e:
                 logging.error("Unable to fetch url: {}. Error: {}".format(url, e))
