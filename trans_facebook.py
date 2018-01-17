@@ -25,9 +25,6 @@ class FB(Orchestrator):
 
         utils.df_strip_char(df, 'total percentage of requests where some data produced', '%')
 
-        # TODO
-        #		df['number of requests where some data produced'] = df.apply(convert_percentages, axis=1)
-
         # convert strings to numbers
         numeric_cols = ['total requests for user data', 'total user accounts referenced',
                         'total percentage of requests where some data produced', 'content restrictions',
