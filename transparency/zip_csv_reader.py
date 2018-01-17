@@ -6,7 +6,7 @@ from zipfile import ZipFile
 
 import numpy as np
 import pandas as pd
-from reader import Reader
+from transparency.reader import Reader
 
 
 class ZipCSVReader(Reader):

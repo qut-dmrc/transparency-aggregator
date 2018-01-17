@@ -1,6 +1,6 @@
 import unittest
 
-from writer_csv import WriterCSV
+from transparency.writer_csv import WriterCSV
 
 
 class TestWriterCSV(unittest.TestCase):

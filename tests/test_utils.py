@@ -4,7 +4,7 @@ import unittest.mock as mock
 
 import pandas as pd
 
-import utils
+import transparency.utils as utils
 
 
 class TestUtils(unittest.TestCase):
@@ -53,7 +53,7 @@ class TestUtils(unittest.TestCase):
         self.assertTrue(isinstance(df['a'][0], numbers.Number))
 
     def test_check_assumption(self):
-        with mock.patch('utils.logging.error') as mock_ret:
+        with mock.patch('transparency.utils.logging.error') as mock_ret:
             utils.check_assumption(True, "Value should be true")
             mock_ret.assert_not_called()
 

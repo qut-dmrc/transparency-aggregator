@@ -5,7 +5,7 @@ import logging
 
 import numpy as np
 import pandas as pd
-from reader import Reader
+from transparency.reader import Reader
 
 
 class CSVReader(Reader):

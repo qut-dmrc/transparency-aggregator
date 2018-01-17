@@ -5,8 +5,8 @@ from io import StringIO
 import numpy as np
 import pandas as pd
 
-import utils
-from multi_columns_checker import MultiColumnsChecker
+import transparency.utils as utils
+from transparency.multi_columns_checker import MultiColumnsChecker
 
 
 class TestMultiColumnsChecker(unittest.TestCase):

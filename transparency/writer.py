@@ -1,7 +1,7 @@
 """
 Write data from a DataFrame
 """
-from action import Action
+from transparency.action import Action
 
 
 class Writer(Action):

@@ -3,9 +3,9 @@ import datetime
 
 import numpy as np
 
-import utils
-from data_frame_builder import DataFrameBuilder
-from orchestrator import Orchestrator
+import transparency.utils as utils
+from transparency.data_frame_builder import DataFrameBuilder
+from transparency.orchestrator import Orchestrator
 
 
 class TransTwitter(Orchestrator):

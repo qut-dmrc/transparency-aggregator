@@ -5,7 +5,7 @@ Mutators change dataframes (e.g. rename columns).
 The mutate function takes a DataFrame and returns a 
 mutated copy of that DataFrame
 """
-from action import Action
+from transparency.action import Action
 
 
 class Mutator(Action):

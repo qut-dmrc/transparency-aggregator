@@ -35,3 +35,12 @@ This script will eventually download as many transparency reports as possible.
       -o FILE, --output=FILE     Save results to FILE in CSV format.
       --version  Show version.
       --all     Fetch all available transparency reports
+
+
+## Troubleshooting
+
+are you getting:
+    ssl.SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:777)
+
+On MacOS, you want to navigate to "Applicatoins/Python 3.6" and run the "Install Certificates.command" file.
+

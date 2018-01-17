@@ -1,7 +1,7 @@
 """
 Get source data pointing to readable files/urls
 """
-from action import Action
+from transparency.action import Action
 
 
 class Source(Action):

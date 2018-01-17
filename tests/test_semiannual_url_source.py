@@ -1,6 +1,6 @@
 import unittest
 
-from semiannual_url_source import SemiannualUrlSource
+from transparency.semiannual_url_source import SemiannualUrlSource
 
 
 class TestSemiannualUrlSource(unittest.TestCase):

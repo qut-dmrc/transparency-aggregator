@@ -2,8 +2,8 @@ import unittest
 
 import pandas as pd
 
-from data_frame_builder import DataFrameBuilder
-from orchestrator import Orchestrator
+from transparency.data_frame_builder import DataFrameBuilder
+from transparency.orchestrator import Orchestrator
 
 
 class TestDataFrameBuilder(unittest.TestCase):

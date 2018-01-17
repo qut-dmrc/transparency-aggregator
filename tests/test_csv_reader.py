@@ -2,7 +2,7 @@ import unittest
 
 import os
 
-from csv_reader import CSVReader
+from transparency.csv_reader import CSVReader
 
 
 class TestCSVReader(unittest.TestCase):

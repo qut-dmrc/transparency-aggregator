@@ -5,7 +5,7 @@ from io import StringIO
 import numpy as np
 import pandas as pd
 
-from desired_columns_mutator import DesiredColumnsMutator
+from transparency.desired_columns_mutator import DesiredColumnsMutator
 
 
 class TestDesiredColumnsMutator(unittest.TestCase):

@@ -1,5 +1,5 @@
 import csv
-from writer import Writer
+from transparency.writer import Writer
 
 class WriterCSV(Writer):
     def write(self, pandasDataFrame, outputFile):

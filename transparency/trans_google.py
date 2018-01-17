@@ -5,11 +5,11 @@ from zipfile import ZipFile
 import numpy as np
 import pandas as pd
 
-import utils
-from data_frame_builder import DataFrameBuilder
-from orchestrator import Orchestrator
-from static_source import StaticSource
-from zip_csv_reader import ZipCSVReader
+import transparency.utils as utils
+from transparency.data_frame_builder import DataFrameBuilder
+from transparency.orchestrator import Orchestrator
+from transparency.static_source import StaticSource
+from transparency.zip_csv_reader import ZipCSVReader
 
 
 class TransGoogle(Orchestrator):

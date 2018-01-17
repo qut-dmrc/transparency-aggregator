@@ -1,10 +1,10 @@
 """ Fetch and read Facebook transparency data """
 import datetime
 
-import utils
-from data_frame_builder import DataFrameBuilder
-from orchestrator import Orchestrator
-from semiannual_url_source import SemiannualUrlSource
+import transparency.utils as utils
+from transparency.data_frame_builder import DataFrameBuilder
+from transparency.orchestrator import Orchestrator
+from transparency.semiannual_url_source import SemiannualUrlSource
 
 
 class FB(Orchestrator):

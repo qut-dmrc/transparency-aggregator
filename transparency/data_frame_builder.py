@@ -4,7 +4,7 @@
 	Most of these methods will need to be overwritten to handle specific reporting formats.
 	 
 """
-from utils import str_to_date
+from transparency.utils import str_to_date
 
 
 class DataFrameBuilder:

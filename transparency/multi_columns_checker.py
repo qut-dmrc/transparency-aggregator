@@ -3,8 +3,8 @@ Check that assumptions are valid.
 """
 import json
 
-import utils
-from checker import Checker
+import transparency.utils as utils
+from transparency.checker import Checker
 
 
 class MultiColumnsChecker(Checker):

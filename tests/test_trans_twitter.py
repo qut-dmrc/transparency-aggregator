@@ -1,6 +1,6 @@
 import unittest
 
-from trans_twitter import TransTwitter
+from transparency.trans_twitter import TransTwitter
 
 
 class TestTransTwitter(unittest.TestCase):

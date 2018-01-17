@@ -1,6 +1,6 @@
 import unittest
 
-from static_source import StaticSource
+from transparency.static_source import StaticSource
 
 
 class TestStaticSource(unittest.TestCase):

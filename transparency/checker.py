@@ -6,7 +6,7 @@ companies (e.g. google's transparency reports come out twice yearly).  This clas
 its decendents encode those assumptions, so that the user is notified, and check code,
 when the assumptions are violated.
 """
-from action import Action
+from transparency.action import Action
 
 
 class Checker(Action):

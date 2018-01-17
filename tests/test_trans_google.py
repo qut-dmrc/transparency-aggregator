@@ -5,8 +5,8 @@ from io import StringIO
 import numpy as np
 import pandas as pd
 
-import utils
-from trans_google import TransGoogle
+import transparency.utils as utils
+from transparency.trans_google import TransGoogle
 
 
 class TestTransGoogle(unittest.TestCase):

@@ -2,7 +2,7 @@ import unittest
 
 import os
 
-from zip_csv_reader import ZipCSVReader
+from transparency.zip_csv_reader import ZipCSVReader
 
 
 class TestZipCSVReader(unittest.TestCase):

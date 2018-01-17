@@ -10,10 +10,10 @@ import os
 
 import pandas as pd
 
-from csv_reader import CSVReader
-from desired_columns_mutator import DesiredColumnsMutator
-from downloader import Downloader
-from multi_columns_checker import MultiColumnsChecker
+from transparency.csv_reader import CSVReader
+from transparency.desired_columns_mutator import DesiredColumnsMutator
+from transparency.downloader import Downloader
+from transparency.multi_columns_checker import MultiColumnsChecker
 
 
 class Orchestrator:
@@ -52,7 +52,8 @@ class Orchestrator:
             report_end = data['report_end']
 
             try:
-                src_file = self.downloader.download(url, os.path.join(os.path.dirname(__file__),'cache'))
+                #note two dirnames, to go up a directory
+                src_file = self.downloader.download(url, os.path.join(os.path.dirname(os.path.dirname(__file__)),'cache'))
                 df = self.read_csv(src_file)
                 self.process_with_check(df, report_start=report_start, report_end=report_end)
             except urllib.error.URLError as e:

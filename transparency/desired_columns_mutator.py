@@ -1,7 +1,7 @@
 """ 
 """
 
-from mutator import Mutator
+from transparency.mutator import Mutator
 
 
 class DesiredColumnsMutator(Mutator):

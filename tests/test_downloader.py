@@ -3,7 +3,7 @@ import unittest.mock as mock
 
 import os
 
-from downloader import Downloader
+from transparency.downloader import Downloader
 
 
 class TestDownloader(unittest.TestCase):
@@ -21,7 +21,7 @@ class TestDownloader(unittest.TestCase):
         pass
 
     def test_download(self):
-        with mock.patch('downloader.urllib.request.urlretrieve') as mock_ret:
+        with mock.patch('transparency.downloader.urllib.request.urlretrieve') as mock_ret:
             mock_ret.return_value = ('/tmp.txt', ['X-OK: True'])
 
             res = self.downloader.download('https://transparency.facebook.com/download/2013-H1/', 'tests/cache')
@@ -31,7 +31,7 @@ class TestDownloader(unittest.TestCase):
             self.assertEqual('/tmp.txt', res)
 
     def test_download_cached(self):
-        with mock.patch('downloader.urllib.request.urlretrieve') as mock_ret:
+        with mock.patch('transparency.downloader.urllib.request.urlretrieve') as mock_ret:
             mock_ret.return_value = ('/tmp.txt', ['X-OK: True'])
             dir = os.path.join(os.path.dirname(__file__), 'files')
 

@@ -1,6 +1,6 @@
 import unittest
 
-from trans_facebook import FB
+from transparency.trans_facebook import FB
 
 
 class TestFacebook(unittest.TestCase):
