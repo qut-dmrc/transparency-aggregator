@@ -18,13 +18,12 @@ def check_assumption(assumption, assumption_description):
         raise AssumptionError(assumption_description)
 
 
-def str_to_date(date_in, format = '%Y-%m-%d'):
+def str_to_date(date_in, format_str = '%Y-%m-%d'):
     """ Simple method to convert a string to a date. If passed a date, leave as is. """
-    ## TODO Make this locale independant
     if isinstance(date_in, str):
         if date_in == '':
             return None
-        return datetime.strptime(date_in, format)
+        return datetime.strptime(date_in, format_str)
     elif isinstance(date_in, (datetime, date)):
         return date_in
     else:
