@@ -63,9 +63,6 @@ class FB(Orchestrator):
         return self.df_out
 
     def fetch_all(self):
-        # Facebook transparency reports are in half-years, starting from 2013-H1
-        # "https://transparency.facebook.com/download/2013-H1/"
-
         start_year = 2013
         end_year = datetime.datetime.utcnow().year
 
@@ -79,21 +76,6 @@ class FB(Orchestrator):
         source = SemiannualUrlSource({"url_template": "https://transparency.facebook.com/download/$report_year-$facebook_period/", "start_year": start_year, "end_year": end_year})
 
         return source.get()
-        #
-        # for report_year in range(start_year, end_year + 1):
-        #
-        #     for period in ('H1', 'H2'):
-        #         url = "https://transparency.facebook.com/download/{}-{}/".format(report_year, period)
-        #         if period == 'H1':
-        #             report_start = "{}-01-01 00:00:00".format(report_year)
-        #             report_end = "{}-06-30 23:59:59".format(report_year)
-        #         else:
-        #             report_start = "{}-07-01 00:00:00".format(report_year)
-        #             report_end = "{}-12-31 23:59:59".format(report_year)
-        #
-        #         period_data = {'url': url, 'report_start': report_start, 'report_end': report_end}
-        #
-        #         data.append(period_data)
 
     def expected_source_columns_array(self):
         return [

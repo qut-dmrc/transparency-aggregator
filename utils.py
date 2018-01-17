@@ -11,6 +11,7 @@ class AssumptionError(Exception):
 
 
 def check_assumption(assumption, assumption_description):
+    """ensure that assumption is True.  If it isn't, log a message and throw an AssuptionError"""
     if assumption:
         pass
     else:
@@ -68,7 +69,6 @@ def setup_logging(log_file_name, verbose=False, interactive_only=False):
         logger.setLevel(logging.INFO)
 
     return logger
-
 
 def df_fix_columns(df):
     df.columns = df.columns.str.lower()
