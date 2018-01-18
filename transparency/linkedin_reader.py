@@ -38,8 +38,10 @@ class LinkedinReader(Reader):
         df = pd.DataFrame(bigdata)
 
         logging.debug("Found {} rows.".format(df.shape[0]))
-        return df
 
+        # TODO Add assumption check in trans_linkedin
+
+        return df
 
     def linkedin_data_index_to_dates(self, i):
         """

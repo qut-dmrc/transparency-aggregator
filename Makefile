@@ -3,3 +3,6 @@ test:
 
 clean_cache:
 	rm cache/*
+
+run_all:
+	python main.py -c output.csv -a

@@ -6,12 +6,12 @@ import numpy as np
 import transparency.utils as utils
 from transparency.data_frame_builder import DataFrameBuilder
 from transparency.orchestrator import Orchestrator
+from transparency.semiannual_url_source import SemiannualUrlSource
 
 
 class TransTwitter(Orchestrator):
 
     def process(self, df, report_start, report_end):
-
         # Rename the columns to a standard format, and account for changes over the years
         df.columns = df.columns.str.lower()
         utils.df_fix_columns(df)
@@ -63,27 +63,16 @@ class TransTwitter(Orchestrator):
         return self.df_out
 
     def get_urls(self, start_year, end_year):
-        data = []
+        source = SemiannualUrlSource(
+            {
+                "url_template": "https://transparency.twitter.com/content/dam/transparency-twitter/data/download-govt-information-requests/information-requests-report-$start_month-$end_month-$report_year.csv",
+                "start_year": start_year, "end_year": end_year})
 
-        for report_year in range(start_year, end_year + 1):
-
-            for period, start_month, end_month in [("H1", "jan", "jun"), ("H2", "jul", "dec")]:
-                url = f"https://transparency.twitter.com/content/dam/transparency-twitter/data/download-govt-information-requests/information-requests-report-{start_month}-{end_month}-{report_year}.csv"
-                if period == 'H1':
-                    report_start = "{}-01-01 00:00:00".format(report_year)
-                    report_end = "{}-06-30 23:59:59".format(report_year)
-                else:
-                    report_start = "{}-07-01 00:00:00".format(report_year)
-                    report_end = "{}-12-31 23:59:59".format(report_year)
-
-                period_data = {'url': url, 'report_start': report_start, 'report_end': report_end}
-
-                data.append(period_data)
-
-        return data
+        return source.get()
 
     def expected_source_columns_array(self):
         return [[
-            "TIME PERIOD", "COUNTRY", "ISO CODE", "ACCOUNT INFORMATION REQUESTS", "PERCENTAGE WHERE SOME INFORMATION PRODUCED",
+            "TIME PERIOD", "COUNTRY", "ISO CODE", "ACCOUNT INFORMATION REQUESTS",
+            "PERCENTAGE WHERE SOME INFORMATION PRODUCED",
             "ACCOUNTS SPECIFIED", "FLAGS", "LINKS", "REPORT LINKS",
         ]]
