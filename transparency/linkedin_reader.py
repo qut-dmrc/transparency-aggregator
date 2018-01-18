@@ -1,10 +1,13 @@
 """
-Read a LinkedIn html file into a data frame
+Read a LinkedIn html file into a data frame.
+
+LinkedIn has the transparency data as json embedded in a html page.
+The json does not include dates - presumably linkedin generates the dates based on a known start date, just as we do
+here.
 """
 import json
 import logging
 
-import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup, Comment
 
@@ -28,7 +31,7 @@ class LinkedinReader(Reader):
         gov_reqs = linked_in['governmentRequestsTable']
         bigdata = []
         for (i, dat) in enumerate(gov_reqs):
-            (report_start, report_end) = self.i_to_dates(i)
+            (report_start, report_end) = self.linkedin_data_index_to_dates(i)
             for row in dat['countries']:
                 bigdata.append({"i": i, "report_start": report_start, "report_end": report_end, **row})
 
@@ -37,7 +40,12 @@ class LinkedinReader(Reader):
         logging.debug("Found {} rows.".format(df.shape[0]))
         return df
 
-    def i_to_dates(self, i):
+
+    def linkedin_data_index_to_dates(self, i):
+        """
+        calculate start and end dates based on the index of a block of data.
+        Data starts at 2011-07 and increases 6 months each time
+        """
         year = int((i + 1) / 2) + 2011
         period_i = (i + 1) % 2
         month = [1, 7][period_i]

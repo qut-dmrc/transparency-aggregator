@@ -23,8 +23,6 @@ class TestLinkedinReader(unittest.TestCase):
         self.assertEqual('India', df['country'][2])
         self.assertEqual('2012-01-01 00:00:00', df['report_start'][2])
         self.assertEqual('2012-06-30 23:59:59', df['report_end'][2])
-
-        self.assertEqual('India', df['country'][2])
         self.assertEqual('31', df['accountsImpacted'][2])
         self.assertEqual('32%', df['percentProvided'][2])
         self.assertEqual('33', df['memberDataRequests'][2])
