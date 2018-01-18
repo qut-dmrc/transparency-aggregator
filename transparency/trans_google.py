@@ -15,11 +15,7 @@ from transparency.zip_csv_reader import ZipCSVReader
 class TransGoogle(Orchestrator):
 
     def process(self, df, report_start, report_end):
-        # Rename the columns to a standard format, and account for changes over the years
-        df.columns = df.columns.str.lower()
         utils.df_fix_columns(df)
-
-        # delete TOTAL country
 
         numeric_cols = ['user data requests', 'percentage of requests where some data produced',
                         'users/accounts specified']
@@ -37,13 +33,6 @@ class TransGoogle(Orchestrator):
                                 'user data requests', 'users/accounts specified',
                                 'number where some information produced')
 
-        # Extract content restriction requests:
-        #		builder.extract_columns('content restrictions', 'content restrictions', 'content_num_affected', 'content_num_complied')
-
-        # Extract account preservation requests
-        #		builder.extract_columns('preservation requests',
-        #							 'preservations requested', 'preservations_num_affected', 'users / accounts preserved')
-
         self.df_out = builder.get_df()
         self.df_out['report_end'] = df['period ending'].apply(lambda d: utils.str_to_date(d))
 
@@ -56,9 +45,6 @@ class TransGoogle(Orchestrator):
         return self.df_out
 
     def fetch_all(self):
-        # Twitter transparency reports are in half-years, starting from 2012-H1
-        # "https://transparency.twitter.com/content/dam/transparency-twitter/data/download-govt-information-requests/information-requests-report-jan-jun-2012.csv"
-
         available_urls = self.get_urls()
 
         self.df_out = self.process_urls(available_urls)

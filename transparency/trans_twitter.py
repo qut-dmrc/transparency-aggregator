@@ -12,11 +12,9 @@ from transparency.semiannual_url_source import SemiannualUrlSource
 class TransTwitter(Orchestrator):
 
     def process(self, df, report_start, report_end):
-        # Rename the columns to a standard format, and account for changes over the years
-        df.columns = df.columns.str.lower()
         utils.df_fix_columns(df)
 
-        # delete TOTAL country
+        df.query('country != "TOTAL"', inplace=True)
 
         utils.df_strip_char(df, 'percentage where some information produced', '%')
         utils.df_strip_char(df, 'account information requests', '*')
@@ -38,13 +36,6 @@ class TransTwitter(Orchestrator):
         builder.extract_columns('requests for user data', 'all',
                                 'account information requests', 'accounts specified',
                                 'number where some information produced')
-
-        # Extract content restriction requests:
-        #		builder.extract_columns('content restrictions', 'content restrictions', 'content_num_affected', 'content_num_complied')
-
-        # Extract account preservation requests
-        #		builder.extract_columns('preservation requests',
-        #							 'preservations requested', 'preservations_num_affected', 'users / accounts preserved')
 
         self.df_out = builder.get_df()
         return self.df_out

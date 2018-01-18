@@ -46,6 +46,14 @@ class TestTransTwitter(unittest.TestCase):
         self.assertEqual(6, df_out['num_complied'][2])
         self.assertEqual(20, df_out['num_affected'][2])
 
+    def test_process_urls_should_remove_total_column(self):
+        available_urls = [{
+            'url': 'https://transparency.twitter.com/content/dam/transparency-twitter/data/download-govt-information-requests/information-requests-report-jan-jun-2017.csv',
+            'report_start': '2017-01-01 00:00:00', 'report_end': '2017-06-30 23:59:59'}]
+        df_out = self.twitter.process_urls(available_urls)
+
+        self.assertEqual(0, len(df_out.query('country=="TOTAL"')))
+
 
 if __name__ == '__main__':
     unittest.main()

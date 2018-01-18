@@ -10,9 +10,6 @@ from transparency.semiannual_url_source import SemiannualUrlSource
 class FB(Orchestrator):
 
     def process(self, df, report_start, report_end):
-
-        # Rename the columns to a standard format, and account for changes over the years
-        df.columns = df.columns.str.lower()
         utils.df_fix_columns(df)
 
         col_map = {
