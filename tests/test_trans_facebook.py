@@ -1,6 +1,6 @@
 import unittest
 
-from transparency.trans_facebook import FB
+from transparency.trans_facebook import TransFacebook
 
 
 class TestFacebook(unittest.TestCase):
@@ -12,7 +12,7 @@ class TestFacebook(unittest.TestCase):
         pass
 
     def setUp(self):
-        self.fb = FB()
+        self.fb = TransFacebook()
 
     def tearDown(self):
         pass

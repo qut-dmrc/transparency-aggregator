@@ -3,7 +3,7 @@ import logging
 import pandas as pd
 from docopt import docopt
 
-from transparency.trans_facebook import FB
+from transparency.trans_facebook import TransFacebook
 from transparency.trans_google import TransGoogle
 from transparency.trans_twitter import TransTwitter
 from transparency.utils import setup_logging
@@ -62,7 +62,7 @@ Options:
 
 
 def fetch_facebook():
-    fb = FB()
+    fb = TransFacebook()
     df = fb.fetch_all()
     return df
 
