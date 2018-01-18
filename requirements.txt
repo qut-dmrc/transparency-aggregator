@@ -1,3 +1,4 @@
-autopep8
 pandas
 docopt
+beautifulsoup4
+html5lib
