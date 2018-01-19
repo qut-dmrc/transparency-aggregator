@@ -54,6 +54,7 @@ Options:
         df = df.append(fetch_google())
 
     logging.info("Finished complete run. Found {} rows total.".format(df.shape[0]))
+    logging.info("Summary:\n{}".format(df.groupby(["platform", "property"]).size()))
 
     if csv_file:
         logging.info('writing to ' + csv_file)
