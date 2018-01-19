@@ -7,7 +7,7 @@ from transparency.orchestrator import Orchestrator
 from transparency.semiannual_url_source import SemiannualUrlSource
 
 
-class FB(Orchestrator):
+class TransFacebook(Orchestrator):
 
     def process(self, df, report_start, report_end):
         utils.df_fix_columns(df)

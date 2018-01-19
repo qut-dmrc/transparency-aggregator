@@ -1,6 +1,6 @@
 import unittest
 
-from transparency.trans_facebook import FB
+from transparency.trans_facebook import TransFacebook
 
 
 class TestFacebook(unittest.TestCase):
@@ -12,13 +12,13 @@ class TestFacebook(unittest.TestCase):
         pass
 
     def setUp(self):
-        self.fb = FB()
+        self.fb = TransFacebook()
 
     def tearDown(self):
         pass
 
-    def test_read_csv_from_url(self):
-        self.fb.read_csv('https://transparency.facebook.com/download/2013-H1/')
+    def test_read_loads_csv_from_url(self):
+        self.fb.read('https://transparency.facebook.com/download/2013-H1/')
 
     def test_get_urls(self):
         start_year = 2013
