@@ -24,8 +24,7 @@ class DataFrameBuilder:
         return self.df_out
 
     def extract_columns(self, request_type, request_subtype, num_requests_col,
-                        num_accounts_specified_col, num_complied_col, jurisdiction_col='country', agency_col='agency',
-                        reason_col='reason'):
+                        num_accounts_specified_col, num_complied_col, jurisdiction_col='country'):
         """ Take a dataframe with the columns num_requests_col and num_complied_col
             and return a new dataframe in our normal form format.
         """
@@ -43,8 +42,6 @@ class DataFrameBuilder:
                    num_requests_col: 'num_requests',
                    num_accounts_specified_col: 'num_accounts_specified_col',
                    jurisdiction_col: 'country',
-                   agency_col: 'agency',
-                   reason_col: 'reason'
                    }
 
         df_out.rename(columns=col_map, inplace=True)
