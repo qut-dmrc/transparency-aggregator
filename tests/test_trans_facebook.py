@@ -17,8 +17,8 @@ class TestFacebook(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_read_csv_from_url(self):
-        self.fb.read_csv('https://transparency.facebook.com/download/2013-H1/')
+    def test_read_loads_csv_from_url(self):
+        self.fb.read('https://transparency.facebook.com/download/2013-H1/')
 
     def test_get_urls(self):
         start_year = 2013

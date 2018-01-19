@@ -1,47 +1,42 @@
 """ Fetch and read Twitter transparency data """
-import logging
-from zipfile import ZipFile
-
-import numpy as np
-import pandas as pd
 
 import transparency.utils as utils
 from transparency.data_frame_builder import DataFrameBuilder
+from transparency.linkedin_reader import LinkedinReader
 from transparency.orchestrator import Orchestrator
 from transparency.static_source import StaticSource
-from transparency.zip_csv_reader import ZipCSVReader
 
 
-class TransGoogle(Orchestrator):
+class TransLinkedin(Orchestrator):
 
     def process(self, df, report_start, report_end):
         utils.df_fix_columns(df)
 
-        numeric_cols = ['user data requests', 'percentage of requests where some data produced',
-                        'users/accounts specified']
+        utils.df_strip_char(df, 'percentprovided', '%')
+
+        numeric_cols = ['accountsimpacted', 'memberdatarequests', 'percentprovided', 'subjecttorequest']
 
         utils.df_convert_to_numeric(df, numeric_cols)
 
-        builder = DataFrameBuilder(df_in=df, df_out=self.df_out, platform='Google', platform_property='Google',
+        builder = DataFrameBuilder(df_in=df, df_out=self.df_out, platform='LinkedIn', platform_property='LinkedIn',
                                    report_start='', report_end='')
 
-        utils.df_convert_from_percentage(df, 'percentage of requests where some data produced', 'user data requests',
+        utils.df_convert_from_percentage(df, 'percentprovided', 'memberdatarequests',
                                          'number where some information produced')
 
         # Extract requests for user data from governments:
-        builder.extract_columns('requests for user data', '!!',
-                                'user data requests', 'users/accounts specified',
-                                'number where some information produced')
+        builder.extract_columns(request_type='requests for user data', request_subtype='memberdatarequests',
+                                num_requests_col='memberdatarequests', num_affected_col='accountsimpacted',
+                                num_complied_col='number where some information produced')
 
         self.df_out = builder.get_df()
-        self.df_out['report_end'] = df['period ending'].apply(lambda d: utils.str_to_date(d))
 
-        self.df_out['report_start'] = self.df_out['report_end'].apply(
-            lambda report_end: (report_end + pd.DateOffset(days=1) - pd.DateOffset(months=6)))
+        self.df_out['report_end'] = df['report_end']
+        self.df_out['report_start'] = df['report_start']
 
-        for report_start in self.df_out['report_start']:
-            utils.check_assumption(report_start.day == 1, "Report Start date should be the first of the month")
-            utils.check_assumption(report_start.month in [1, 7], "Report Start month should be January or July")
+        # TODO Come back here after refactoring column names
+        # TODO Add assumption check
+
         return self.df_out
 
     def fetch_all(self):
@@ -52,19 +47,18 @@ class TransGoogle(Orchestrator):
         return self.df_out
 
     def expected_source_columns_array(self):
-        return [['CLDR Territory Code', 'Users/Accounts Specified', 'Country', 'Legal Process',
-                'Percentage of requests where some data produced', 'Period Ending', 'User Data Requests']]
+        return [["country", "percentProvided", "subjectToRequest", "report_start", "report_end", "accountsImpacted",
+                 "memberDataRequests", "isMLAT"]]
 
     def get_urls(self):
         source = StaticSource({'data': [{
-            "url": "https://storage.googleapis.com/transparencyreport/google-user-data-requests.zip",
+            "url": "https://www.linkedin.com/legal/transparency",
             "report_start": '',
             "report_end": '',
         }]})
 
         return source.get()
 
-    def read_csv(self, filename):
-        reader = ZipCSVReader({'internal_filename': 'google-user-data-requests/google-user-data-requests.csv'})
+    def read(self, filename):
+        reader = LinkedinReader({})
         return reader.read(filename)
-

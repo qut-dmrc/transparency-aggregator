@@ -64,7 +64,7 @@ class TransGoogle(Orchestrator):
 
         return source.get()
 
-    def read_csv(self, filename):
+    def read(self, filename):
         reader = ZipCSVReader({'internal_filename': 'google-user-data-requests/google-user-data-requests.csv'})
         return reader.read(filename)
 

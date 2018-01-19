@@ -19,27 +19,25 @@ class LinkedinReader(Reader):
         with open(filename) as file:
             soup = BeautifulSoup(file, 'html.parser')
 
-        parent = soup.find('code', {"id": "templates/legal/transparency-content"})
-        comments = parent.findAll(text=lambda text: isinstance(text, Comment))
+        code_block = soup.find('code', {"id": "templates/legal/transparency-content"})
+        json_comments = code_block.findAll(text=lambda text: isinstance(text, Comment))
 
-        final_json = comments[0]
+        linkedin_json_str = json_comments[0]
 
         # the contract for Reader is that all elements of the dataframe are strings
         # parse_int=str uses 'str' to read in ints, which casts them to strings
-        linked_in = json.loads(final_json, parse_int=str)
+        linkedin_json = json.loads(linkedin_json_str, parse_int=str)
 
-        gov_reqs = linked_in['governmentRequestsTable']
-        bigdata = []
+        gov_reqs = linkedin_json['governmentRequestsTable']
+        data = []
         for (i, dat) in enumerate(gov_reqs):
             (report_start, report_end) = self.linkedin_data_index_to_dates(i)
             for row in dat['countries']:
-                bigdata.append({"i": i, "report_start": report_start, "report_end": report_end, **row})
+                data.append({"report_start": report_start, "report_end": report_end, **row})
 
-        df = pd.DataFrame(bigdata)
+        df = pd.DataFrame(data)
 
         logging.debug("Found {} rows.".format(df.shape[0]))
-
-        # TODO Add assumption check in trans_linkedin
 
         return df
 

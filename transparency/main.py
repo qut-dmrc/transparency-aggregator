@@ -5,6 +5,7 @@ from docopt import docopt
 
 from transparency.trans_facebook import TransFacebook
 from transparency.trans_google import TransGoogle
+from transparency.trans_linkedin import TransLinkedin
 from transparency.trans_twitter import TransTwitter
 from transparency.utils import setup_logging
 from transparency.writer_csv import WriterCSV
@@ -53,6 +54,9 @@ Options:
     if get_from == 'google' or get_all:
         df = df.append(fetch_google())
 
+    if get_from == 'linkedin' or get_all:
+        df = df.append(fetch_linkedin())
+
     logging.info("Finished complete run. Found {} rows total.".format(df.shape[0]))
 
     if csv_file:
@@ -76,6 +80,12 @@ def fetch_twitter():
 def fetch_google():
     google = TransGoogle()
     df = google.fetch_all()
+    return df
+
+
+def fetch_linkedin():
+    linkedin = TransLinkedin()
+    df = linkedin.fetch_all()
     return df
 
 

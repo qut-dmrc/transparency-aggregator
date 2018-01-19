@@ -21,7 +21,7 @@ class Orchestrator:
         self.df_out = pd.DataFrame()
         self.downloader = Downloader()
 
-    def read_csv(self, filename):
+    def read(self, filename):
         reader = CSVReader({})
         return reader.read(filename)
 
@@ -54,7 +54,7 @@ class Orchestrator:
             try:
                 #note two dirnames, to go up a directory
                 src_file = self.downloader.download(url, os.path.join(os.path.dirname(os.path.dirname(__file__)),'cache'))
-                df = self.read_csv(src_file)
+                df = self.read(src_file)
                 self.process_with_check(df, report_start=report_start, report_end=report_end)
             except urllib.error.URLError as e:
                 logging.error("Unable to fetch url: {}. Error: {}".format(url, e))
