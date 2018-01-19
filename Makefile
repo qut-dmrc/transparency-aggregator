@@ -4,5 +4,5 @@ test:
 clean_cache:
 	rm cache/*
 
-run_all:
+run:
 	python main.py -c output.csv -a
