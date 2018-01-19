@@ -28,9 +28,17 @@ class TestLinkedinReader(unittest.TestCase):
         self.assertEqual('33', df['memberDataRequests'][2])
         self.assertEqual('34', df['subjectToRequest'][2])
 
+    def test_read_correctly_throws_error_when_no_dates_checked(self):
+        with self.assertRaises(utils.AssumptionError) as context:
+            with self.assertLogs(level="ERROR"):
+                self.reader.read(os.path.join(os.path.dirname(__file__), 'files/linkedin_sample_no_date_range.html'))
+
+        expected_message = "No date checks performed. Find another way of checking date assumptions."
+        self.assertIn(expected_message, str(context.exception))
+
     def test_check_date_range_throws_error_when_dates_do_not_match(self):
         with self.assertRaises(utils.AssumptionError) as context:
-            with self.assertLogs(level="ERROR") as logger:
+            with self.assertLogs(level="ERROR"):
                 date_range = '2016 July-December - This data point is not used; used for readability.'
                 report_start = '2012-01-01 00:00:00'
                 report_end = '2012-06-30 23:59:59'
