@@ -41,7 +41,7 @@ class Orchestrator:
         """ Ensure the final dataframe contains all and only the columns we need. """
         mutator = DesiredColumnsMutator({'desired_columns': ['report_start', 'report_end', 'platform', 'property',
                                                              'country', 'request_type', 'request_subtype',
-                                                             'num_requests', 'num_complied', 'num_affected', 'agency',
+                                                             'num_requests', 'num_complied', 'num_accounts_specified_col', 'agency',
                                                              'reason']})
         return mutator.mutate(df)
 

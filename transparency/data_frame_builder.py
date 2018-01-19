@@ -24,13 +24,13 @@ class DataFrameBuilder:
         return self.df_out
 
     def extract_columns(self, request_type, request_subtype, num_requests_col,
-                        num_affected_col, num_complied_col, jurisdiction_col='country', agency_col='agency',
+                        num_accounts_specified_col, num_complied_col, jurisdiction_col='country', agency_col='agency',
                         reason_col='reason'):
         """ Take a dataframe with the columns num_requests_col and num_complied_col
             and return a new dataframe in our normal form format.
         """
 
-        df_out = self.df_in[[jurisdiction_col, num_requests_col, num_complied_col, num_affected_col]].copy()
+        df_out = self.df_in[[jurisdiction_col, num_requests_col, num_complied_col, num_accounts_specified_col]].copy()
 
         # These are static: fill each row of the DF with these values
         for key, value in self.fixed_columns.items():
@@ -41,7 +41,7 @@ class DataFrameBuilder:
 
         col_map = {num_complied_col: 'num_complied',
                    num_requests_col: 'num_requests',
-                   num_affected_col: 'num_affected',
+                   num_accounts_specified_col: 'num_accounts_specified_col',
                    jurisdiction_col: 'country',
                    agency_col: 'agency',
                    reason_col: 'reason'
