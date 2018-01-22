@@ -17,7 +17,7 @@ There are currently 68 companies releasing this data. A reasonably complete list
 This script is designed to scrape tables from CSV, PDF, or HTML reports and aggregate data from different companies into
 a single common format. The output format contains the following fields:
 
->'report_start', 'report_end', 'platform', 'property', 'country', 'request_type', 'agency', 'reason', 'num_requests', 'num_complied', 'num_affected'
+>'report_start', 'report_end', 'platform', 'property', 'country', 'request_type', 'agency', 'reason', 'num_requests', 'num_requests_complied', 'num_affected'
 
 Initially, the two main types of requests are private information requests and content removal requests.
 

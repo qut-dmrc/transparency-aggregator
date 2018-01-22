@@ -57,7 +57,7 @@ class TransFacebook(Orchestrator):
                                 request_subtype='preservation requests',
                                 num_requests_col='preservations requested',
                                 num_accounts_specified_col='preservations_num_affected',
-                                num_complied_col='users / accounts preserved')
+                                num_requests_complied_col='users / accounts preserved')
 
         self.df_out = builder.get_df()
         return self.df_out

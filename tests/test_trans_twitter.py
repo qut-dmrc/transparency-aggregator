@@ -43,7 +43,7 @@ class TestTransTwitter(unittest.TestCase):
         df_out = self.twitter.process_urls(available_urls)
         self.assertEqual('Australia', df_out['country'][2])
         self.assertEqual(14, df_out['num_requests'][2])
-        self.assertEqual(6, df_out['num_complied'][2])
+        self.assertEqual(6, df_out['num_requests_complied'][2])
         self.assertEqual(20, df_out['num_accounts_specified_col'][2])
 
     def test_process_urls_should_remove_total_column(self):

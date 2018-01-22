@@ -27,7 +27,7 @@ class TransLinkedin(Orchestrator):
         # Extract requests for user data from governments:
         builder.extract_columns(request_type='requests for user data', request_subtype='memberdatarequests',
                                 num_requests_col='memberdatarequests', num_accounts_specified_col='accountsimpacted',
-                                num_complied_col='number where some information produced')
+                                num_requests_complied_col='number where some information produced')
 
         self.df_out = builder.get_df()
 
