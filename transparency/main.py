@@ -45,17 +45,10 @@ Options:
     logging.info("Starting complete run, collecting historical data.")
     df = pd.DataFrame()
 
-    if get_from == 'facebook' or get_all:
-        df = df.append(fetch_facebook())
-
-    if get_from == 'twitter' or get_all:
-        df = df.append(fetch_twitter())
-
-    if get_from == 'google' or get_all:
-        df = df.append(fetch_google())
-
-    if get_from == 'linkedin' or get_all:
-        df = df.append(fetch_linkedin())
+    orchestrators = get_orchestrators()
+    for (name, orc_class) in orchestrators.items():
+        if (get_from and 'trans' + get_from == name.lower()) or get_all:
+            df = df.append(fetch(orc_class))
 
     logging.info("Finished complete run. Found {} rows total.".format(df.shape[0]))
     logging.info("Summary:\n{}".format(df.groupby(["platform", "property"]).size()))
@@ -65,30 +58,21 @@ Options:
         writer = WriterCSV({})
         writer.write(df, csv_file)
 
-
-def fetch_facebook():
-    fb = TransFacebook()
-    df = fb.fetch_all()
+def fetch(orc_class):
+    orc = orc_class()
+    df = orc.fetch_all()
     return df
 
-
-def fetch_twitter():
-    twitter = TransTwitter()
-    df = twitter.fetch_all()
-    return df
-
-
-def fetch_google():
-    google = TransGoogle()
-    df = google.fetch_all()
-    return df
-
-
-def fetch_linkedin():
-    linkedin = TransLinkedin()
-    df = linkedin.fetch_all()
-    return df
-
+def get_orchestrators():
+    # it's possible to build this dict dynamically (e.g.:
+    #    return {k:v for k, v in globals().items() if k.lower().startswith('trans')}
+    # but that method doesn't let IDE know that the classes are used.
+    return {
+        'transfacebook': TransFacebook,
+        'transtwitter': TransTwitter,
+        'transgoogle': TransGoogle,
+        'translinkedin': TransLinkedin,
+    }
 
 if __name__ == '__main__':
     main()
