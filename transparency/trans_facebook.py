@@ -25,7 +25,7 @@ class TransFacebook(Orchestrator):
         # convert strings to numbers
         numeric_cols = ['total requests for user data', 'total user accounts referenced',
                         'total percentage of requests where some data produced', 'content restrictions',
-                        'content_num_affected', 'content_num_complied', 'preservations requested',
+                        'preservations requested',
                         'preservations_num_affected', 'users / accounts preserved']
 
         utils.df_convert_to_numeric(df, numeric_cols)
@@ -49,8 +49,8 @@ class TransFacebook(Orchestrator):
                                 'number of requests where some data produced')
 
         # Extract content restriction requests:
-        builder.extract_columns('content restrictions', 'all', 'content restrictions', 'content_num_affected',
-                                'content_num_complied')
+        builder.extract_columns('content restrictions', 'all', 'content restrictions', '',
+                                '')
 
         # Extract account preservation requests
         builder.extract_columns('requests for user data', 'preservation requests',

@@ -29,7 +29,16 @@ class DataFrameBuilder:
             and return a new dataframe in our normal form format.
         """
 
-        df_out = self.df_in[[jurisdiction_col, num_requests_col, num_complied_col, num_accounts_specified_col]].copy()
+        col_map = {
+            num_complied_col: 'num_complied',
+            num_requests_col: 'num_requests',
+            num_accounts_specified_col: 'num_accounts_specified_col',
+            jurisdiction_col: 'country',
+        }
+
+        cols = [col for col in col_map.keys() if col]
+
+        df_out = self.df_in[cols].copy()
 
         # These are static: fill each row of the DF with these values
         for key, value in self.fixed_columns.items():
@@ -38,11 +47,6 @@ class DataFrameBuilder:
         df_out['request_type'] = request_type
         df_out['request_subtype'] = request_subtype
 
-        col_map = {num_complied_col: 'num_complied',
-                   num_requests_col: 'num_requests',
-                   num_accounts_specified_col: 'num_accounts_specified_col',
-                   jurisdiction_col: 'country',
-                   }
 
         df_out.rename(columns=col_map, inplace=True)
 
