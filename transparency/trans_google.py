@@ -1,4 +1,5 @@
 """ Fetch and read Twitter transparency data """
+import logging
 
 import pandas as pd
 
@@ -25,14 +26,22 @@ class TransGoogle(Orchestrator):
         utils.df_convert_from_percentage(df, 'percentage of requests where some data produced', 'user data requests',
                                          'number where some information produced')
 
-        # Extract requests for user data from governments:
+        def get_request_type(row):
+            legal = row['legal process']
+            if legal == 'Preservation Requests':
+                return 'preservation requests'
+            else:
+                return 'requests for user data'
+
         builder.extract_columns(
-            request_type='requests for user data',
-            request_subtype='!!',
+            request_type=get_request_type,
+            request_subtype=lambda row: row['legal process'],
             num_requests_col='user data requests',
             num_accounts_specified_col='users/accounts specified',
             num_requests_complied_col='number where some information produced'
         )
+
+        # Extract requests for user data from governments:
 
         self.df_out = builder.get_df()
         self.df_out['report_end'] = df['period ending'].apply(lambda d: utils.str_to_date(d))

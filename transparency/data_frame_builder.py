@@ -47,15 +47,22 @@ class DataFrameBuilder:
 
         cols = [col for col in col_map.keys() if col]
 
-        df = self.df_in[cols].copy()
-
+        df = self.df_in.copy()
         # These are static: fill each row of the DF with these values
         for key, value in self.fixed_columns.items():
             df[key] = value
 
-        df['request_type'] = request_type
-        df['request_subtype'] = request_subtype
+        if callable(request_type):
+            df['request_type'] = df.apply(request_type, axis=1)
+        else:
+            df['request_type'] = request_type
 
+        if callable(request_subtype):
+            df['request_subtype'] = df.apply(request_subtype, axis=1)
+        else:
+            df['request_subtype'] = request_subtype
+
+        # TODO: limit extra columns
         df.rename(columns=col_map, inplace=True)
 
         self.df_out = self.df_out.append(df)
