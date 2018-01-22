@@ -38,18 +38,18 @@ class DataFrameBuilder:
 
         cols = [col for col in col_map.keys() if col]
 
-        df_out = self.df_in[cols].copy()
+        df = self.df_in[cols].copy()
 
         # These are static: fill each row of the DF with these values
         for key, value in self.fixed_columns.items():
-            df_out[key] = value
+            df[key] = value
 
-        df_out['request_type'] = request_type
-        df_out['request_subtype'] = request_subtype
+        df['request_type'] = request_type
+        df['request_subtype'] = request_subtype
 
 
-        df_out.rename(columns=col_map, inplace=True)
+        df.rename(columns=col_map, inplace=True)
 
-        self.df_out = self.df_out.append(df_out)
+        self.df_out = self.df_out.append(df)
 
         return True
