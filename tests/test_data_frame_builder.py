@@ -37,12 +37,23 @@ class TestDataFrameBuilder(unittest.TestCase):
         df_out = pd.DataFrame()
         Orchestrator.coerce_df(df_out)
 
-        cut = DataFrameBuilder(df_in, df_out, 'platform', 'platform_property', '2001-01-01 00:00:00', '2001-06-30 23:59:59')
-        cut.extract_columns('request_type', request_subtype='all', num_requests_col='number requests',
-                            num_accounts_specified_col='number accounts specified', num_requests_complied_col='number complied')
-        cut.extract_columns('another request_type', request_subtype='subpoena',
-                            num_requests_col='another number requests', num_accounts_specified_col='another number accounts specified',
-                            num_requests_complied_col='another number complied')
+        cut = DataFrameBuilder(df_in, df_out, 'platform', 'platform_property', '2001-01-01 00:00:00',
+                               '2001-06-30 23:59:59')
+        cut.extract_columns(
+            request_type='request_type',
+            request_subtype='all',
+            num_requests_col='number requests',
+            num_accounts_specified_col='number accounts specified',
+            num_requests_complied_col='number complied'
+        )
+
+        cut.extract_columns(
+            request_type='another request_type',
+            request_subtype='subpoena',
+            num_requests_col='another number requests',
+            num_accounts_specified_col='another number accounts specified',
+            num_requests_complied_col='another number complied'
+        )
         new_df_out = cut.get_df()
 
         self.assertEqual(6, len(new_df_out.index))

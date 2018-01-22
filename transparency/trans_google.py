@@ -1,8 +1,5 @@
 """ Fetch and read Twitter transparency data """
-import logging
-from zipfile import ZipFile
 
-import numpy as np
 import pandas as pd
 
 import transparency.utils as utils
@@ -29,9 +26,13 @@ class TransGoogle(Orchestrator):
                                          'number where some information produced')
 
         # Extract requests for user data from governments:
-        builder.extract_columns('requests for user data', '!!',
-                                'user data requests', 'users/accounts specified',
-                                'number where some information produced')
+        builder.extract_columns(
+            request_type='requests for user data',
+            request_subtype='!!',
+            num_requests_col='user data requests',
+            num_accounts_specified_col='users/accounts specified',
+            num_requests_complied_col='number where some information produced'
+        )
 
         self.df_out = builder.get_df()
         self.df_out['report_end'] = df['period ending'].apply(lambda d: utils.str_to_date(d))
@@ -53,7 +54,7 @@ class TransGoogle(Orchestrator):
 
     def expected_source_columns_array(self):
         return [['CLDR Territory Code', 'Users/Accounts Specified', 'Country', 'Legal Process',
-                'Percentage of requests where some data produced', 'Period Ending', 'User Data Requests']]
+                 'Percentage of requests where some data produced', 'Period Ending', 'User Data Requests']]
 
     def get_urls(self):
         source = StaticSource({'data': [{
@@ -67,4 +68,3 @@ class TransGoogle(Orchestrator):
     def read(self, filename):
         reader = ZipCSVReader({'internal_filename': 'google-user-data-requests/google-user-data-requests.csv'})
         return reader.read(filename)
-

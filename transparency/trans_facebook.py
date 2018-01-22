@@ -44,20 +44,31 @@ class TransFacebook(Orchestrator):
                                    report_start=report_start, report_end=report_end)
 
         # Extract requests for user data from governments:
-        builder.extract_columns('requests for user data', 'facebook other',
-                                'total requests for user data', 'total user accounts referenced',
-                                'number of requests where some data produced')
+        builder.extract_columns(
+            request_type='requests for user data',
+            request_subtype='facebook other',
+            num_requests_col='total requests for user data',
+            num_accounts_specified_col='total user accounts referenced',
+            num_requests_complied_col='number of requests where some data produced'
+        )
 
         # Extract content restriction requests:
-        builder.extract_columns('content restrictions', 'all', 'content restrictions', '',
-                                '')
+        builder.extract_columns(
+            request_type='content restrictions',
+            request_subtype='all',
+            num_requests_col='content restrictions',
+            num_accounts_specified_col='',
+            num_requests_complied_col=''
+        )
 
         # Extract account preservation requests
-        builder.extract_columns(request_type='requests for user data',
-                                request_subtype='preservation requests',
-                                num_requests_col='preservations requested',
-                                num_accounts_specified_col='preservations_num_affected',
-                                num_requests_complied_col='users / accounts preserved')
+        builder.extract_columns(
+            request_type='requests for user data',
+            request_subtype='preservation requests',
+            num_requests_col='preservations requested',
+            num_accounts_specified_col='preservations_num_affected',
+            num_requests_complied_col='users / accounts preserved'
+        )
 
         self.df_out = builder.get_df()
         return self.df_out
@@ -73,14 +84,19 @@ class TransFacebook(Orchestrator):
         return self.df_out
 
     def get_urls(self, start_year, end_year):
-        source = SemiannualUrlSource({"url_template": "https://transparency.facebook.com/download/$report_year-$facebook_period/", "start_year": start_year, "end_year": end_year})
+        source = SemiannualUrlSource(
+            {"url_template": "https://transparency.facebook.com/download/$report_year-$facebook_period/",
+             "start_year": start_year, "end_year": end_year})
 
         return source.get()
 
     def expected_source_columns_array(self):
         return [
-            ["Country","Requests for User Data","User Accounts Referenced","Percentage of requests where some data produced","Content Restrictions"],
-            ["Country","Total Requests for User Data","Total User Accounts Referenced","Total Percentage of Requests Where Some Data Produced","Content Restrictions","Preservations Requested","Users/Accounts Preserved"],
-            ["Country","Requests for User Data","User Accounts Referenced","Percentage of requests where some data produced"],
+            ["Country", "Requests for User Data", "User Accounts Referenced",
+             "Percentage of requests where some data produced", "Content Restrictions"],
+            ["Country", "Total Requests for User Data", "Total User Accounts Referenced",
+             "Total Percentage of Requests Where Some Data Produced", "Content Restrictions", "Preservations Requested",
+             "Users/Accounts Preserved"],
+            ["Country", "Requests for User Data", "User Accounts Referenced",
+             "Percentage of requests where some data produced"],
         ]
-

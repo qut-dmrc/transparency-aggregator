@@ -33,9 +33,13 @@ class TransTwitter(Orchestrator):
                                          'account information requests', 'number where some information produced')
 
         # Extract requests for user data from governments:
-        builder.extract_columns('requests for user data', 'all',
-                                'account information requests', 'accounts specified',
-                                'number where some information produced')
+        builder.extract_columns(
+            request_type='requests for user data',
+            request_subtype='all',
+            num_requests_col='account information requests',
+            num_accounts_specified_col='accounts specified',
+            num_requests_complied_col='number where some information produced'
+        )
 
         self.df_out = builder.get_df()
         return self.df_out
