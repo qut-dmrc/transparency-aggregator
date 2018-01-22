@@ -11,6 +11,7 @@ import logging
 import pandas as pd
 from bs4 import BeautifulSoup, Comment
 
+from transparency import utils
 from transparency.reader import Reader
 
 
@@ -30,10 +31,17 @@ class LinkedinReader(Reader):
 
         gov_reqs = linkedin_json['governmentRequestsTable']
         data = []
+        date_range_check_count = 0
+
         for (i, dat) in enumerate(gov_reqs):
             (report_start, report_end) = self.linkedin_data_index_to_dates(i)
+            date_range = dat.get('dateRange')
             for row in dat['countries']:
                 data.append({"report_start": report_start, "report_end": report_end, **row})
+
+            date_range_check_count += self.check_date_range(date_range, report_start, report_end)
+
+        utils.check_assumption(date_range_check_count > 0, "No date checks performed. Find another way of checking date assumptions.")
 
         df = pd.DataFrame(data)
 
@@ -52,3 +60,14 @@ class LinkedinReader(Reader):
         start = pd.Timestamp(year, month, 1)
         end = start + pd.DateOffset(months=6) - pd.DateOffset(seconds=1)
         return (str(start), str(end))
+
+    def check_date_range(self, date_range, report_start, report_end):
+        if date_range:
+            start = utils.str_to_date(report_start[:10]).strftime('%Y %B')
+            end = utils.str_to_date(report_end[:10]).strftime('%B')
+
+            expected = f"{start}-{end}"
+            utils.check_assumption(date_range.startswith(expected), f"Expected '{expected}' to be in '{date_range}'.")
+            return 1
+        else:
+            return 0
