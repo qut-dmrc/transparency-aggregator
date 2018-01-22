@@ -23,16 +23,25 @@ class DataFrameBuilder:
     def get_df(self):
         return self.df_out
 
-    def extract_columns(self, request_type, request_subtype, num_requests_col,
-                        num_accounts_specified_col, num_requests_complied_col, jurisdiction_col='country'):
+    def extract_columns(
+            self,
+            request_type,
+            request_subtype,
+            num_requests_col,
+            num_accounts_specified_col,
+            num_requests_complied_col,
+            num_accounts_complied_col='',
+            jurisdiction_col='country'
+    ):
         """ Take a dataframe with the columns num_requests_col and num_requests_complied_col
-            and return a new dataframe in our normal form format.
+            and return a new dataframe in our standard form.
         """
 
         col_map = {
-            num_requests_complied_col: 'num_requests_complied',
             num_requests_col: 'num_requests',
-            num_accounts_specified_col: 'num_accounts_specified_col',
+            num_accounts_specified_col: 'num_accounts_specified',
+            num_requests_complied_col: 'num_requests_complied',
+            num_accounts_complied_col: 'num_accounts_complied',
             jurisdiction_col: 'country',
         }
 
@@ -46,7 +55,6 @@ class DataFrameBuilder:
 
         df['request_type'] = request_type
         df['request_subtype'] = request_subtype
-
 
         df.rename(columns=col_map, inplace=True)
 

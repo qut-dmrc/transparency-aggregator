@@ -61,14 +61,14 @@ class TestDataFrameBuilder(unittest.TestCase):
         self.assertEqual('request_type', new_df_out['request_type'][0])
         self.assertEqual('all', new_df_out['request_subtype'][0])
         self.assertEqual(1, new_df_out['num_requests'][0])
-        self.assertEqual(4, new_df_out['num_accounts_specified_col'][0])
+        self.assertEqual(4, new_df_out['num_accounts_specified'][0])
         self.assertEqual(7, new_df_out['num_requests_complied'][0])
 
         self.assertEqual('aust', new_df_out['country'][3])
         self.assertEqual('another request_type', new_df_out['request_type'][3])
         self.assertEqual('subpoena', new_df_out['request_subtype'][3])
         self.assertEqual(11, new_df_out['num_requests'][3])
-        self.assertEqual(14, new_df_out['num_accounts_specified_col'][3])
+        self.assertEqual(14, new_df_out['num_accounts_specified'][3])
         self.assertEqual(17, new_df_out['num_requests_complied'][3])
 
 

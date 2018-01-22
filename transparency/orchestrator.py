@@ -5,8 +5,8 @@
 	 
 """
 import logging
-import urllib
 import os
+import urllib
 
 import pandas as pd
 
@@ -42,10 +42,21 @@ class Orchestrator:
     @staticmethod
     def coerce_df(df):
         """ Ensure the final dataframe contains all and only the columns we need. """
-        mutator = DesiredColumnsMutator({'desired_columns': ['report_start', 'report_end', 'platform', 'property',
-                                                             'country', 'request_type', 'request_subtype',
-                                                             'num_requests', 'num_requests_complied', 'num_accounts_specified_col', 'agency',
-                                                             'reason']})
+        mutator = DesiredColumnsMutator({'desired_columns': [
+            'report_start',
+            'report_end',
+            'platform',
+            'property',
+            'country',
+            'request_type',
+            'request_subtype',
+            'num_requests',
+            'num_accounts_specified',
+            'num_requests_complied',
+            'num_accounts_complied',
+            'agency',
+            'reason'
+        ]})
         return mutator.mutate(df)
 
     def process_urls(self, available_urls):
@@ -55,8 +66,9 @@ class Orchestrator:
             report_end = data['report_end']
 
             try:
-                #note two dirnames, to go up a directory
-                src_file = self.downloader.download(url, os.path.join(os.path.dirname(os.path.dirname(__file__)),'cache'))
+                # note two dirnames, to go up a directory
+                src_file = self.downloader.download(url,
+                                                    os.path.join(os.path.dirname(os.path.dirname(__file__)), 'cache'))
                 df = self.read(src_file)
                 self.process_with_check(df, report_start=report_start, report_end=report_end)
             except urllib.error.URLError as e:
