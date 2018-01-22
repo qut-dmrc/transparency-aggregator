@@ -1,6 +1,9 @@
 test:
 	python -m unittest discover tests
 
+system_test:
+	python -m unittest discover system_tests
+
 clean_cache:
 	rm cache/*
 
