@@ -6,3 +6,6 @@ clean_cache:
 
 run:
 	python main.py -c output.csv -a
+
+rund:
+	python main.py -c output.csv -a --verbose
