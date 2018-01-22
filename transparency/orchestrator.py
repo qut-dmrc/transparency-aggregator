@@ -21,6 +21,9 @@ class Orchestrator:
         self.df_out = pd.DataFrame()
         self.downloader = Downloader()
 
+    def name(self):
+        return type(self).__name__
+
     def read(self, filename):
         reader = CSVReader({})
         return reader.read(filename)
