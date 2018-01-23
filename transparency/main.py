@@ -62,7 +62,7 @@ def fetch(orc_class):
     orc = orc_class()
     logging.info(f"fetching data for {orc.name()}")
     df = orc.fetch_all()
-    logging.debug(f"sample of {orc.name()}:\n{df.head(3)}")
+    logging.debug(f"sample of {orc.name()}:\n\n{df.head(3).to_string()}\n")
     return df
 
 def get_orchestrators():
