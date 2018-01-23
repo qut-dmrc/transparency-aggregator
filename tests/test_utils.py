@@ -66,6 +66,19 @@ class TestUtils(unittest.TestCase):
                 self.assertIn('ERROR:root:Assumption failed: Value should be true', logger.output[0])
         self.assertTrue('Value should be true' in str(context.exception))
 
+    def test_df_convert_to_lower(self):
+        d = {
+            'a': pd.Series(['Test']),
+            'b': pd.Series(['TEST']),
+            'c': pd.Series(['Test']),
+        }
+        df = pd.DataFrame(d)
+        utils.df_convert_to_lower(df, ['a', 'b'])
+
+        self.assertEqual('test', df['a'][0])
+        self.assertEqual('test', df['b'][0])
+        self.assertEqual('Test', df['c'][0])
+
     def test_df_convert_from_percentage(self):
         pass
 # df, pc_col, total_col, dest_col):

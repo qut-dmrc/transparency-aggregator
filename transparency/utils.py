@@ -3,7 +3,6 @@ from datetime import datetime, date
 from logging.handlers import RotatingFileHandler
 
 import pandas as pd
-from dateutil.parser import parse
 
 
 class AssumptionError(Exception):
@@ -19,7 +18,7 @@ def check_assumption(assumption, assumption_description):
         raise AssumptionError(assumption_description)
 
 
-def str_to_date(date_in, format_str = '%Y-%m-%d'):
+def str_to_date(date_in, format_str='%Y-%m-%d'):
     """ Simple method to convert a string to a date. If passed a date, leave as is. """
     if isinstance(date_in, str):
         if date_in == '':
@@ -70,6 +69,7 @@ def setup_logging(log_file_name, verbose=False, interactive_only=False):
 
     return logger
 
+
 def df_fix_columns(df):
     df.columns = df.columns.str.lower()
 
@@ -78,6 +78,7 @@ def df_strip_char(df, col, char):
     df[col] = df[col].str.rstrip(char)
 
 
+# TODO Remove default None
 def df_convert_to_numeric(df, numeric_cols):
     for col in numeric_cols:
         if col not in df.columns:
@@ -90,6 +91,11 @@ def df_convert_to_numeric(df, numeric_cols):
             df[col] = df[col].str.replace(r"(\d+)( - )(\d+)", r'\1')
 
             df[col] = pd.to_numeric(df[col], errors='raise')
+
+
+def df_convert_to_lower(df, string_cols):
+    for col in string_cols:
+        df[col] = df[col].apply(str.lower)
 
 
 def df_convert_from_percentage(df, pc_col, total_col, dest_col):

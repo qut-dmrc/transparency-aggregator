@@ -32,6 +32,7 @@ class TestTransLinkedin(unittest.TestCase):
         df_out = self.trans.process_with_check(df, '', '')
         self.assertEqual('India', df_out['country'][0])
         self.assertEqual(12, df_out['num_requests'][0])
+        self.assertEqual("all", df_out['request_subtype'][0])
 
 
 if __name__ == '__main__':
