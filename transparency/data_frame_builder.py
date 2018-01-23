@@ -4,6 +4,7 @@
 	Most of these methods will need to be overwritten to handle specific reporting formats.
 	 
 """
+from transparency import utils
 from transparency.utils import str_to_date
 
 
@@ -64,6 +65,8 @@ class DataFrameBuilder:
 
         # TODO: limit extra columns
         df.rename(columns=col_map, inplace=True)
+
+        utils.df_convert_to_lower(df, ["request_type", "request_subtype"])
 
         self.df_out = self.df_out.append(df)
 
