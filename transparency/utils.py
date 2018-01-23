@@ -77,6 +77,10 @@ def df_fix_columns(df):
 def df_strip_char(df, col, char):
     df[col] = df[col].str.rstrip(char)
 
+def df_convert_to_int(df, cols):
+    for col in cols:
+        df[col] = df[col].astype(object)
+        df[col] = df[col].apply(lambda v: None if v is None else int(v), convert_dtype=False)
 
 # TODO Remove default None
 def df_convert_to_numeric(df, numeric_cols):
@@ -101,3 +105,4 @@ def df_convert_to_lower(df, string_cols):
 def df_convert_from_percentage(df, pc_col, total_col, dest_col):
     df[dest_col] = df[total_col] * df[pc_col] / 100.0
     df[dest_col] = df[dest_col].round()
+

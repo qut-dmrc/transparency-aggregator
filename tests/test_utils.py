@@ -5,9 +5,10 @@ import unittest.mock as mock
 import pandas as pd
 
 import transparency.utils as utils
+from tests.transparency_test_case import TransparencyTestCase
 
 
-class TestUtils(unittest.TestCase):
+class TestUtils(TransparencyTestCase):
 
     def test_str_to_date_with_format_parses_date(self):
         got = utils.str_to_date('01/02/2000', "%d/%m/%Y")
@@ -78,6 +79,20 @@ class TestUtils(unittest.TestCase):
         self.assertEqual('test', df['a'][0])
         self.assertEqual('test', df['b'][0])
         self.assertEqual('Test', df['c'][0])
+
+    def test_df_convert_to_int(self):
+        d = {
+            'a': pd.Series([1, '2', 3.1, None], index=[1,2,3,4])
+        }
+        df = pd.DataFrame(d)
+
+        utils.df_convert_to_int(df, ['a'])
+
+        self.assertEqualAndInt(1, df['a'][1])
+        self.assertEqualAndInt(2, df['a'][2])
+        self.assertEqualAndInt(3, df['a'][3])
+        self.assertIsNone(df['a'][4])
+
 
     def test_df_convert_from_percentage(self):
         pass
