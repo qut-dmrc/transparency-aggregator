@@ -60,6 +60,8 @@ class TestTransGoogle(unittest.TestCase):
         df_out = self.google.process_with_check(df, '', '')
         self.assertEqual('Australia', df_out['country'][1])
         self.assertEqual(155, df_out['num_requests'][1])
+        self.assertEqual(pd.Timestamp("2009-07-01 00:00:00"), df_out['report_start'][1])
+        self.assertEqual(pd.Timestamp("2009-12-31 23:59:59"), df_out['report_end'][1])
 
     def test_process_with_check_extra_column_should_cause_assumption_error(self):
         df = self.sample_df()
