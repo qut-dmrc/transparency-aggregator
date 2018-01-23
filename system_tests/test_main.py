@@ -1,6 +1,6 @@
+import math
 import subprocess
 import unittest
-import math
 
 import numpy as np
 import pandas as pd
@@ -8,16 +8,18 @@ import pandas as pd
 
 class TestMain(unittest.TestCase):
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         output = subprocess.check_output(
             ['python', 'main.py', '--csv-output', 'system_tests/output/output.csv', '--get-all'])
 
         if output:
             print(output)
 
-        self.df = pd.read_csv('system_tests/output/output.csv', encoding="UTF-8", dtype=np.object_)
+        cls._df = pd.read_csv('system_tests/output/output.csv', encoding="UTF-8", dtype=np.object_)
 
-        self.indexed_df = self.df.set_index([
+    def setUp(self):
+        self.indexed_df = TestMain._df.set_index([
             'report_start',
             'platform',
             'property',
@@ -47,6 +49,7 @@ class TestMain(unittest.TestCase):
         self.assertEqual("20000.0", row['num_accounts_specified'])
         self.assertEqual("8690.0", row['num_requests_complied'])
         self.assertTrue(math.isnan(row['num_accounts_complied']))
+
 
 # "report_start","report_end","platform","property","country","request_type","request_subtype","num_requests","num_accounts_specified","num_requests_complied","num_accounts_complied","agency","reason"
 
