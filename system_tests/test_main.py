@@ -45,7 +45,7 @@ class TestMain(unittest.TestCase):
         self.assertEqual("2017-06-30 23:59:59", row['report_end'])
         self.assertEqual("704", row['num_requests'])
         self.assertEqual("849", row['num_accounts_specified'])
-        self.assertEqual("542.0", row['num_requests_complied'])
+        self.assertEqual("542", row['num_requests_complied'])
 
     def test_facebook_2013(self):
         row = self.indexed_df.loc[
@@ -53,8 +53,8 @@ class TestMain(unittest.TestCase):
 
         self.assertEqual("2013-06-30 23:59:59", row['report_end'])
         self.assertEqual("11000", row['num_requests'])
-        self.assertEqual("20000.0", row['num_accounts_specified'])
-        self.assertEqual("8690.0", row['num_requests_complied'])
+        self.assertEqual("20000", row['num_accounts_specified'])
+        self.assertEqual("8690", row['num_requests_complied'])
         self.assertTrue(math.isnan(row['num_accounts_complied']))
 
     def test_twitter_2012(self):
@@ -62,9 +62,9 @@ class TestMain(unittest.TestCase):
             "2012-01-01 00:00:00", "Twitter", "Twitter", "Canada", "requests for user data", "all"]
 
         self.assertEqual("2012-06-30 23:59:59", row['report_end'])
-        self.assertEqual("11.0", row['num_requests'])
-        self.assertEqual("12.0", row['num_accounts_specified'])
-        self.assertEqual("2.0", row['num_requests_complied'])
+        self.assertEqual("11", row['num_requests'])
+        self.assertEqual("12", row['num_accounts_specified'])
+        self.assertEqual("2", row['num_requests_complied'])
         self.assertTrue(math.isnan(row['num_accounts_complied']))
 
     def test_twitter_2017(self):
@@ -72,9 +72,9 @@ class TestMain(unittest.TestCase):
             "2017-01-01 00:00:00", "Twitter", "Twitter", "Australia", "requests for user data", "all"]
 
         self.assertEqual("2017-06-30 23:59:59", row['report_end'])
-        self.assertEqual("14.0", row['num_requests'])
-        self.assertEqual("20.0", row['num_accounts_specified'])
-        self.assertEqual("6.0", row['num_requests_complied'])
+        self.assertEqual("14", row['num_requests'])
+        self.assertEqual("20", row['num_accounts_specified'])
+        self.assertEqual("6", row['num_requests_complied'])
         self.assertTrue(math.isnan(row['num_accounts_complied']))
 
     def test_google_2009(self):
@@ -98,7 +98,7 @@ class TestMain(unittest.TestCase):
         self.assertEqual("2010-12-31 23:59:59", row['report_end'])
         self.assertEqual("85", row['num_requests'])
         self.assertTrue(math.isnan(row['num_accounts_specified']))
-        self.assertEqual("62.0", row['num_requests_complied'])
+        self.assertEqual("62", row['num_requests_complied'])
         self.assertTrue(math.isnan(row['num_accounts_complied']))
 
     def test_google_2012(self):
@@ -107,8 +107,8 @@ class TestMain(unittest.TestCase):
 
         self.assertEqual("2012-12-31 23:59:59", row['report_end'])
         self.assertEqual("758", row['num_requests'])
-        self.assertEqual("1249.0", row['num_accounts_specified'])
-        self.assertEqual("682.0", row['num_requests_complied'])
+        self.assertEqual("1249", row['num_accounts_specified'])
+        self.assertEqual("682", row['num_requests_complied'])
         self.assertTrue(math.isnan(row['num_accounts_complied']))
 
     def test_google_2013(self):
@@ -117,8 +117,8 @@ class TestMain(unittest.TestCase):
 
         self.assertEqual("2013-12-31 23:59:59", row['report_end'])
         self.assertEqual("140", row['num_requests'])
-        self.assertEqual("259.0", row['num_accounts_specified'])
-        self.assertEqual("126.0", row['num_requests_complied'])
+        self.assertEqual("259", row['num_accounts_specified'])
+        self.assertEqual("126", row['num_requests_complied'])
         self.assertTrue(math.isnan(row['num_accounts_complied']))
 
     def test_google_2014_preservation_requests(self):
@@ -127,7 +127,7 @@ class TestMain(unittest.TestCase):
 
         self.assertEqual("2014-12-31 23:59:59", row['report_end'])
         self.assertEqual("26", row['num_requests'])
-        self.assertEqual("50.0", row['num_accounts_specified'])
+        self.assertEqual("50", row['num_accounts_specified'])
         self.assertTrue(math.isnan(row['num_requests_complied']))
         self.assertTrue(math.isnan(row['num_accounts_complied']))
 
@@ -137,8 +137,8 @@ class TestMain(unittest.TestCase):
 
         self.assertEqual("2014-12-31 23:59:59", row['report_end'])
         self.assertEqual("26", row['num_requests'])
-        self.assertEqual("27.0", row['num_accounts_specified'])
-        self.assertEqual("6.0", row['num_requests_complied'])
+        self.assertEqual("27", row['num_accounts_specified'])
+        self.assertEqual("6", row['num_requests_complied'])
         self.assertTrue(math.isnan(row['num_accounts_complied']))        
 
 # "report_start","report_end","platform","property","country","request_type","request_subtype","num_requests","num_accounts_specified","num_requests_complied","num_accounts_complied","agency","reason"
