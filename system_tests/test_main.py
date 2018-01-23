@@ -138,7 +138,27 @@ class TestMain(unittest.TestCase):
         self.assertEqual("26", row['num_requests'])
         self.assertEqual("27.0", row['num_accounts_specified'])
         self.assertEqual("6.0", row['num_requests_complied'])
-        self.assertTrue(math.isnan(row['num_accounts_complied']))        
+        self.assertTrue(math.isnan(row['num_accounts_complied']))
+
+    def test_linkedin_2012(self):
+        row = self.indexed_df.loc[
+            "2012-07-01 00:00:00", "LinkedIn", "LinkedIn", "United States", "requests for user data", "all"]
+
+        self.assertEqual("2012-12-31 23:59:59", row['report_end'])
+        self.assertEqual("45", row['num_requests'])
+        self.assertEqual("49.0", row['num_accounts_specified'])
+        self.assertEqual("36.0", row['num_requests_complied'])
+        self.assertTrue(math.isnan(row['num_accounts_complied'])) 
+
+    def test_linkedin_2017(self):
+        row = self.indexed_df.loc[
+            "2017-01-01 00:00:00", "LinkedIn", "LinkedIn", "United States", "requests for user data", "all"]
+
+        self.assertEqual("2017-06-30 23:59:59", row['report_end'])
+        self.assertEqual("187", row['num_requests'])
+        self.assertEqual("594.0", row['num_accounts_specified'])
+        self.assertEqual("133.0", row['num_requests_complied'])
+        self.assertEqual("229.0", row['num_accounts_complied'])       
 
 # "report_start","report_end","platform","property","country","request_type","request_subtype","num_requests","num_accounts_specified","num_requests_complied","num_accounts_complied","agency","reason"
 
