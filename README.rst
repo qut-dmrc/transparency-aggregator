@@ -54,7 +54,7 @@ You can run the system tests with:
 The system tests use the program to download and process all data (using the cached data if available) and then checks a small
 subset of the results agree with data copied off the website by hand.
 
-You can use use the SYSTEM_TEST_USE_OLD_OUTPUT to skip creating a output file
+You can use use the SYSTEM_TEST_USE_OLD_OUTPUT environment variable to skip creating an output file
 This is useful when writing new system tests.
 
 SYSTEM_TEST_USE_OLD_OUTPUT=1 make system_test
