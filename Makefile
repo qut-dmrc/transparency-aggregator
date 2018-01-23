@@ -12,3 +12,7 @@ run:
 
 rund:
 	python main.py -c output.csv -a --verbose
+
+package:
+	python setup.py sdist  #source dist
+	python setup.py bdist_wheel #platform wheel
