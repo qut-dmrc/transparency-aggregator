@@ -94,6 +94,19 @@ class TestUtils(TransparencyTestCase):
         self.assertIsNone(df['a'][4])
         self.assertIsNone(df['a'][5])
 
+    def test_df_create_missing_cols(self):
+        d = {
+            'a': [1,2,3,4],
+            'b': [5,6,7,8],
+        }
+        df = pd.DataFrame(d)
+
+        utils.df_create_missing_columns(df, ['b', 'c'])
+
+        self.assertEqual((4, 3), df.shape)
+        self.assertEqual(['a','b','c'], list(df.columns.values))
+        self.assertEqual(5, df['b'][0])
+        self.assertIsNone(df['c'][0])
 
     def test_df_convert_from_percentage(self):
         pass

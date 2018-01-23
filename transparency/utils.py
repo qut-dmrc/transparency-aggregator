@@ -78,6 +78,11 @@ def df_fix_columns(df):
 def df_strip_char(df, col, char):
     df[col] = df[col].str.rstrip(char)
 
+def df_create_missing_columns(df, cols):
+    for col in cols:
+        if col not in df.columns:
+            df[col] = None
+
 def df_convert_to_int(df, cols):
     def convert(v):
         if v is None:
