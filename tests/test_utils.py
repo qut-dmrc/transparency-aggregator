@@ -82,7 +82,7 @@ class TestUtils(TransparencyTestCase):
 
     def test_df_convert_to_int(self):
         d = {
-            'a': pd.Series([1, '2', 3.1, None], index=[1,2,3,4])
+            'a': pd.Series([1, '2', 3.1, None, float('nan')], index=[1,2,3,4,5])
         }
         df = pd.DataFrame(d)
 
@@ -92,6 +92,7 @@ class TestUtils(TransparencyTestCase):
         self.assertEqualAndInt(2, df['a'][2])
         self.assertEqualAndInt(3, df['a'][3])
         self.assertIsNone(df['a'][4])
+        self.assertIsNone(df['a'][5])
 
 
     def test_df_convert_from_percentage(self):

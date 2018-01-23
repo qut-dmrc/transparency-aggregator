@@ -2,6 +2,7 @@ import logging
 from datetime import datetime, date
 from logging.handlers import RotatingFileHandler
 
+import math
 import pandas as pd
 
 
@@ -78,9 +79,15 @@ def df_strip_char(df, col, char):
     df[col] = df[col].str.rstrip(char)
 
 def df_convert_to_int(df, cols):
+    def convert(v):
+        if v is None:
+            return None
+        if type(v) is float and math.isnan(v):
+            return None
+        return int(v)
     for col in cols:
         df[col] = df[col].astype(object)
-        df[col] = df[col].apply(lambda v: None if v is None else int(v), convert_dtype=False)
+        df[col] = df[col].apply(convert, convert_dtype=False)
 
 # TODO Remove default None
 def df_convert_to_numeric(df, numeric_cols):
