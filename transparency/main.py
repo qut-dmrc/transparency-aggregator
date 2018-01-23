@@ -51,7 +51,8 @@ Options:
             df = df.append(fetch(orc_class))
 
     logging.info("Finished complete run. Found {} rows total.".format(df.shape[0]))
-    logging.info("Summary:\n{}".format(df.groupby(["platform", "property"]).size()))
+    summary = df.groupby(["platform", "property"]).size()
+    logging.info("Summary:\n\n{}\n".format(summary.to_string()))
 
     if csv_file:
         logging.info('writing to ' + csv_file)
