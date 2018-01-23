@@ -44,10 +44,11 @@ class TransGoogle(Orchestrator):
         # Extract requests for user data from governments:
 
         self.df_out = builder.get_df()
-        self.df_out['report_end'] = df['period ending'].apply(lambda d: utils.str_to_date(d))
+        self.df_out['report_end'] = df['period ending'].apply(
+            lambda d: utils.str_to_date(d).replace(hour=23, minute=59, second=59))
 
         self.df_out['report_start'] = self.df_out['report_end'].apply(
-            lambda report_end: (report_end + pd.DateOffset(days=1) - pd.DateOffset(months=6)))
+            lambda report_end: (report_end + pd.DateOffset(days=1) - pd.DateOffset(months=6)).replace(hour=0, minute=0, second=0))
 
         for report_start in self.df_out['report_start']:
             utils.check_assumption(report_start.day == 1, "Report Start date should be the first of the month")
