@@ -26,7 +26,7 @@ class TransFacebook(Orchestrator):
         numeric_cols = ['total requests for user data', 'total user accounts referenced',
                         'total percentage of requests where some data produced', 'content restrictions',
                         'preservations requested',
-                        'preservations_num_affected', 'users / accounts preserved']
+                        'preservations_num_affected', 'users/accounts preserved']
 
         utils.df_convert_to_numeric(df, numeric_cols)
 
@@ -36,9 +36,6 @@ class TransFacebook(Orchestrator):
         df['number of requests where some data produced'] = df[
             'number of requests where some data produced'].round()
         # this doesn't seem to work: .astype(int, errors='ignore')
-
-        df['preservations_num_affected'] = df[
-            'preservations requested']  # Assume 1:1 mapping on requests:accounts
 
         builder = DataFrameBuilder(df_in=df, df_out=self.df_out, platform='Facebook', platform_property='Facebook',
                                    report_start=report_start, report_end=report_end)
@@ -67,7 +64,7 @@ class TransFacebook(Orchestrator):
             request_subtype='preservation requests',
             num_requests_col='preservations requested',
             num_accounts_specified_col='preservations_num_affected',
-            num_requests_complied_col='users / accounts preserved'
+            num_requests_complied_col='users/accounts preserved'
         )
 
         self.df_out = builder.get_df()
