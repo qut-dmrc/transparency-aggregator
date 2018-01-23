@@ -44,3 +44,18 @@ are you getting:
 
 On MacOS, you want to navigate to "Applications/Python 3.6" and run the "Install Certificates.command" file.
 
+## Testing
+
+You can run the unit tests with:
+    make test
+
+You can run the system tests with:
+    make system_test
+The system tests use the program to download and process all data (using the cached data if available) and then checks a small
+subset of the results agree with data copied off the website by hand.
+
+You can use use the SYSTEM_TEST_USE_OLD_OUTPUT to skip creating a output file
+This is useful when writing new system tests.
+
+SYSTEM_TEST_USE_OLD_OUTPUT=1 make system_test
+

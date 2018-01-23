@@ -1,6 +1,8 @@
+import logging
 import math
 import subprocess
 import unittest
+import os
 
 import numpy as np
 import pandas as pd
@@ -10,13 +12,18 @@ class TestMain(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        output = subprocess.check_output(
-            ['python', 'main.py', '--csv-output', 'system_tests/output/output.csv', '--get-all'])
+        use_old = os.environ.get('SYSTEM_TEST_USE_OLD_OUTPUT')
+        output_file = 'system_tests/output/output.csv'
+        if not use_old:
+            output = subprocess.check_output(
+                ['python', 'main.py', '--csv-output', output_file, '--get-all'])
 
-        if output:
-            print(output)
+            if output:
+                print(output)
+        else:
+            logging.warning('SYSTEM_TEST_USE_OLD_OUTPUT is set\n\n*********************\n*********************\n\n  USING OLD OUTPUT!\n\n*********************\n*********************\n')
 
-        cls._df = pd.read_csv('system_tests/output/output.csv', encoding="UTF-8", dtype=np.object_)
+        cls._df = pd.read_csv(output_file, encoding="UTF-8", dtype=np.object_)
 
     def setUp(self):
         self.indexed_df = TestMain._df.set_index([
