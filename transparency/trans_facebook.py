@@ -60,11 +60,12 @@ class TransFacebook(Orchestrator):
 
         # Extract account preservation requests
         builder.extract_columns(
-            request_type='requests for user data',
+            request_type='preservation requests',
             request_subtype='preservation requests',
             num_requests_col='preservations requested',
-            num_accounts_specified_col='preservations_num_affected',
-            num_requests_complied_col='users/accounts preserved'
+            num_accounts_specified_col='',
+            num_requests_complied_col='',
+            num_accounts_complied_col='users/accounts preserved'
         )
 
         self.df_out = builder.get_df()

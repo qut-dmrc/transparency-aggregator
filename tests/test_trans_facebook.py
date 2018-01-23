@@ -1,21 +1,10 @@
-import unittest
-
 from transparency.trans_facebook import TransFacebook
+from tests.transparency_test_case import TransparencyTestCase
 
 
-class TestFacebook(unittest.TestCase):
-    # self.fb = None
-
-    @classmethod
-    def setup_class(cls):
-        """This method is run once for each class before any tests are run"""
-        pass
-
+class TestFacebook(TransparencyTestCase):
     def setUp(self):
         self.fb = TransFacebook()
-
-    def tearDown(self):
-        pass
 
     def test_read_loads_csv_from_url(self):
         self.fb.read('https://transparency.facebook.com/download/2013-H1/')
@@ -42,6 +31,28 @@ class TestFacebook(unittest.TestCase):
 
         self.fb.process_urls(available_urls)
 
+    def sample_df(self):
+        return self.get_df(
+            """
+            Country,"Total Requests for User Data","Total User Accounts Referenced","Total Percentage of Requests Where Some Data Produced","Content Restrictions","Preservations Requested","Users/Accounts Preserved"
+            Argentina,100,"200",50.00%,10,800,900
+            """
+        )
+
+    def test_process_preservation_requests_are_translated_correctly(self):
+        df_out = self.fb.process(self.sample_df(), '2017-01-01 00:00:00', '2017-06-30 23:59:59')
+        self.assertEqual(3, df_out.shape[0])
+
+        row = df_out.query('country=="Argentina" and request_type=="preservation requests"').iloc[0]
+
+        self.assertEqual('Argentina', row['country'])
+        self.assertEqual(800, row['num_requests'])
+        self.assertEqual(900, row['num_accounts_complied'])
+        self.assertNaN(row['num_requests_complied'])
+        self.assertNaN(row['num_accounts_specified'])
+        self.assertEqual('preservation requests', row['request_subtype'])
+        self.assertEqual('preservation requests', row['request_type'])
+
     def test_process_urls_unreachable(self):
         unavailableURL = 'https://transparency.facebook.com.notexist/'
         available_urls = [
@@ -51,7 +62,3 @@ class TestFacebook(unittest.TestCase):
             self.fb.process_urls(available_urls)
             self.assertEqual(1, len(cm.output))
             self.assertIn(f'ERROR:root:Unable to fetch url: {unavailableURL}. ', cm.output[0])
-
-
-if __name__ == '__main__':
-    unittest.main()
