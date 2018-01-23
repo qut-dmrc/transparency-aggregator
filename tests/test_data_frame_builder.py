@@ -1,12 +1,11 @@
-import unittest
-
 import pandas as pd
 
 from transparency.data_frame_builder import DataFrameBuilder
 from transparency.orchestrator import Orchestrator
+from tests.transparency_test_case import TransparencyTestCase
 
 
-class TestDataFrameBuilder(unittest.TestCase):
+class TestDataFrameBuilder(TransparencyTestCase):
 
     @classmethod
     def setup_class(cls):
@@ -56,20 +55,20 @@ class TestDataFrameBuilder(unittest.TestCase):
         )
         new_df_out = cut.get_df()
 
-        self.assertEqual(6, len(new_df_out.index))
+        self.assertEqualAndInt(6, len(new_df_out.index))
         self.assertEqual('aust', new_df_out['country'][0])
         self.assertEqual('request_type', new_df_out['request_type'][0])
         self.assertEqual('all', new_df_out['request_subtype'][0])
-        self.assertEqual(1, new_df_out['num_requests'][0])
-        self.assertEqual(4, new_df_out['num_accounts_specified'][0])
-        self.assertEqual(7, new_df_out['num_requests_complied'][0])
+        self.assertEqualAndInt(1, new_df_out['num_requests'][0])
+        self.assertEqualAndInt(4, new_df_out['num_accounts_specified'][0])
+        self.assertEqualAndInt(7, new_df_out['num_requests_complied'][0])
 
         self.assertEqual('aust', new_df_out['country'][3])
         self.assertEqual('another request_type', new_df_out['request_type'][3])
         self.assertEqual('subpoena', new_df_out['request_subtype'][3])
-        self.assertEqual(11, new_df_out['num_requests'][3])
-        self.assertEqual(14, new_df_out['num_accounts_specified'][3])
-        self.assertEqual(17, new_df_out['num_requests_complied'][3])
+        self.assertEqualAndInt(11, new_df_out['num_requests'][3])
+        self.assertEqualAndInt(14, new_df_out['num_accounts_specified'][3])
+        self.assertEqualAndInt(17, new_df_out['num_requests_complied'][3])
 
 
 if __name__ == '__main__':

@@ -18,3 +18,8 @@ class TransparencyTestCase(unittest.TestCase):
 
     def assertNaN(self, value):
         self.assertTrue(math.isnan(value), f"'{value}' is not NaN")
+
+    def assertEqualAndInt(self, expect, actual):
+        self.assertEqual(expect, actual)
+        self.assertEqual(int, type(actual))
+

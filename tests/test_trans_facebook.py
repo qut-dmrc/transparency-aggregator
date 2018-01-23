@@ -48,8 +48,8 @@ class TestFacebook(TransparencyTestCase):
         self.assertEqual('Argentina', row['country'])
         self.assertEqual(800, row['num_requests'])
         self.assertEqual(900, row['num_accounts_complied'])
-        self.assertNaN(row['num_requests_complied'])
-        self.assertNaN(row['num_accounts_specified'])
+        self.assertIsNone(row['num_requests_complied'])
+        self.assertIsNone(row['num_accounts_specified'])
         self.assertEqual('preservation requests', row['request_subtype'])
         self.assertEqual('preservation requests', row['request_type'])
 

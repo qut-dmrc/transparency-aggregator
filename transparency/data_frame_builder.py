@@ -38,6 +38,12 @@ class DataFrameBuilder:
             and return a new dataframe in our standard form.
         """
 
+        output_cols = [
+            "num_requests",
+            "num_accounts_specified",
+            "num_requests_complied",
+            "num_accounts_complied",
+        ]
         col_map = {
             num_requests_col: 'num_requests',
             num_accounts_specified_col: 'num_accounts_specified',
@@ -66,7 +72,11 @@ class DataFrameBuilder:
         # TODO: limit extra columns
         df.rename(columns=col_map, inplace=True)
 
+
         utils.df_convert_to_lower(df, ["request_type", "request_subtype"])
+
+        utils.df_create_missing_columns(df, output_cols)
+        utils.df_convert_to_int(df, output_cols)
 
         self.df_out = self.df_out.append(df)
 
