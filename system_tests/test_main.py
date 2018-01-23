@@ -78,8 +78,11 @@ class TestMain(unittest.TestCase):
         self.assertTrue(math.isnan(row['num_accounts_complied']))
 
     def test_google_2009(self):
+        # the error:
+        #   KeyError: 'the label [Google] is not in the [columns]'
+        # just means the row wasn't found.  Note that it is case sensitive.
         row = self.indexed_df.loc[
-            "2009-07-01 00:00:00", "Google", "Google", "Australia", "requests for user data", "All"]
+            "2009-07-01 00:00:00", "Google", "Google", "Australia", "requests for user data", "all"]
 
         self.assertEqual("2009-12-31 23:59:59", row['report_end'])
         self.assertEqual("155", row['num_requests'])
@@ -90,7 +93,7 @@ class TestMain(unittest.TestCase):
 
     def test_google_2010(self):
         row = self.indexed_df.loc[
-            "2010-07-01 00:00:00", "Google", "Google", "Belgium", "requests for user data", "All"]
+            "2010-07-01 00:00:00", "Google", "Google", "Belgium", "requests for user data", "all"]
 
         self.assertEqual("2010-12-31 23:59:59", row['report_end'])
         self.assertEqual("85", row['num_requests'])
@@ -100,7 +103,7 @@ class TestMain(unittest.TestCase):
 
     def test_google_2012(self):
         row = self.indexed_df.loc[
-            "2012-07-01 00:00:00", "Google", "Google", "United States", "requests for user data", "Legal Requests"]
+            "2012-07-01 00:00:00", "Google", "Google", "United States", "requests for user data", "legal requests"]
 
         self.assertEqual("2012-12-31 23:59:59", row['report_end'])
         self.assertEqual("758", row['num_requests'])
@@ -110,7 +113,7 @@ class TestMain(unittest.TestCase):
 
     def test_google_2013(self):
         row = self.indexed_df.loc[
-            "2013-07-01 00:00:00", "Google", "Google", "United States", "requests for user data", "Pen Register Orders"]
+            "2013-07-01 00:00:00", "Google", "Google", "United States", "requests for user data", "pen register orders"]
 
         self.assertEqual("2013-12-31 23:59:59", row['report_end'])
         self.assertEqual("140", row['num_requests'])
@@ -118,10 +121,9 @@ class TestMain(unittest.TestCase):
         self.assertEqual("126.0", row['num_requests_complied'])
         self.assertTrue(math.isnan(row['num_accounts_complied']))
 
-
-    def test_google_2014(self):
+    def test_google_2014_preservation_requests(self):
         row = self.indexed_df.loc[
-            "2014-07-01 00:00:00", "Google", "Google", "Canada", "preservation requests", "Preservation Requests"]
+            "2014-07-01 00:00:00", "Google", "Google", "Canada", "preservation requests", "preservation requests"]
 
         self.assertEqual("2014-12-31 23:59:59", row['report_end'])
         self.assertEqual("26", row['num_requests'])
@@ -129,10 +131,9 @@ class TestMain(unittest.TestCase):
         self.assertTrue(math.isnan(row['num_requests_complied']))
         self.assertTrue(math.isnan(row['num_accounts_complied']))
 
-
-    def test_google_2014(self):
+    def test_google_2014_legal_requests(self):
         row = self.indexed_df.loc[
-            "2014-07-01 00:00:00", "Google", "Google", "Canada", "requests for user data", "Legal Requests"]
+            "2014-07-01 00:00:00", "Google", "Google", "Canada", "requests for user data", "legal requests"]
 
         self.assertEqual("2014-12-31 23:59:59", row['report_end'])
         self.assertEqual("26", row['num_requests'])
