@@ -1,9 +1,9 @@
-""" Fetch and read Twitter transparency data """
+"""
+Read and aggregate manually entered CSVs from the directory ./manual
+"""
 import logging
-import os
 
 from transparency import utils
-from transparency.csv_reader import CSVReader
 from transparency.directory_source import DirectorySource
 from transparency.orchestrator import Orchestrator
 
