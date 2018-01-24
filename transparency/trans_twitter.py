@@ -26,7 +26,7 @@ class TransTwitter(Orchestrator):
 
         utils.df_convert_to_numeric(df, numeric_cols)
 
-        builder = DataFrameBuilder(df_in=df, df_out=self.df_out, platform='Twitter', platform_property='Twitter',
+        builder = DataFrameBuilder(df_in=df, platform='Twitter', platform_property='Twitter',
                                    report_start=report_start, report_end=report_end)
 
         utils.df_convert_from_percentage(df, 'percentage where some information produced',
@@ -41,8 +41,8 @@ class TransTwitter(Orchestrator):
             num_requests_complied_col='number where some information produced'
         )
 
-        self.df_out = builder.get_df()
-        return self.df_out
+        df_out = builder.get_df()
+        return df_out
 
     def fetch_all(self):
         # Twitter transparency reports are in half-years, starting from 2012-H1
@@ -53,9 +53,9 @@ class TransTwitter(Orchestrator):
 
         available_urls = self.get_urls(start_year, end_year)
 
-        self.df_out = self.process_urls(available_urls)
+        df_out = self.process_urls(available_urls)
 
-        return self.df_out
+        return df_out
 
     def get_urls(self, start_year, end_year):
         source = SemiannualUrlSource(

@@ -19,7 +19,6 @@ from transparency.multi_columns_checker import MultiColumnsChecker
 
 class Orchestrator:
     def __init__(self):
-        self.df_out = pd.DataFrame()
         self.downloader = Downloader()
 
     def name(self):
@@ -61,6 +60,7 @@ class Orchestrator:
         return mutator.mutate(df)
 
     def process_urls(self, available_urls):
+        df_out = pd.DataFrame()
         for data in available_urls:
             url = data['url']
             report_start = data.get('report_start', None)
@@ -69,9 +69,10 @@ class Orchestrator:
             try:
                 # note two dirnames, to go up a directory
                 src_file = self.downloader.download(url, utils.make_path('cache'))
-                df = self.read(src_file)
-                self.process_with_check(df, report_start=report_start, report_end=report_end)
+                src_df = self.read(src_file)
+                dst_df = self.process_with_check(src_df, report_start=report_start, report_end=report_end)
+                df_out = df_out.append(dst_df)
             except urllib.error.URLError as e:
                 logging.error("Unable to fetch url: {}. Error: {}".format(url, e))
 
-        return self.coerce_df(self.df_out)
+        return self.coerce_df(df_out)

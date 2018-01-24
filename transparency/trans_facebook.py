@@ -37,7 +37,7 @@ class TransFacebook(Orchestrator):
             'number of requests where some data produced'].round()
         # this doesn't seem to work: .astype(int, errors='ignore')
 
-        builder = DataFrameBuilder(df_in=df, df_out=self.df_out, platform='Facebook', platform_property='Facebook',
+        builder = DataFrameBuilder(df_in=df, platform='Facebook', platform_property='Facebook',
                                    report_start=report_start, report_end=report_end)
 
         # Extract requests for user data from governments:
@@ -68,8 +68,8 @@ class TransFacebook(Orchestrator):
             num_accounts_complied_col=''
         )
 
-        self.df_out = builder.get_df()
-        return self.df_out
+        df_out = builder.get_df()
+        return df_out
 
     def fetch_all(self):
         start_year = 2013
@@ -77,9 +77,9 @@ class TransFacebook(Orchestrator):
 
         available_urls = self.get_urls(start_year, end_year)
 
-        self.df_out = self.process_urls(available_urls)
+        df_out = self.process_urls(available_urls)
 
-        return self.df_out
+        return df_out
 
     def get_urls(self, start_year, end_year):
         source = SemiannualUrlSource(

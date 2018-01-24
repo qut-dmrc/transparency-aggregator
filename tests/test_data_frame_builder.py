@@ -33,10 +33,8 @@ class TestDataFrameBuilder(TransparencyTestCase):
 
     def test_data_frame_builder(self):
         df_in = self.sample_df()
-        df_out = pd.DataFrame()
-        Orchestrator.coerce_df(df_out)
 
-        cut = DataFrameBuilder(df_in, df_out, 'platform', 'platform_property', '2001-01-01 00:00:00',
+        cut = DataFrameBuilder(df_in, 'platform', 'platform_property', '2001-01-01 00:00:00',
                                '2001-06-30 23:59:59')
         cut.extract_columns(
             request_type='request_type',

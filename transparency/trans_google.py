@@ -20,7 +20,7 @@ class TransGoogle(Orchestrator):
 
         utils.df_convert_to_numeric(df, numeric_cols)
 
-        builder = DataFrameBuilder(df_in=df, df_out=self.df_out, platform='Google', platform_property='Google',
+        builder = DataFrameBuilder(df_in=df, platform='Google', platform_property='Google',
                                    report_start='', report_end='')
 
         utils.df_convert_from_percentage(df, 'percentage of requests where some data produced', 'user data requests',
@@ -43,24 +43,24 @@ class TransGoogle(Orchestrator):
 
         # Extract requests for user data from governments:
 
-        self.df_out = builder.get_df()
-        self.df_out['report_end'] = df['period ending'].apply(
+        df_out = builder.get_df()
+        df_out['report_end'] = df['period ending'].apply(
             lambda d: utils.str_to_date(d).replace(hour=23, minute=59, second=59))
 
-        self.df_out['report_start'] = self.df_out['report_end'].apply(
+        df_out['report_start'] = df_out['report_end'].apply(
             lambda report_end: (report_end + pd.DateOffset(days=1) - pd.DateOffset(months=6)).replace(hour=0, minute=0, second=0))
 
-        for report_start in self.df_out['report_start']:
+        for report_start in df_out['report_start']:
             utils.check_assumption(report_start.day == 1, "Report Start date should be the first of the month")
             utils.check_assumption(report_start.month in [1, 7], "Report Start month should be January or July")
-        return self.df_out
+        return df_out
 
     def fetch_all(self):
         available_urls = self.get_urls()
 
-        self.df_out = self.process_urls(available_urls)
+        df_out = self.process_urls(available_urls)
 
-        return self.df_out
+        return df_out
 
     def expected_source_columns_array(self):
         return [['CLDR Territory Code', 'Users/Accounts Specified', 'Country', 'Legal Process',

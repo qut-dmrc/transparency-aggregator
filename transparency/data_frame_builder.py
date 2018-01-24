@@ -4,14 +4,16 @@
 	Most of these methods will need to be overwritten to handle specific reporting formats.
 	 
 """
+import pandas as pd
 from transparency import utils
 from transparency.utils import str_to_date
 
 
+
 class DataFrameBuilder:
-    def __init__(self, df_in, df_out, platform, platform_property, report_start, report_end):
+    def __init__(self, df_in, platform, platform_property, report_start, report_end):
         self.df_in = df_in
-        self.df_out = df_out
+        self.df_out = pd.DataFrame()
         self.fixed_columns = {
             'platform': platform,
             'property': platform_property,

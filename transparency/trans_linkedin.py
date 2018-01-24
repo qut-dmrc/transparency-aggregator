@@ -18,7 +18,7 @@ class TransLinkedin(Orchestrator):
 
         utils.df_convert_to_numeric(df, numeric_cols)
 
-        builder = DataFrameBuilder(df_in=df, df_out=self.df_out, platform='LinkedIn', platform_property='LinkedIn',
+        builder = DataFrameBuilder(df_in=df, platform='LinkedIn', platform_property='LinkedIn',
                                    report_start='', report_end='')
 
         utils.df_convert_from_percentage(df, 'percentprovided', 'memberdatarequests',
@@ -34,19 +34,19 @@ class TransLinkedin(Orchestrator):
             num_accounts_complied_col='accountsimpacted',
         )
 
-        self.df_out = builder.get_df()
+        df_out = builder.get_df()
 
-        self.df_out['report_end'] = df['report_end']
-        self.df_out['report_start'] = df['report_start']
+        df_out['report_end'] = df['report_end']
+        df_out['report_start'] = df['report_start']
 
-        return self.df_out
+        return df_out
 
     def fetch_all(self):
         available_urls = self.get_urls()
 
-        self.df_out = self.process_urls(available_urls)
+        df_out = self.process_urls(available_urls)
 
-        return self.df_out
+        return df_out
 
     def expected_source_columns_array(self):
         return [["country", "percentProvided", "subjectToRequest", "report_start", "report_end", "accountsImpacted",
