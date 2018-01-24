@@ -43,7 +43,7 @@ class TransFacebook(Orchestrator):
         # Extract requests for user data from governments:
         builder.extract_columns(
             request_type='requests for user data',
-            request_subtype='facebook other',
+            request_subtype='all',
             num_requests_col='total requests for user data',
             num_accounts_specified_col='total user accounts referenced',
             num_requests_complied_col='number of requests where some data produced'
