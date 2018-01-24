@@ -62,8 +62,8 @@ class Orchestrator:
     def process_urls(self, available_urls):
         for data in available_urls:
             url = data['url']
-            report_start = data['report_start']
-            report_end = data['report_end']
+            report_start = data.get('report_start', None)
+            report_end = data.get('report_end', None)
 
             try:
                 # note two dirnames, to go up a directory
