@@ -39,9 +39,6 @@ class TransLinkedin(Orchestrator):
         self.df_out['report_end'] = df['report_end']
         self.df_out['report_start'] = df['report_start']
 
-        # TODO Come back here after refactoring column names
-        # TODO Add assumption check
-
         return self.df_out
 
     def fetch_all(self):

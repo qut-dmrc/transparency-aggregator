@@ -1,8 +1,8 @@
 import logging
 import math
+import os
 import subprocess
 import unittest
-import os
 
 import numpy as np
 import pandas as pd
@@ -11,11 +11,14 @@ from tests.transparency_test_case import TransparencyTestCase
 
 
 class TestMain(TransparencyTestCase):
-
+    """
+    This test compares the output of the system with a few datapoints
+    collected by hand by looking at transparency websites
+    """
     @classmethod
     def setUpClass(cls):
         use_old = os.environ.get('SYSTEM_TEST_USE_OLD_OUTPUT')
-        os.chdir(os.path.join(os.path.dirname(__file__), '..')) # change working directory to root of project
+        os.chdir(os.path.join(os.path.dirname(__file__), '..'))  # change working directory to root of project
         output_file = 'system_tests/output/output.csv'
         if not use_old:
             output = subprocess.check_output(
@@ -24,7 +27,8 @@ class TestMain(TransparencyTestCase):
             if output:
                 print(output)
         else:
-            logging.warning('SYSTEM_TEST_USE_OLD_OUTPUT is set\n\n*********************\n*********************\n\n  USING OLD OUTPUT!\n\n*********************\n*********************\n')
+            logging.warning(
+                'SYSTEM_TEST_USE_OLD_OUTPUT is set\n\n*********************\n*********************\n\n  USING OLD OUTPUT!\n\n*********************\n*********************\n')
 
         cls._df = pd.read_csv(output_file, encoding="UTF-8", dtype=np.object_)
 
@@ -41,7 +45,7 @@ class TestMain(TransparencyTestCase):
     def tearDown(self):
         pass
 
-    def test_facebook_2017(self):
+    def test_facebook_2017_user_data_request(self):
         row = self.indexed_df.loc[
             "2017-01-01 00:00:00", "Facebook", "Facebook", "Australia", "requests for user data", "all"]
 
@@ -59,7 +63,7 @@ class TestMain(TransparencyTestCase):
         self.assertEqual("2378", row['num_accounts_specified'])
         self.assertNaN(row['num_requests_complied'])
 
-    def test_facebook_2013(self):
+    def test_facebook_2013_user_data_request(self):
         row = self.indexed_df.loc[
             "2013-01-01 00:00:00", "Facebook", "Facebook", "United States", "requests for user data", "all"]
 
@@ -69,7 +73,7 @@ class TestMain(TransparencyTestCase):
         self.assertEqual("8690", row['num_requests_complied'])
         self.assertTrue(math.isnan(row['num_accounts_complied']))
 
-    def test_twitter_2012(self):
+    def test_twitter_2012_user_data_request(self):
         row = self.indexed_df.loc[
             "2012-01-01 00:00:00", "Twitter", "Twitter", "Canada", "requests for user data", "all"]
 
@@ -79,7 +83,7 @@ class TestMain(TransparencyTestCase):
         self.assertEqual("2", row['num_requests_complied'])
         self.assertTrue(math.isnan(row['num_accounts_complied']))
 
-    def test_twitter_2017(self):
+    def test_twitter_2017_user_data_request(self):
         row = self.indexed_df.loc[
             "2017-01-01 00:00:00", "Twitter", "Twitter", "Australia", "requests for user data", "all"]
 
@@ -89,7 +93,7 @@ class TestMain(TransparencyTestCase):
         self.assertEqual("6", row['num_requests_complied'])
         self.assertTrue(math.isnan(row['num_accounts_complied']))
 
-    def test_google_2009(self):
+    def test_google_2009_user_data_request(self):
         # the error:
         #   KeyError: 'the label [Google] is not in the [columns]'
         # just means the row wasn't found.  Note that it is case sensitive.
@@ -100,10 +104,9 @@ class TestMain(TransparencyTestCase):
         self.assertEqual("155", row['num_requests'])
         self.assertTrue(math.isnan(row['num_accounts_specified']))
         self.assertTrue(math.isnan(row['num_requests_complied']))
-        self.assertTrue(math.isnan(row['num_accounts_complied']))    
-    
+        self.assertTrue(math.isnan(row['num_accounts_complied']))
 
-    def test_google_2010(self):
+    def test_google_2010_user_data_request(self):
         row = self.indexed_df.loc[
             "2010-07-01 00:00:00", "Google", "Google", "Belgium", "requests for user data", "all"]
 
@@ -113,7 +116,7 @@ class TestMain(TransparencyTestCase):
         self.assertEqual("62", row['num_requests_complied'])
         self.assertTrue(math.isnan(row['num_accounts_complied']))
 
-    def test_google_2012(self):
+    def test_google_2012_legal_request(self):
         row = self.indexed_df.loc[
             "2012-07-01 00:00:00", "Google", "Google", "United States", "requests for user data", "legal requests"]
 
@@ -123,7 +126,7 @@ class TestMain(TransparencyTestCase):
         self.assertEqual("682", row['num_requests_complied'])
         self.assertTrue(math.isnan(row['num_accounts_complied']))
 
-    def test_google_2013(self):
+    def test_google_2013_pen_register_orders(self):
         row = self.indexed_df.loc[
             "2013-07-01 00:00:00", "Google", "Google", "United States", "requests for user data", "pen register orders"]
 
@@ -153,7 +156,7 @@ class TestMain(TransparencyTestCase):
         self.assertEqual("6", row['num_requests_complied'])
         self.assertTrue(math.isnan(row['num_accounts_complied']))
 
-    def test_linkedin_2012(self):
+    def test_linkedin_2012_user_data_request(self):
         row = self.indexed_df.loc[
             "2012-07-01 00:00:00", "LinkedIn", "LinkedIn", "United States", "requests for user data", "all"]
 
@@ -163,7 +166,7 @@ class TestMain(TransparencyTestCase):
         self.assertEqual("36", row['num_requests_complied'])
         self.assertNaN(row['num_accounts_complied'])
 
-    def test_linkedin_2017(self):
+    def test_linkedin_2017_user_data_request(self):
         row = self.indexed_df.loc[
             "2017-01-01 00:00:00", "LinkedIn", "LinkedIn", "United States", "requests for user data", "all"]
 
@@ -172,6 +175,7 @@ class TestMain(TransparencyTestCase):
         self.assertEqual("594", row['num_accounts_specified'])
         self.assertEqual("133", row['num_requests_complied'])
         self.assertEqual("229", row['num_accounts_complied'])
+
 
 # "report_start","report_end","platform","property","country","request_type","request_subtype","num_requests","num_accounts_specified","num_requests_complied","num_accounts_complied","agency","reason"
 

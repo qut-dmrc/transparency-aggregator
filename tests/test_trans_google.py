@@ -41,8 +41,6 @@ class TestTransGoogle(TransparencyTestCase):
         self.assertEqual('Brazil', df_out['country'][3])
         self.assertEqual(3663, df_out['num_requests'][3])
 
-    # TODO Test from fixed data
-
     def sample_df(self):
         csv = \
             """
