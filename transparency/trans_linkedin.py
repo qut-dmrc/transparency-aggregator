@@ -29,8 +29,9 @@ class TransLinkedin(Orchestrator):
             request_type='requests for user data',
             request_subtype='all',
             num_requests_col='memberdatarequests',
-            num_accounts_specified_col='accountsimpacted',
-            num_requests_complied_col='number where some information produced'
+            num_accounts_specified_col='subjecttorequest',
+            num_requests_complied_col='number where some information produced',
+            num_accounts_complied_col='accountsimpacted',
         )
 
         self.df_out = builder.get_df()

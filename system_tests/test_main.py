@@ -15,6 +15,7 @@ class TestMain(TransparencyTestCase):
     @classmethod
     def setUpClass(cls):
         use_old = os.environ.get('SYSTEM_TEST_USE_OLD_OUTPUT')
+        os.chdir(os.path.join(os.path.dirname(__file__), '..')) # change working directory to root of project
         output_file = 'system_tests/output/output.csv'
         if not use_old:
             output = subprocess.check_output(
@@ -158,9 +159,9 @@ class TestMain(TransparencyTestCase):
 
         self.assertEqual("2012-12-31 23:59:59", row['report_end'])
         self.assertEqual("45", row['num_requests'])
-        self.assertTrue(math.isnan(row['num_accounts_specified']))
+        self.assertEqual("49", row['num_accounts_specified'])
         self.assertEqual("36", row['num_requests_complied'])
-        self.assertTrue(math.isnan(row['num_accounts_complied'])) 
+        self.assertNaN(row['num_accounts_complied'])
 
     def test_linkedin_2017(self):
         row = self.indexed_df.loc[
