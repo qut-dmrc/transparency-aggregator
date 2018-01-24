@@ -7,8 +7,10 @@ import os
 import numpy as np
 import pandas as pd
 
+from tests.transparency_test_case import TransparencyTestCase
 
-class TestMain(unittest.TestCase):
+
+class TestMain(TransparencyTestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -46,6 +48,15 @@ class TestMain(unittest.TestCase):
         self.assertEqual("704", row['num_requests'])
         self.assertEqual("849", row['num_accounts_specified'])
         self.assertEqual("542", row['num_requests_complied'])
+
+    def test_facebook_2017_preservation_request(self):
+        row = self.indexed_df.loc[
+            "2017-01-01 00:00:00", "Facebook", "Facebook", "Canada", "preservation requests", "preservation requests"]
+
+        self.assertEqual("2017-06-30 23:59:59", row['report_end'])
+        self.assertEqual("1452", row['num_requests'])
+        self.assertEqual("2378", row['num_accounts_specified'])
+        self.assertNaN(row['num_requests_complied'])
 
     def test_facebook_2013(self):
         row = self.indexed_df.loc[

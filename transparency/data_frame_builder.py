@@ -44,6 +44,7 @@ class DataFrameBuilder:
             "num_requests_complied",
             "num_accounts_complied",
         ]
+
         col_map = {
             num_requests_col: 'num_requests',
             num_accounts_specified_col: 'num_accounts_specified',
@@ -52,7 +53,8 @@ class DataFrameBuilder:
             jurisdiction_col: 'country',
         }
 
-        cols = [col for col in col_map.keys() if col]
+        #remove empty string key, empty string indicates column not present
+        col_map.pop('', None)
 
         df = self.df_in.copy()
         # These are static: fill each row of the DF with these values

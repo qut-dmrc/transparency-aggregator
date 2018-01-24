@@ -29,8 +29,6 @@ class MultiColumnsChecker(Checker):
             f"and extra columns ({json.dumps(extra_cols)})"
         )
 
-#        print("expected cols", minimal_diff['expected_cols'])
-#        print("actual cols", actual_cols)
         utils.check_assumption(len(extra_cols) == 0, "Unexpected extra columns: " + json.dumps(extra_cols))
         utils.check_assumption(len(missing_cols) == 0, "Unexpected missing columns: " + json.dumps(missing_cols))
 
