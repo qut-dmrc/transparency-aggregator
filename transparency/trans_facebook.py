@@ -61,7 +61,7 @@ class TransFacebook(Orchestrator):
         # Extract account preservation requests
         builder.extract_columns(
             request_type='preservation requests',
-            request_subtype='preservation requests',
+            request_subtype='all',
             num_requests_col='preservations requested',
             num_accounts_specified_col='users/accounts preserved',
             num_requests_complied_col='',  # TODO: check with facebook if all preservation requests are actioned

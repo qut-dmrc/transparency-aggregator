@@ -50,8 +50,8 @@ class TestFacebook(TransparencyTestCase):
         self.assertEqual(900, row['num_accounts_specified'])
         self.assertIsNone(row['num_accounts_complied'])
         self.assertIsNone(row['num_requests_complied'])
-        self.assertEqual('preservation requests', row['request_subtype'])
         self.assertEqual('preservation requests', row['request_type'])
+        self.assertEqual('all', row['request_subtype'])
 
     def test_process_urls_unreachable(self):
         unavailableURL = 'https://transparency.facebook.com.notexist/'

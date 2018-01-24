@@ -33,9 +33,16 @@ class TransGoogle(Orchestrator):
             else:
                 return 'requests for user data'
 
+        def get_request_subtype(row):
+            legal = row['legal process']
+            if legal == 'Preservation Requests':
+                return 'all'
+            else:
+                return legal
+
         builder.extract_columns(
             request_type=get_request_type,
-            request_subtype=lambda row: row['legal process'],
+            request_subtype=get_request_subtype,
             num_requests_col='user data requests',
             num_accounts_specified_col='users/accounts specified',
             num_requests_complied_col='number where some information produced'
