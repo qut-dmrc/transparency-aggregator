@@ -43,7 +43,7 @@ class TestMain(TransparencyTestCase):
 
     def test_facebook_2017(self):
         row = self.indexed_df.loc[
-            "2017-01-01 00:00:00", "Facebook", "Facebook", "Australia", "requests for user data", "facebook other"]
+            "2017-01-01 00:00:00", "Facebook", "Facebook", "Australia", "requests for user data", "all"]
 
         self.assertEqual("2017-06-30 23:59:59", row['report_end'])
         self.assertEqual("704", row['num_requests'])
@@ -61,7 +61,7 @@ class TestMain(TransparencyTestCase):
 
     def test_facebook_2013(self):
         row = self.indexed_df.loc[
-            "2013-01-01 00:00:00", "Facebook", "Facebook", "United States", "requests for user data", "facebook other"]
+            "2013-01-01 00:00:00", "Facebook", "Facebook", "United States", "requests for user data", "all"]
 
         self.assertEqual("2013-06-30 23:59:59", row['report_end'])
         self.assertEqual("11000", row['num_requests'])
