@@ -6,6 +6,7 @@ from io import StringIO
 
 import numpy as np
 import pandas as pd
+import numbers
 
 
 class TransparencyTestCase(unittest.TestCase):
@@ -17,6 +18,7 @@ class TransparencyTestCase(unittest.TestCase):
         return df
 
     def assertNaN(self, value):
+        self.assertTrue(isinstance(value, numbers.Number), f"'{value}' is a {type(value)}, not a number (only numbers can be NaN)")
         self.assertTrue(math.isnan(value), f"'{value}' is not NaN")
 
     def assertEqualAndInt(self, expect, actual):
