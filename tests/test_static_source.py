@@ -1,9 +1,9 @@
-import unittest
+from tests.transparency_test_case import TransparencyTestCase
 
 from transparency.static_source import StaticSource
 
 
-class TestStaticSource(unittest.TestCase):
+class TestStaticSource(TransparencyTestCase):
     def setUp(self):
         self.source = StaticSource({"data": [{"url": "http://url"}]})
 

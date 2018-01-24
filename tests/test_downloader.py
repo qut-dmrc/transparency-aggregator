@@ -1,12 +1,12 @@
-import unittest
 import unittest.mock as mock
+from tests.transparency_test_case import TransparencyTestCase
 
 import os
 
 from transparency.downloader import Downloader
 
 
-class TestDownloader(unittest.TestCase):
+class TestDownloader(TransparencyTestCase):
 
     @classmethod
     def setup_class(cls):
@@ -43,7 +43,3 @@ class TestDownloader(unittest.TestCase):
     def test_url_to_filename(self):
         got = self.downloader.url_to_filename('https://transparency.facebook.com/download/2013-H1/')
         self.assertEqual("https___transparency_facebook_com_download_2013_H1_", got)
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -1,9 +1,9 @@
-import unittest
+from tests.transparency_test_case import TransparencyTestCase
 
 from transparency.trans_twitter import TransTwitter
 
 
-class TestTransTwitter(unittest.TestCase):
+class TestTransTwitter(TransparencyTestCase):
     # self.twitter = None
 
     @classmethod
@@ -53,7 +53,3 @@ class TestTransTwitter(unittest.TestCase):
         df_out = self.twitter.process_urls(available_urls)
 
         self.assertEqual(0, len(df_out.query('country=="TOTAL"')))
-
-
-if __name__ == '__main__':
-    unittest.main()

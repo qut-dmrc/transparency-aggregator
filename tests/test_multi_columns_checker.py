@@ -1,5 +1,5 @@
 import textwrap
-import unittest
+from tests.transparency_test_case import TransparencyTestCase
 from io import StringIO
 
 import numpy as np
@@ -9,7 +9,7 @@ import transparency.utils as utils
 from transparency.multi_columns_checker import MultiColumnsChecker
 
 
-class TestMultiColumnsChecker(unittest.TestCase):
+class TestMultiColumnsChecker(TransparencyTestCase):
     def setUp(self):
         self.checker = MultiColumnsChecker(
             {'expected_source_columns_array':

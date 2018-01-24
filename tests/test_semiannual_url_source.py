@@ -1,9 +1,9 @@
-import unittest
+from tests.transparency_test_case import TransparencyTestCase
 
 from transparency.semiannual_url_source import SemiannualUrlSource
 
 
-class TestSemiannualUrlSource(unittest.TestCase):
+class TestSemiannualUrlSource(TransparencyTestCase):
     def setUp(self):
         self.source = SemiannualUrlSource({"url_template": "https://transparency.example.com/$report_year-$facebook_period-$start_month-$end_month", 'start_year': '2016', 'end_year': '2017'})
 

@@ -69,7 +69,3 @@ class TestDataFrameBuilder(TransparencyTestCase):
         self.assertEqualAndInt(11, new_df_out['num_requests'][3])
         self.assertEqualAndInt(14, new_df_out['num_accounts_specified'][3])
         self.assertEqualAndInt(17, new_df_out['num_requests_complied'][3])
-
-
-if __name__ == '__main__':
-    unittest.main()

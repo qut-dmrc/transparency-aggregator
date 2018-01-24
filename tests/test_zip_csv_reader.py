@@ -1,11 +1,11 @@
-import unittest
+from tests.transparency_test_case import TransparencyTestCase
 
 import os
 
 from transparency.zip_csv_reader import ZipCSVReader
 
 
-class TestZipCSVReader(unittest.TestCase):
+class TestZipCSVReader(TransparencyTestCase):
     def setUp(self):
         self.reader = ZipCSVReader({'internal_filename': 'simple_csv_file.csv'})
 

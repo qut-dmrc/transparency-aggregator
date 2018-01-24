@@ -1,11 +1,11 @@
 import os
-import unittest
+from tests.transparency_test_case import TransparencyTestCase
 
 from transparency import utils
 from transparency.linkedin_reader import LinkedinReader
 
 
-class TestLinkedinReader(unittest.TestCase):
+class TestLinkedinReader(TransparencyTestCase):
     def setUp(self):
         self.reader = LinkedinReader({})
 

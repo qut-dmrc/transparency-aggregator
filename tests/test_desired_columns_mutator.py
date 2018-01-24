@@ -1,5 +1,5 @@
 import textwrap
-import unittest
+from tests.transparency_test_case import TransparencyTestCase
 from io import StringIO
 
 import numpy as np
@@ -8,7 +8,7 @@ import pandas as pd
 from transparency.desired_columns_mutator import DesiredColumnsMutator
 
 
-class TestDesiredColumnsMutator(unittest.TestCase):
+class TestDesiredColumnsMutator(TransparencyTestCase):
     def setUp(self):
         x = {'desired_columns': ['apple', 'banana', 'cherry']}
         self.mutator = DesiredColumnsMutator(x)

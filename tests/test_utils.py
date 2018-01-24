@@ -1,6 +1,6 @@
 import numbers
-import unittest
 import unittest.mock as mock
+from tests.transparency_test_case import TransparencyTestCase
 
 import pandas as pd
 

@@ -1,11 +1,11 @@
-import unittest
+from tests.transparency_test_case import TransparencyTestCase
 
 import os
 
 from transparency.csv_reader import CSVReader
 
 
-class TestCSVReader(unittest.TestCase):
+class TestCSVReader(TransparencyTestCase):
     def setUp(self):
         self.reader = CSVReader({})
 

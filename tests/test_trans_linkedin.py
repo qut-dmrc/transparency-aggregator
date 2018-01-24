@@ -1,5 +1,5 @@
 import textwrap
-import unittest
+from tests.transparency_test_case import TransparencyTestCase
 from io import StringIO
 
 import numpy as np
@@ -8,7 +8,7 @@ import pandas as pd
 from transparency.trans_linkedin import TransLinkedin
 
 
-class TestTransLinkedin(unittest.TestCase):
+class TestTransLinkedin(TransparencyTestCase):
     def setUp(self):
         self.trans = TransLinkedin()
 
@@ -33,7 +33,3 @@ class TestTransLinkedin(unittest.TestCase):
         self.assertEqual('India', df_out['country'][0])
         self.assertEqual(12, df_out['num_requests'][0])
         self.assertEqual("all", df_out['request_subtype'][0])
-
-
-if __name__ == '__main__':
-    unittest.main()

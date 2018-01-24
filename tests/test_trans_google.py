@@ -1,5 +1,5 @@
 import textwrap
-import unittest
+from tests.transparency_test_case import TransparencyTestCase
 from io import StringIO
 
 import numpy as np
@@ -9,7 +9,7 @@ import transparency.utils as utils
 from transparency.trans_google import TransGoogle
 
 
-class TestTransGoogle(unittest.TestCase):
+class TestTransGoogle(TransparencyTestCase):
     # self.google = None
 
     @classmethod
@@ -80,8 +80,3 @@ class TestTransGoogle(unittest.TestCase):
                 df_out = self.google.process_with_check(df, '', '')
 
         self.assertIn('Unexpected missing columns: ["Period Ending"]', str(context.exception))
-
-
-# self.process(df, report_start=report_start, report_end=report_end)
-if __name__ == '__main__':
-    unittest.main()
