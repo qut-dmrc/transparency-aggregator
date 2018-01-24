@@ -25,16 +25,18 @@ This script will eventually download as many transparency reports as possible.
 
 ## Usage
 
-      transparency_aggregator.py [-vl] --all --output=FILE
-      transparency_aggregator.py --version
+    main.py [-vl] --csv-output=FILE (--get=SOURCE | --get-all)
+    main.py --version
+    main.py --help
 
     Options:
       -h --help     Show this screen.
       -v --verbose  Increase verbosity for debugging.
       -l --nolog    Don't save log to file -- for debugging only.
-      -o FILE, --output=FILE     Save results to FILE in CSV format.
+      -c FILE, --csv-output=FILE     Save results to FILE in CSV format.
       --version  Show version.
-      --all     Fetch all available transparency reports
+      -a --get-all     Fetch all available transparency reports
+      -s --get=SOURCE  Fetch data from SOURCE (e.g. facebook)
 
 
 ## Troubleshooting
