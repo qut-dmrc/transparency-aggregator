@@ -10,6 +10,7 @@ import urllib
 
 import pandas as pd
 
+from transparency import utils
 from transparency.csv_reader import CSVReader
 from transparency.desired_columns_mutator import DesiredColumnsMutator
 from transparency.downloader import Downloader
@@ -67,8 +68,7 @@ class Orchestrator:
 
             try:
                 # note two dirnames, to go up a directory
-                src_file = self.downloader.download(url,
-                                                    os.path.join(os.path.dirname(os.path.dirname(__file__)), 'cache'))
+                src_file = self.downloader.download(url, utils.make_path('cache'))
                 df = self.read(src_file)
                 self.process_with_check(df, report_start=report_start, report_end=report_end)
             except urllib.error.URLError as e:

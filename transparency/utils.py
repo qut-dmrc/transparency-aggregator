@@ -125,4 +125,4 @@ def df_convert_from_percentage(df, pc_col, total_col, dest_col):
 
 
 def make_path(sub_path):
-    return os.path.join(os.path.dirname(__file__), "..", sub_path)
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), "..", sub_path))

@@ -3,6 +3,7 @@ from tests.transparency_test_case import TransparencyTestCase
 
 import os
 
+from transparency import utils
 from transparency.downloader import Downloader
 
 
@@ -33,7 +34,7 @@ class TestDownloader(TransparencyTestCase):
     def test_download_cached(self):
         with mock.patch('transparency.downloader.urllib.request.urlretrieve') as mock_ret:
             mock_ret.return_value = ('/tmp.txt', ['X-OK: True'])
-            dir = os.path.join(os.path.dirname(__file__), 'files')
+            dir = utils.make_path(os.path.join('tests', 'files'))
 
             res = self.downloader.download('file_that_exists', dir)
 
