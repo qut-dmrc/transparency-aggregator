@@ -22,9 +22,6 @@ class TestUtils(TransparencyTestCase):
         self.assertEqual(2, got.month)
         self.assertEqual(2000, got.year)
 
-    def test_setup_logging(self):
-        pass  # TODO
-
     def test_df_fix_columns(self):
         d = {
             'NUMBER requests': pd.Series([1, 2, 3], index=['a', 'b', 'c']),
