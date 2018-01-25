@@ -2,3 +2,5 @@ pandas
 docopt
 beautifulsoup4
 html5lib
+lxml
+numpy

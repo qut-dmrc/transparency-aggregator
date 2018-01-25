@@ -1,4 +1,4 @@
-""" Fetch and read Twitter transparency data """
+""" Fetch and read Linkedin transparency data """
 
 import transparency.utils as utils
 from transparency.data_frame_builder import DataFrameBuilder

@@ -22,14 +22,17 @@ class SemiannualUrlSource(Source):
                     'facebook_period': "H1",
                     'start_month': "jan",
                     'end_month': "jun",
+                    'end_day_month': "06-30",
                 },
                 {
                     'facebook_period': "H2",
                     'start_month': "jul",
                     'end_month': "dec",
+                    'end_day_month': "12-31",
                 },
             ]):
-                substitutes = {**substitutes, 'report_year': report_year}
+                date_end = f"{report_year}-{substitutes['end_day_month']}"
+                substitutes = {**substitutes, 'report_year': report_year, 'date_end': date_end}
                 url = url_template.substitute(substitutes)
                 if i == 0:
                     report_start = "{}-01-01 00:00:00".format(report_year)

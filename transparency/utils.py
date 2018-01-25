@@ -3,7 +3,7 @@ import math
 import os
 from datetime import datetime, date
 from logging.handlers import RotatingFileHandler
-
+import numpy as np
 import pandas as pd
 
 
@@ -75,6 +75,10 @@ def setup_logging(log_file_name, verbose=False, interactive_only=False):
 def df_fix_columns(df):
     df.columns = df.columns.str.lower()
 
+def df_percentage_to_count(df, percent_col, total_col, output_col):
+
+    df[output_col] = df[percent_col] * df[total_col] / 100.0
+    df[output_col] = df[output_col].astype(float).apply(np.round)
 
 def df_strip_char(df, col, char):
     df[col] = df[col].str.rstrip(char)

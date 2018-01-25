@@ -18,3 +18,19 @@ class TestSemiannualUrlSource(TransparencyTestCase):
         ]
 
         self.assertEqual(expected, data)
+
+    def test_read_correctly_handles_date_end(self):
+        source = SemiannualUrlSource(
+            {"url_template": "https://transparency.example.com/$date_end",
+             'start_year': '2016', 'end_year': '2017'})
+
+        data = source.get()
+
+        expected = [
+            {"url": "https://transparency.example.com/2016-06-30", "report_start": "2016-01-01 00:00:00", "report_end": "2016-06-30 23:59:59"},
+            {"url": "https://transparency.example.com/2016-12-31", "report_start": "2016-07-01 00:00:00", "report_end": "2016-12-31 23:59:59"},
+            {"url": "https://transparency.example.com/2017-06-30", "report_start": "2017-01-01 00:00:00", "report_end": "2017-06-30 23:59:59"},
+            {"url": "https://transparency.example.com/2017-12-31", "report_start": "2017-07-01 00:00:00", "report_end": "2017-12-31 23:59:59"},
+        ]
+
+        self.assertEqual(expected, data)

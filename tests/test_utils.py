@@ -31,6 +31,28 @@ class TestUtils(TransparencyTestCase):
         utils.df_fix_columns(df)
         self.assertEqual(['number requests', 'number affected'], df.columns.tolist())
 
+    def test_df_percentage_to_count(self):
+        d = {
+            'percent requests complied': pd.Series([0, 50, 50, 100]),
+            'total requests': pd.Series([40, 51, 53, 60.1]),
+        }
+        df = pd.DataFrame(d)
+        utils.df_percentage_to_count(df, 'percent requests complied', 'total requests', 'num requests complied')
+        self.assertEqual(0, df['num requests complied'][0])
+        self.assertEqual(26, df['num requests complied'][1])
+        self.assertEqual(26, df['num requests complied'][2]) # note - bankers rounding
+        self.assertEqual(60, df['num requests complied'][3])
+
+    def test_df_percentage_to_count_nan(self):
+        d = {
+            'percent requests complied': pd.Series([0, float('nan')]),
+            'total requests': pd.Series([40, 51]),
+        }
+        df = pd.DataFrame(d)
+        utils.df_percentage_to_count(df, 'percent requests complied', 'total requests', 'num requests complied')
+        self.assertEqual(0, df['num requests complied'][0])
+        self.assertNaN(df['num requests complied'][1])
+
     def test_df_strip_char(self):
         d = {
             'a': pd.Series(['1', '2%', '3'], index=['a', 'b', 'c']),
