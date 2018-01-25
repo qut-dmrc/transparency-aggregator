@@ -176,6 +176,27 @@ class TestMain(TransparencyTestCase):
         self.assertEqual("133", row['num_requests_complied'])
         self.assertEqual("229", row['num_accounts_complied'])
 
+    def test_snapchat_2016_user_data_request_emergency(self):
+        row = self.indexed_df.loc[
+            "2016-01-01 00:00:00", "Snap", "Snapchat", "Canada", "requests for user data", "emergency disclosure requests"
+        ]
+
+        self.assertEqual("2016-06-30 23:59:59", row['report_end'])
+        self.assertEqual("13", row['num_requests'])
+        self.assertEqual("17", row['num_accounts_specified'])
+        self.assertEqual("10", row['num_requests_complied'])
+
+
+    def test_snapchat_2016_user_data_request_other(self):
+        row = self.indexed_df.loc[
+            "2015-01-01 00:00:00", "Snap", "Snapchat", "France", "requests for user data", "non emergency disclosure requests"
+        ]
+
+        self.assertEqual("2015-06-30 23:59:59", row['report_end'])
+        self.assertEqual("37", row['num_requests'])
+        self.assertEqual("50", row['num_accounts_specified'])
+        self.assertEqual("0", row['num_requests_complied'])
+
 
 # "report_start","report_end","platform","property","country","request_type","request_subtype","num_requests","num_accounts_specified","num_requests_complied","num_accounts_complied","agency","reason"
 
