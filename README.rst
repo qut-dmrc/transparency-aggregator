@@ -40,6 +40,23 @@ Usage
 -a, --get-all               Fetch all available transparency reports
 -s, --get=SOURCE            Fetch data from SOURCE (e.g. facebook)
 
+Cache
+-----
+
+We recommend clearing the cache before generating a report, except while
+developing new code.
+
+You can clear the cache with:
+    ``make clear_cache``
+
+Downloaded data is cached in the ./cache/ directory. Results with error codes
+(e.g. 404) are not cached.  The cache needs to be cleared before changes to
+sites are detected.  For sites that publish each report at a different URL,
+this works fine.  For sites where everything is at one URL (e.g. Linkedin), or
+where the data on a page changes (e.g. the most recent snapchat URL), these
+changes will be missed.
+
+
 Troubleshooting
 ---------------
 are you getting:

@@ -4,7 +4,7 @@ test:
 system_test:
 	python -m unittest discover system_tests
 
-clean_cache:
+clear_cache:
 	rm cache/*
 
 run:
