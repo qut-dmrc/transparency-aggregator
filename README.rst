@@ -24,7 +24,18 @@ a single common format. The output format contains the following fields:
 
 Initially, the two main types of requests are private information requests and content removal requests.
 
-This script will eventually download as many transparency reports as possible.
+
+Progress to date -- get involved!
+---------------------------------
+This project is under active development. We aim to extend it to download and as many transparency reports as possible.
+
+So far, we have developed an extensible framework and are aggregating information requests from Facebook, Google, LinkedIn, and Snapchat. We are looking for contributors to write new interpreters for data from other providers. Documentation about the steps you need to take to add a new source will be available shortly.
+
+
+Contact
+-------
+If you have any questions or comments, please contact Nicolas Suzor <n.suzor@qut.edu.au>.
+
 
 Usage
 -----
