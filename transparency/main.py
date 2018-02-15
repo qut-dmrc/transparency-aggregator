@@ -8,7 +8,7 @@ from transparency.trans_google import TransGoogle
 from transparency.trans_linkedin import TransLinkedin
 from transparency.trans_manual import TransManual
 from transparency.trans_snap import TransSnap
-from transparency.trans_twitter import TransTwitter
+from transparency.twitter_info import TransTwitter
 from transparency.utils import setup_logging
 from transparency.writer_csv import WriterCSV
 

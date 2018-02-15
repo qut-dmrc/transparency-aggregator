@@ -34,6 +34,8 @@ class DataFrameBuilder:
             num_accounts_specified_col,
             num_requests_complied_col,
             num_accounts_complied_col='',
+            num_accounts_suspended_col='',
+            num_content_removed_col='',
             jurisdiction_col='country'
     ):
         """ Take a dataframe with the columns num_requests_col and num_requests_complied_col
@@ -47,11 +49,18 @@ class DataFrameBuilder:
             "num_accounts_complied",
         ]
 
+        if num_accounts_suspended_col:
+            output_cols.append('num_accounts_enforced')
+        if num_content_removed_col:
+            output_cols.append('num_content_enforced')
+
         col_map = {
             num_requests_col: 'num_requests',
             num_accounts_specified_col: 'num_accounts_specified',
             num_requests_complied_col: 'num_requests_complied',
             num_accounts_complied_col: 'num_accounts_complied',
+            num_content_removed_col: 'num_content_enforced',
+            num_accounts_suspended_col: 'num_accounts_enforced',
             jurisdiction_col: 'country',
         }
 

@@ -5,6 +5,7 @@ from datetime import datetime, date
 from logging.handlers import RotatingFileHandler
 import numpy as np
 import pandas as pd
+from pandas.core.dtypes.common import is_numeric_dtype
 
 
 class AssumptionError(Exception):
@@ -108,7 +109,7 @@ def df_convert_to_numeric(df, numeric_cols):
     for col in numeric_cols:
         if col not in df.columns:
             df[col] = None
-        else:
+        elif not is_numeric_dtype(df[col]):
             # replace formatting commas
             df[col] = df[col].str.replace(',', '')
 

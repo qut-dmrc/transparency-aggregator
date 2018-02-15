@@ -54,6 +54,8 @@ class Orchestrator:
             'num_accounts_specified',
             'num_requests_complied',
             'num_accounts_complied',
+            'num_accounts_enforced',
+            'num_content_enforced',
             'agency',
             'reason'
         ]})
