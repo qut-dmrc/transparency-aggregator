@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 import transparency.utils as utils
-from transparency.trans_google import TransGoogle
+from transparency.trans_google_removal import TransGoogleRemoval
 
 
 class TestTransGoogle(TransparencyTestCase):
@@ -18,7 +18,7 @@ class TestTransGoogle(TransparencyTestCase):
         pass
 
     def setUp(self):
-        self.google = TransGoogle()
+        self.google = TransGoogleRemoval()
 
     def tearDown(self):
         pass
@@ -27,27 +27,30 @@ class TestTransGoogle(TransparencyTestCase):
         available_urls = self.google.get_urls()
 
         self.assertEqual(1, len(available_urls))
-        self.assertEqual('https://storage.googleapis.com/transparencyreport/google-user-data-requests.zip',
+        self.assertEqual('https://storage.googleapis.com/transparencyreport/google-government-removals.zip',
                          available_urls[0]['url'])
         self.assertEqual('', available_urls[0]['report_start'])
         self.assertEqual('', available_urls[0]['report_end'])
 
     def test_process_urls_should_load_data(self):
         available_urls = [
-            {'url': 'https://storage.googleapis.com/transparencyreport/google-user-data-requests.zip', 'report_start': '',
+            {'url': 'https://storage.googleapis.com/transparencyreport/google-government-removals.zip', 'report_start': '',
              'report_end': ''}]
 
         df_out = self.google.process_urls(available_urls)
-        self.assertEqual('Brazil', df_out['country'][3])
-        self.assertEqual(3663, df_out['num_requests'][3])
+        self.assertEqual('Brazil', df_out['country'][5])
+        self.assertEqual(291, df_out['num_requests'][5])
 
     def sample_df(self):
         csv = \
             """
-            Period Ending,Country,CLDR Territory Code,Legal Process,User Data Requests,Percentage of requests where some data produced,Users/Accounts Specified
-            2009-12-31,Argentina,AR,All,98,,
-            2009-12-31,Australia,AU,All,155,,
-            2009-12-31,Belgium,BE,All,67,,
+                Period Ending,Country,CLDR Territory Code,All Requests: Number of Requests,All Requests: % Fully Or Partially Complied With,All Requests: Items Requested To Be Removed,Court Orders: Number of Requests,Court Orders: % Fully Or Partially Complied With,Court Orders: Items Requested To Be Removed,"Other Requests (Executive, Police, etc.): Number of Requests","Other Requests (Executive, Police, etc.): % Fully Or Partially Complied With","Other Requests (Executive, Police, etc.): Items Requested To Be Removed"
+                2009-12-31,Argentina,AR,42,88,,41,,,1,,
+                2009-12-31,Armenia,AM,<10,0,,,,,,,
+                2009-12-31,Australia,AU,17,53,,,,,17,,
+                2009-12-31,Austria,AT,<10,60,,,,,,,
+                2009-12-31,Belgium,BE,<10,0,,,,,,,
+                2009-12-31,Brazil,BR,291,82,,165,,,126,,
             """
 
         df = pd.read_csv(StringIO(textwrap.dedent(csv)), encoding="UTF-8", dtype=np.object_)
@@ -56,10 +59,10 @@ class TestTransGoogle(TransparencyTestCase):
     def test_process_with_check_should_load_data(self):
         df = self.sample_df()
         df_out = self.google.process_with_check(df, '', '')
-        self.assertEqual('Australia', df_out['country'][1])
-        self.assertEqual(155, df_out['num_requests'][1])
-        self.assertEqual(pd.Timestamp("2009-07-01 00:00:00"), df_out['report_start'][1])
-        self.assertEqual(pd.Timestamp("2009-12-31 23:59:59"), df_out['report_end'][1])
+        self.assertEqual('Australia', df_out['country'][2])
+        self.assertEqual(17, df_out['num_requests'][2])
+        self.assertEqual(pd.Timestamp("2009-07-01 00:00:00"), df_out['report_start'][2])
+        self.assertEqual(pd.Timestamp("2009-12-31 23:59:59"), df_out['report_end'][2])
 
     def test_process_with_check_extra_column_should_cause_assumption_error(self):
         df = self.sample_df()

@@ -10,7 +10,7 @@ from transparency.static_source import StaticSource
 from transparency.zip_csv_reader import ZipCSVReader
 
 
-class TransGoogle(Orchestrator):
+class TransGoogleInfo(Orchestrator):
 
     def process(self, df, report_start, report_end):
         utils.df_fix_columns(df)

@@ -4,7 +4,7 @@ import pandas as pd
 from docopt import docopt
 
 from transparency.trans_facebook import TransFacebook
-from transparency.trans_google import TransGoogle
+from transparency.trans_google_info import TransGoogleInfo
 from transparency.trans_linkedin import TransLinkedin
 from transparency.trans_manual import TransManual
 from transparency.trans_snap import TransSnap
@@ -75,7 +75,7 @@ def get_orchestrators():
     return {
         'transfacebook': TransFacebook,
         'transtwitter': TransTwitter,
-        'transgoogle': TransGoogle,
+        'transgoogle': TransGoogleInfo,
         'translinkedin': TransLinkedin,
         'transsnap': TransSnap,
         'transmanual': TransManual,
