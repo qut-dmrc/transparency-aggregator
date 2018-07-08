@@ -17,7 +17,7 @@ from transparency.reader import Reader
 
 class LinkedinReader(Reader):
     def read(self, filename):
-        with open(filename) as file:
+        with open(filename, encoding="utf8") as file:
             soup = BeautifulSoup(file, 'html.parser')
 
         code_block = soup.find('code', {"id": "templates/legal/transparency-content"})

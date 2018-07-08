@@ -53,6 +53,12 @@ class TestFacebook(TransparencyTestCase):
         self.assertEqual('preservation requests', row['request_type'])
         self.assertEqual('all', row['request_subtype'])
 
+    def test_process_removal_requests(self):
+        df_out = self.fb.process(self.sample_df(), '2017-01-01 00:00:00', '2017-06-30 23:59:59')
+
+        row = df_out.query('country=="Argentina" and request_type=="content restrictions"').iloc[0]
+        self.assertEqualAndInt(10, row['num_requests'])
+
     def test_process_urls_unreachable(self):
         unavailableURL = 'https://transparency.facebook.com.notexist/'
         available_urls = [

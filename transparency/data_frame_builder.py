@@ -91,7 +91,6 @@ class DataFrameBuilder:
         # TODO: limit extra columns
         df.rename(columns=col_map, inplace=True)
 
-
         utils.df_convert_to_lower(df, ["request_type", "request_subtype"])
 
         utils.df_create_missing_columns(df, output_cols)

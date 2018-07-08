@@ -46,7 +46,8 @@ class TransFacebook(Orchestrator):
             request_subtype='all',
             num_requests_col='total requests for user data',
             num_accounts_specified_col='total user accounts referenced',
-            num_requests_complied_col='number of requests where some data produced'
+            num_requests_complied_col='number of requests where some data produced',
+            num_accounts_complied_col='',
         )
 
         # Extract content restriction requests:
@@ -65,7 +66,7 @@ class TransFacebook(Orchestrator):
             num_requests_col='preservations requested',
             num_accounts_specified_col='users/accounts preserved',
             num_requests_complied_col='',  # TODO: check with facebook if all preservation requests are actioned
-            num_accounts_complied_col=''
+            num_accounts_complied_col='',
         )
 
         df_out = builder.get_df()

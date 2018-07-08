@@ -91,3 +91,14 @@ This is useful when writing new system tests.
 
 ``SYSTEM_TEST_USE_OLD_OUTPUT=1 make system_test``
 
+
+Scope
+-----
+
+Currently, the following transparency reports are read and imported:
+
+* Google information requests, government removal requests
+* Twitter information requests, government removal requests
+* Snapchat information requests
+* Linkedin information requests
+* Facebook: information requests, preservation requests, government removal requests

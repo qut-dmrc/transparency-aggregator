@@ -13,7 +13,7 @@ from transparency.reader import Reader
 
 class SnapReader(Reader):
     def read(self, filename):
-        with open(filename) as file:
+        with open(filename, encoding="utf8") as file:
             soup = BeautifulSoup(file, 'html.parser')
 
         table_data = soup.find("h2", text="International Government Information Requests").find_next("table")
