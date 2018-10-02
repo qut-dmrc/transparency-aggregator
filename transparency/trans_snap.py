@@ -70,14 +70,14 @@ class TransSnap(Orchestrator):
         )
 
         # Check that the date passed in matches the date in the table
-        date_start_mismatch = ((report_start == df['report_start_from_table']) | (report_start == '')).all()
-        date_end_mismatch = ((report_end == df['report_end_from_table']) | (report_end == '')).all()
+        date_start_mismatch = ((report_start == df['report start from table']) | (report_start == '')).all()
+        date_end_mismatch = ((report_end == df['report end from table']) | (report_end == '')).all()
         utils.check_assumption(date_start_mismatch, "Start dates in table did not match dates passed in.")
         utils.check_assumption(date_end_mismatch, "End dates in table did not match dates passed in.")
 
         df_out = builder.get_df()
-        df_out['report_start'] = df_out['report_start_from_table']
-        df_out['report_end'] = df_out['report_end_from_table']
+        df_out['report_start'] = df_out['report start from table']
+        df_out['report_end'] = df_out['report end from table']
 
         return df_out
 
@@ -89,14 +89,14 @@ class TransSnap(Orchestrator):
              'Other Information Requests',
              'Account Identifiers* for Other Information Requests',
              'Percentage of Other Information Requests where some data was produced',
-             'report_start_from_table', 'report_end_from_table'],
+             'report start from table', 'report end from table'],
             ['country', 'Emergency Requests',
              'Account Identifiers* for Emergency Requests',
              'Percentage of Emergency Requests where some data was produced',
              'Other Information Requests',
              'account identifiers for other requests',
              'Percentage of Other Information Request where some data was produced',
-             'report_start_from_table', 'report_end_from_table'],
+             'report start from table', 'report end from table'],
         ]
         return cols
 

@@ -21,8 +21,8 @@ class SnapReader(Reader):
 
         start_date, end_date = self.parse_date_range(df.iloc[0, 0])
 
-        df['reportstartfromtable'] = start_date
-        df['reportendfromtable'] = end_date
+        df['report start from table'] = start_date
+        df['report end from table'] = end_date
 
         # rename first column
         df = df.rename(columns={'Reporting Period': 'country'})
