@@ -28,7 +28,7 @@ class TransSnap(Orchestrator):
         }
 
         # TODO - figure out what to do with nulls in the source data, because they are almost certainly zeroes
-
+        df.columns = df.columns.str.lower()
         df.rename(columns=col_map, inplace=True)
 
         utils.df_strip_char(df, 'percent emergency requests complied', '%')

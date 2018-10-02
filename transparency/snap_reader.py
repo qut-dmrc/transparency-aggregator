@@ -40,7 +40,8 @@ class SnapReader(Reader):
         and return start date and end date (modified for last minute of period)
         """
 
-        start_date_str, end_date_str = date_range_string.split('—')  # warning - emdash
+        date_range_string = date_range_string.replace('—', '-')  # warning - emdash
+        start_date_str, end_date_str = date_range_string.split('-')
 
         start_date = parse(start_date_str)
         end_date = parse(end_date_str)

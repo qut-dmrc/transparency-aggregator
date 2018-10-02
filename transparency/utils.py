@@ -6,6 +6,7 @@ from logging.handlers import RotatingFileHandler
 import numpy as np
 import pandas as pd
 from pandas.core.dtypes.common import is_numeric_dtype
+import string
 
 
 class AssumptionError(Exception):
@@ -131,3 +132,8 @@ def df_convert_from_percentage(df, pc_col, total_col, dest_col):
 
 def make_path(sub_path):
     return os.path.abspath(os.path.join(os.path.dirname(__file__), "..", sub_path))
+
+
+def strip_punctuation(s):
+    table = str.maketrans(dict.fromkeys(string.punctuation))
+    return s.translate(table)

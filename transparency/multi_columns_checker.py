@@ -5,13 +5,16 @@ import json
 
 import transparency.utils as utils
 from transparency.checker import Checker
-
+import numpy as np
 
 class MultiColumnsChecker(Checker):
 
     def check(self, df):
         actual_cols = df.columns.values
+        actual_cols = np.array([ utils.strip_punctuation(x.lower()) for x in actual_cols ])
+
         expected_cols_array = self.config['expected_source_columns_array']
+        expected_cols_array = [[utils.strip_punctuation(x.lower()) for x in y] for y in expected_cols_array]
 
         diffs = [
             self.get_diff(actual_cols, expected_cols)

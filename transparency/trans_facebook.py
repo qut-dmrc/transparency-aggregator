@@ -18,6 +18,7 @@ class TransFacebook(Orchestrator):
             'percentage of requests where some data produced': 'total percentage of requests where some data produced',
         }
 
+        df.columns = df.columns.str.lower()
         df.rename(columns=col_map, inplace=True)
 
         utils.df_strip_char(df, 'total percentage of requests where some data produced', '%')
