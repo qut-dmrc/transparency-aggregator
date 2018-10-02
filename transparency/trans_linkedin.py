@@ -36,8 +36,8 @@ class TransLinkedin(Orchestrator):
 
         df_out = builder.get_df()
 
-        df_out['report_end'] = df['report_end']
-        df_out['report_start'] = df['report_start']
+        df_out['reportend'] = df['reportend']
+        df_out['reportstart'] = df['reportstart']
 
         return df_out
 

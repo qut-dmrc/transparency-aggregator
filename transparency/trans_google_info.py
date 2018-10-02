@@ -51,10 +51,10 @@ class TransGoogleInfo(Orchestrator):
         # Extract requests for user data from governments:
 
         df_out = builder.get_df()
-        df_out['report_end'] = df['period ending'].apply(
+        df_out['reportend'] = df['period ending'].apply(
             lambda d: utils.str_to_date(d).replace(hour=23, minute=59, second=59))
 
-        df_out['report_start'] = df_out['report_end'].apply(
+        df_out['reportstart'] = df_out['reportend'].apply(
             lambda report_end: (report_end + pd.DateOffset(days=1) - pd.DateOffset(months=6)).replace(hour=0, minute=0, second=0))
 
         for report_start in df_out['report_start']:

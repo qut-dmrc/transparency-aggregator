@@ -12,11 +12,11 @@ from transparency.reader import Reader
 
 
 class SnapReader(Reader):
-    def read(self, filename):
+    def read(self, filename, table_heading):
         with open(filename, encoding="utf8") as file:
             soup = BeautifulSoup(file, 'html.parser')
 
-        table_data = soup.find("h2", text="International Government Information Requests").find_next("table")
+        table_data = soup.find("h2", text=table_heading).find_next("table")
         df = pd.read_html(str(table_data))[0]
 
         start_date, end_date = self.parse_date_range(df.iloc[0, 0])

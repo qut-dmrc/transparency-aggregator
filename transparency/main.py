@@ -8,7 +8,8 @@ from transparency.trans_google_info import TransGoogleInfo
 from transparency.trans_google_removal import TransGoogleRemoval
 from transparency.trans_linkedin import TransLinkedin
 from transparency.trans_manual import TransManual
-from transparency.trans_snap import TransSnap
+from transparency.trans_snap import TransSnapInfo
+from transparency.trans_snap_removal import TransSnapRemoval
 from transparency.twitter_info import TransTwitterInfo
 from transparency.twitter_removal import TransTwitterRemoval
 from transparency.utils import setup_logging
@@ -81,7 +82,8 @@ def get_orchestrators():
         'transgoogle': TransGoogleInfo,
         'transgoogleremoval': TransGoogleRemoval,
         'translinkedin': TransLinkedin,
-        'transsnap': TransSnap,
+        'transsnapinfo': TransSnapInfo,
+        'transsnapremoval': TransSnapRemoval,
         'transmanual': TransManual,
     }
 

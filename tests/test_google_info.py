@@ -77,4 +77,4 @@ class TestTransGoogle(TransparencyTestCase):
             with self.assertLogs(level="ERROR") as logger:
                 df_out = self.google.process_with_check(df, '', '')
 
-        self.assertIn('Unexpected missing columns: ["Period Ending"]', str(context.exception))
+        self.assertIn('Unexpected missing columns: ["period ending"]', str(context.exception))

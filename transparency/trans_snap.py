@@ -8,15 +8,15 @@ from transparency.semiannual_url_source import SemiannualUrlSource
 from transparency.snap_reader import SnapReader
 
 
-class TransSnap(Orchestrator):
+class TransSnapInfo(Orchestrator):
 
     def process(self, df, report_start, report_end):
         utils.df_fix_columns(df)
 
         """['reporting period', 'emergency requests', 'accounts emergency',
        'percent emergency requests complied', 'other information requests',
-       'accounts other', 'percent other requests complied', 'report_start',
-       'report_end']
+       'accounts other', 'percent other requests complied', 'reportstart',
+       'reportend']
         """
 
         col_map = {
@@ -76,8 +76,8 @@ class TransSnap(Orchestrator):
         utils.check_assumption(date_end_mismatch, "End dates in table did not match dates passed in.")
 
         df_out = builder.get_df()
-        df_out['report_start'] = df_out['report start from table']
-        df_out['report_end'] = df_out['report end from table']
+        df_out['reportstart'] = df_out['report start from table']
+        df_out['reportend'] = df_out['report end from table']
 
         return df_out
 
@@ -128,4 +128,4 @@ class TransSnap(Orchestrator):
 
     def read(self, filename):
         reader = SnapReader({})
-        return reader.read(filename)
+        return reader.read(filename, "International Government Information Requests")
