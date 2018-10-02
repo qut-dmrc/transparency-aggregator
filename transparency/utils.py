@@ -6,7 +6,7 @@ from logging.handlers import RotatingFileHandler
 import numpy as np
 import pandas as pd
 from pandas.core.dtypes.common import is_numeric_dtype
-import string
+import regex as re
 
 
 class AssumptionError(Exception):
@@ -135,5 +135,6 @@ def make_path(sub_path):
 
 
 def strip_punctuation(s):
-    table = str.maketrans(dict.fromkeys(string.punctuation))
-    return s.translate(table)
+    return re.sub(r"\p{P}+", "", s)
+    #table = str.maketrans(dict.fromkeys(string.punctuation))
+    #return s.translate(table)
