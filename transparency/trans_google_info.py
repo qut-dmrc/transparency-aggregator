@@ -16,7 +16,7 @@ class TransGoogleInfo(Orchestrator):
         utils.df_fix_columns(df)
 
         numeric_cols = ['user data requests', 'percentage of requests where some data produced',
-                        'users/accounts specified']
+                        'usersaccounts specified']
 
         utils.df_convert_to_numeric(df, numeric_cols)
 
@@ -44,7 +44,7 @@ class TransGoogleInfo(Orchestrator):
             request_type=get_request_type,
             request_subtype=get_request_subtype,
             num_requests_col='user data requests',
-            num_accounts_specified_col='users/accounts specified',
+            num_accounts_specified_col='usersaccounts specified',
             num_requests_complied_col='number where some information produced'
         )
 
@@ -70,7 +70,7 @@ class TransGoogleInfo(Orchestrator):
         return df_out
 
     def expected_source_columns_array(self):
-        return [['CLDR Territory Code', 'Users/Accounts Specified', 'Country', 'Legal Process',
+        return [['CLDR Territory Code', 'UsersAccounts Specified', 'Country', 'Legal Process',
                  'Percentage of requests where some data produced', 'Period Ending', 'User Data Requests']]
 
     def get_urls(self):

@@ -27,7 +27,7 @@ class TransFacebook(Orchestrator):
         numeric_cols = ['total requests for user data', 'total user accounts referenced',
                         'total percentage of requests where some data produced', 'content restrictions',
                         'preservations requested',
-                        'preservations_num_affected', 'users/accounts preserved']
+                        'preservations_num_affected', 'usersaccounts preserved']
 
         utils.df_convert_to_numeric(df, numeric_cols)
 
@@ -65,7 +65,7 @@ class TransFacebook(Orchestrator):
             request_type='preservation requests',
             request_subtype='all',
             num_requests_col='preservations requested',
-            num_accounts_specified_col='users/accounts preserved',
+            num_accounts_specified_col='usersaccounts preserved',
             num_requests_complied_col='',  # TODO: check with facebook if all preservation requests are actioned
             num_accounts_complied_col='',
         )

@@ -1,6 +1,6 @@
 from tests.transparency_test_case import TransparencyTestCase
 
-from transparency.twitter_info import TransTwitter
+from transparency.twitter_info import TransTwitterInfo
 
 
 class TestTransTwitter(TransparencyTestCase):
@@ -12,7 +12,7 @@ class TestTransTwitter(TransparencyTestCase):
         pass
 
     def setUp(self):
-        self.twitter = TransTwitter()
+        self.twitter = TransTwitterInfo()
 
     def tearDown(self):
         pass

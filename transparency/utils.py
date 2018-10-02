@@ -117,6 +117,16 @@ def df_convert_to_numeric(df, numeric_cols):
             # replace ranges with the lower bound of the range
             df[col] = df[col].str.replace(r"(\d+)( - )(\d+)", r'\1')
 
+            # discard additional information in cell
+            # (e.g. https://transparency.twitter.com/en/removal-requests.html#removal-requests-jul-dec-2015
+            #       shows total withheld tweets = "3,353 (2,440)"
+            #       This means 3353 tweets withheld from a total of 2440 accounts. We are only interested in the first.
+            df[col] = df[col].str.replace(r"(\d+)( )\(\d+\)", r'\1')
+
+            # remove asterisks and percentages
+            df[col] = df[col].str.rstrip('*')
+            df[col] = df[col].str.rstrip('%')
+
             df[col] = pd.to_numeric(df[col], errors='raise')
 
 
@@ -135,6 +145,7 @@ def make_path(sub_path):
 
 
 def strip_punctuation(s):
-    return re.sub(r"\p{P}+", "", s)
-    #table = str.maketrans(dict.fromkeys(string.punctuation))
-    #return s.translate(table)
+    s = re.sub(r"\p{P}+", "", s) # strip all punctuation
+    s = re.sub(r"\s\s+", " ", s) # replace multiple whitespace characters with single space
+    s = re.sub(r"\s\Z", "", s) # remove trailing whitespace
+    return s

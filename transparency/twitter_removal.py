@@ -16,13 +16,22 @@ class TransTwitterRemoval(Orchestrator):
 
         df.query('country != "TOTAL"', inplace=True)
 
+        # TODO - figure out what to do with nulls in the source data, because they are almost certainly zeroes
+        df.columns = [ utils.strip_punctuation(x.lower()) for x in df.columns.values ]
+
+        col_map = {
+            'removal requests govt agency police other': 'removal requests government agency police other',
+        }
+
+        df.rename(columns=col_map, inplace=True)
+
         utils.df_strip_char(df, 'percentage where some content withheld', '%')
 
-        numeric_cols = ['removal requests (court orders)',
-                'removal requests (government agency, police, other) ',
+        numeric_cols = ['removal requests court orders',
+                'removal requests government agency police other',
                 'percentage where some content withheld', 'accounts specified',
-                'accounts withheld', 'tweets withheld', 'accounts (tos)',
-                'accounts (no action)']
+                'accounts withheld', 'tweets withheld', 'accounts tos',
+                'accounts no action']
 
         df = df.replace('-', np.NaN)  # treat dashs as null, per nic 2018-01-11
 
@@ -31,10 +40,10 @@ class TransTwitterRemoval(Orchestrator):
         builder = DataFrameBuilder(df_in=df, platform='Twitter', platform_property='Twitter',
                                    report_start=report_start, report_end=report_end)
 
-        df['removal requests'] = df['removal requests (court orders)'] + df['removal requests (government agency, police, other) ']
+        df['removal requests'] = df['removal requests court orders'] + df['removal requests government agency police other']
 
-        utils.df_convert_from_percentage(df, 'percentage where some content withheld',
-                                         'removal requests', 'number where some content withheld')
+        utils.df_convert_from_percentage(df, pc_col='percentage where some content withheld',
+                                         total_col='removal requests', dest_col='number where some content withheld')
 
         # Extract requests for content removal from governments:
         builder.extract_columns(
@@ -52,7 +61,7 @@ class TransTwitterRemoval(Orchestrator):
 
     def fetch_all(self):
         # Twitter transparency reports are in half-years, starting from 2012-H1
-        # "https://transparency.twitter.com/content/dam/transparency-twitter/data/download-govt-information-requests/information-requests-report-jan-jun-2012.csv"
+        # https://transparency.twitter.com/content/dam/transparency-twitter/data/download-removal-requests/removal-requests-report-jul-dec-2017.csv
 
         start_year = 2012
         end_year = datetime.datetime.utcnow().year
@@ -72,9 +81,14 @@ class TransTwitterRemoval(Orchestrator):
         return source.get()
 
     def expected_source_columns_array(self):
-        return [[
-            "COUNTRY", "LINKS", "TIME PERIOD", "ISO CODE", "REPORT LINKS", "FLAGS", "ACCOUNTS SPECIFIED",
+        return [
+            ["COUNTRY", "LINKS", "TIME PERIOD", "ISO CODE", "REPORT LINKS", "FLAGS", "ACCOUNTS SPECIFIED",
              "ACCOUNTS WITHHELD", "TWEETS WITHHELD", "REMOVAL REQUESTS (COURT ORDERS)",
              "REMOVAL REQUESTS (GOVERNMENT AGENCY, POLICE, OTHER) ", "ACCOUNTS (NO ACTION)",
-             "PERCENTAGE WHERE SOME CONTENT WITHHELD", "ACCOUNTS (TOS)",
-        ]]
+             "PERCENTAGE WHERE SOME CONTENT WITHHELD", "ACCOUNTS (TOS)",],
+
+            ["COUNTRY", "LINKS", "TIME PERIOD", "ISO CODE", "REPORT LINKS", "FLAGS", "ACCOUNTS SPECIFIED",
+            "ACCOUNTS WITHHELD", "TWEETS WITHHELD", "REMOVAL REQUESTS (COURT ORDERS)",
+            "REMOVAL REQUESTS (GOV’T AGENCY, POLICE, OTHER)", "ACCOUNTS (NO ACTION)",
+            "PERCENTAGE WHERE SOME CONTENT WITHHELD", "ACCOUNTS (TOS)",],
+        ]

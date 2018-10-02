@@ -8,7 +8,8 @@ from transparency.trans_google_info import TransGoogleInfo
 from transparency.trans_linkedin import TransLinkedin
 from transparency.trans_manual import TransManual
 from transparency.trans_snap import TransSnap
-from transparency.twitter_info import TransTwitter
+from transparency.twitter_info import TransTwitterInfo
+from transparency.twitter_removal import TransTwitterRemoval
 from transparency.utils import setup_logging
 from transparency.writer_csv import WriterCSV
 
@@ -74,7 +75,8 @@ def get_orchestrators():
     # but that method doesn't let IDE know that the classes are used.
     return {
         'transfacebook': TransFacebook,
-        'transtwitter': TransTwitter,
+        'transtwitterinfo': TransTwitterInfo,
+        'transtwitterremoval': TransTwitterRemoval,
         'transgoogle': TransGoogleInfo,
         'translinkedin': TransLinkedin,
         'transsnap': TransSnap,
