@@ -55,3 +55,15 @@ class TestTransTwitter(TransparencyTestCase):
         df_out = self.twitter.process_urls(available_urls)
 
         self.assertEqual(0, len(df_out.query('country=="TOTAL"')))
+
+    def test_process_urls_old_format(self):
+        available_urls = [{
+                              'url': 'https://transparency.twitter.com/content/dam/transparency-twitter/data/download-removal-requests/removal-requests-report-jan-jun-2012.csv',
+                              'report_start': '2012-01-01 00:00:00', 'report_end': '2012-06-30 23:59:59'}]
+        df_out = self.twitter.process_urls(available_urls)
+        self.assertEqual('United Kingdom', df_out['country'][4])
+        self.assertEqual(1, df_out['num_requests'][4])
+        self.assertEqual(0, df_out['num_requests_complied'][1])
+        self.assertEqual(7, df_out['num_accounts_specified'][3])
+        self.assertIsNone(df_out['num_accounts_enforced'][2])
+        self.assertIsNone(df_out['num_content_enforced'][1])

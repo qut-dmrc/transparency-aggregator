@@ -22,14 +22,14 @@ class TransGoogleRemoval(Orchestrator):
         df = df[~(df['all requests: number of requests'] == '<10')]
         df = df[~(df['all requests: number of requests'] == '?')]
 
-        numeric_cols = ['all requests: number of requests',
-                        'all requests: % fully or partially complied with',
-                        'all requests: items requested to be removed',
-                        'court orders: number of requests', 'court orders: % fully or partially complied with',
-                        'court orders: items requested to be removed',
-                        'other requests (executive, police, etc.): number of requests',
-                        'other requests (executive, police, etc.): % fully or partially complied with',
-                        'other requests (executive, police, etc.): items requested to be removed', ]
+        numeric_cols = ['all requests number of requests',
+                        'all requests fully or partially complied with',
+                        'all requests items requested to be removed',
+                        'court orders number of requests', 'court orders fully or partially complied with',
+                        'court orders items requested to be removed',
+                        'other requests executive police etc number of requests',
+                        'other requests executive police etc fully or partially complied with',
+                        'other requests executive police etc items requested to be removed', ]
 
         utils.df_convert_to_numeric(df, numeric_cols)
 
