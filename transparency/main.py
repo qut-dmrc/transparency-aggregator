@@ -5,6 +5,7 @@ from docopt import docopt
 
 from transparency.trans_facebook import TransFacebook
 from transparency.trans_google_info import TransGoogleInfo
+from transparency.trans_google_removal import TransGoogleRemoval
 from transparency.trans_linkedin import TransLinkedin
 from transparency.trans_manual import TransManual
 from transparency.trans_snap import TransSnap
@@ -78,6 +79,7 @@ def get_orchestrators():
         'transtwitterinfo': TransTwitterInfo,
         'transtwitterremoval': TransTwitterRemoval,
         'transgoogle': TransGoogleInfo,
+        'transgoogleremoval': TransGoogleRemoval,
         'translinkedin': TransLinkedin,
         'transsnap': TransSnap,
         'transmanual': TransManual,

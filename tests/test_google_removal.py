@@ -44,13 +44,13 @@ class TestTransGoogle(TransparencyTestCase):
     def sample_df(self):
         csv = \
             """
-                Period Ending,Country,CLDR Territory Code,All Requests: Number of Requests,All Requests: % Fully Or Partially Complied With,All Requests: Items Requested To Be Removed,Court Orders: Number of Requests,Court Orders: % Fully Or Partially Complied With,Court Orders: Items Requested To Be Removed,"Other Requests (Executive, Police, etc.): Number of Requests","Other Requests (Executive, Police, etc.): % Fully Or Partially Complied With","Other Requests (Executive, Police, etc.): Items Requested To Be Removed"
-                2009-12-31,Argentina,AR,42,88,,41,,,1,,
-                2009-12-31,Armenia,AM,<10,0,,,,,,,
-                2009-12-31,Australia,AU,17,53,,,,,17,,
-                2009-12-31,Austria,AT,<10,60,,,,,,,
-                2009-12-31,Belgium,BE,<10,0,,,,,,,
-                2009-12-31,Brazil,BR,291,82,,165,,,126,,
+            Period Ending,Country,CLDR Territory Code,All Requests: Number of Requests,All Requests: % Fully Or Partially Complied With,All Requests: Items Requested To Be Removed,Court Orders: Number of Requests,Court Orders: % Fully Or Partially Complied With,Court Orders: Items Requested To Be Removed,"Other Requests (Executive, Police, etc.): Number of Requests","Other Requests (Executive, Police, etc.): % Fully Or Partially Complied With","Other Requests (Executive, Police, etc.): Items Requested To Be Removed"
+            2009-12-31,Argentina,AR,42,88,,41,,,1,,
+            2009-12-31,Armenia,AM,<10,0,,,,,,,
+            2009-12-31,Australia,AU,17,53,,,,,17,,
+            2009-12-31,Austria,AT,<10,60,,,,,,,
+            2009-12-31,Belgium,BE,<10,0,,,,,,,
+            2009-12-31,Brazil,BR,291,82,,165,,,126,,
             """
 
         df = pd.read_csv(StringIO(textwrap.dedent(csv)), encoding="UTF-8", dtype=np.object_)
@@ -80,4 +80,4 @@ class TestTransGoogle(TransparencyTestCase):
             with self.assertLogs(level="ERROR") as logger:
                 df_out = self.google.process_with_check(df, '', '')
 
-        self.assertIn('Unexpected missing columns: ["Period Ending"]', str(context.exception))
+        self.assertIn('Unexpected missing columns: ["period ending"]', str(context.exception))

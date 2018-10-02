@@ -19,8 +19,8 @@ class TransGoogleRemoval(Orchestrator):
         # This is signified by '<10' in number of requests column
         # And sometimes, Google reports '?' in the number of requests column.
         # We ignore all of these values.
-        df = df[~(df['all requests: number of requests'] == '<10')]
-        df = df[~(df['all requests: number of requests'] == '?')]
+        df = df[~(df['all requests number of requests'] == '<10')]
+        df = df[~(df['all requests number of requests'] == '?')]
 
         numeric_cols = ['all requests number of requests',
                         'all requests fully or partially complied with',
@@ -36,15 +36,15 @@ class TransGoogleRemoval(Orchestrator):
         builder = DataFrameBuilder(df_in=df, platform='Google', platform_property='Google',
                                    report_start='', report_end='')
 
-        utils.df_convert_from_percentage(df, 'all requests: % fully or partially complied with', 'all requests: number of requests',
-                                         'all requests: number where some content removed')
+        utils.df_convert_from_percentage(df, 'all requests fully or partially complied with', 'all requests number of requests',
+                                         'all requests number where some content removed')
 
         builder.extract_columns(
             request_type='removal requests',
             request_subtype='all',
-            num_requests_col='all requests: number of requests',
-            num_content_specified_col='all requests: items requested to be removed',
-            num_requests_complied_col='all requests: number where some content removed'
+            num_requests_col='all requests number of requests',
+            num_content_specified_col='all requests items requested to be removed',
+            num_requests_complied_col='all requests number where some content removed'
         )
 
         # Extract requests for user data from governments:

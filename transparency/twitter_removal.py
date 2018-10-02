@@ -17,7 +17,6 @@ class TransTwitterRemoval(Orchestrator):
         df.query('country != "TOTAL"', inplace=True)
 
         # TODO - figure out what to do with nulls in the source data, because they are almost certainly zeroes
-        df.columns = [ utils.strip_punctuation(x.lower()) for x in df.columns.values ]
 
         col_map = {
             'removal requests govt agency police other': 'removal requests government agency police other',
