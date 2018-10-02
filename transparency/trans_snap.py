@@ -20,15 +20,17 @@ class TransSnap(Orchestrator):
         """
 
         col_map = {
-            'account identifiers* for emergency requests': 'accounts emergency',
+            'account identifiers for emergency requests': 'accounts emergency',
             'percentage of emergency requests where some data was produced': 'percent emergency requests complied',
-            'account identifiers* for other information requests': 'accounts other',
+            'account identifiers for other information requests': 'accounts other',
             'other information requests': 'other requests',
             'percentage of other information requests where some data was produced': 'percent other requests complied',
+            "account identifiers for other requests": 'accounts other',
+             "percentage of other information request where some data was produced":  'percent other requests complied',
         }
 
         # TODO - figure out what to do with nulls in the source data, because they are almost certainly zeroes
-        df.columns = df.columns.str.lower()
+        df.columns = [ utils.strip_punctuation(x.lower()) for x in df.columns.values ]
         df.rename(columns=col_map, inplace=True)
 
         utils.df_strip_char(df, 'percent emergency requests complied', '%')
@@ -87,6 +89,13 @@ class TransSnap(Orchestrator):
              'Other Information Requests',
              'Account Identifiers* for Other Information Requests',
              'Percentage of Other Information Requests where some data was produced',
+             'report_start_from_table', 'report_end_from_table'],
+            ['country', 'Emergency Requests',
+             'Account Identifiers* for Emergency Requests',
+             'Percentage of Emergency Requests where some data was produced',
+             'Other Information Requests',
+             'account identifiers for other requests',
+             'Percentage of Other Information Request where some data was produced',
              'report_start_from_table', 'report_end_from_table'],
         ]
         return cols
