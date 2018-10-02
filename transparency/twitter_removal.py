@@ -52,7 +52,7 @@ class TransTwitterRemoval(Orchestrator):
 
     def fetch_all(self):
         # Twitter transparency reports are in half-years, starting from 2012-H1
-        # "https://transparency.twitter.com/content/dam/transparency-twitter/data/download-govt-information-requests/information-requests-report-jan-jun-2012.csv"
+        # https://transparency.twitter.com/content/dam/transparency-twitter/data/download-removal-requests/removal-requests-report-jul-dec-2017.csv
 
         start_year = 2012
         end_year = datetime.datetime.utcnow().year
@@ -72,9 +72,14 @@ class TransTwitterRemoval(Orchestrator):
         return source.get()
 
     def expected_source_columns_array(self):
-        return [[
-            "COUNTRY", "LINKS", "TIME PERIOD", "ISO CODE", "REPORT LINKS", "FLAGS", "ACCOUNTS SPECIFIED",
+        return [
+            ["COUNTRY", "LINKS", "TIME PERIOD", "ISO CODE", "REPORT LINKS", "FLAGS", "ACCOUNTS SPECIFIED",
              "ACCOUNTS WITHHELD", "TWEETS WITHHELD", "REMOVAL REQUESTS (COURT ORDERS)",
              "REMOVAL REQUESTS (GOVERNMENT AGENCY, POLICE, OTHER) ", "ACCOUNTS (NO ACTION)",
-             "PERCENTAGE WHERE SOME CONTENT WITHHELD", "ACCOUNTS (TOS)",
-        ]]
+             "PERCENTAGE WHERE SOME CONTENT WITHHELD", "ACCOUNTS (TOS)",],
+
+            ["COUNTRY", "LINKS", "TIME PERIOD", "ISO CODE", "REPORT LINKS", "FLAGS", "ACCOUNTS SPECIFIED",
+            "ACCOUNTS WITHHELD", "TWEETS WITHHELD", "REMOVAL REQUESTS (COURT ORDERS)",
+            "REMOVAL REQUESTS (GOV’T AGENCY, POLICE, OTHER)", "ACCOUNTS (NO ACTION)",
+            "PERCENTAGE WHERE SOME CONTENT WITHHELD", "ACCOUNTS (TOS)",],
+        ]
