@@ -75,7 +75,8 @@ def setup_logging(log_file_name, verbose=False, interactive_only=False):
 
 
 def df_fix_columns(df):
-    df.columns = df.columns.str.lower()
+    #df.columns = df.columns.str.lower()
+    df.columns = [strip_punctuation(x.lower()) for x in df.columns.values]
 
 def df_percentage_to_count(df, percent_col, total_col, output_col):
 
@@ -137,7 +138,7 @@ def df_convert_to_lower(df, string_cols):
 
 def df_convert_from_percentage(df, pc_col, total_col, dest_col):
     df[dest_col] = df[total_col] * df[pc_col] / 100.0
-    df[dest_col] = df[dest_col].round()
+    df[dest_col] = df[dest_col].astype(float).round()
 
 
 def make_path(sub_path):
